@@ -17,7 +17,12 @@
 		4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEC4224E37A7008493CB /* BaseLabel.swift */; };
 		4A56CEC7224E3841008493CB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEC6224E3841008493CB /* String.swift */; };
 		4A56CECB224E513A008493CB /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CECA224E513A008493CB /* BaseButton.swift */; };
-		4A56CECD224E5A25008493CB /* ForgotPasswordVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */; };
+		4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CECE224E5DEE008493CB /* ForgotPasswordVC.swift */; };
+		4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED0224E5FAF008493CB /* AddAccountNameVC.swift */; };
+		4A56CED3224E6255008493CB /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED2224E6255008493CB /* Fonts.swift */; };
+		4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */; };
+		4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */; };
+		4A56CED9224E855D008493CB /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED8224E855D008493CB /* NotificationName.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
@@ -39,7 +44,12 @@
 		4A56CEC4224E37A7008493CB /* BaseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
 		4A56CEC6224E3841008493CB /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		4A56CECA224E513A008493CB /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
-		4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVCViewController.swift; sourceTree = "<group>"; };
+		4A56CECE224E5DEE008493CB /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		4A56CED0224E5FAF008493CB /* AddAccountNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountNameVC.swift; sourceTree = "<group>"; };
+		4A56CED2224E6255008493CB /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountImageVC.swift; sourceTree = "<group>"; };
+		4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
+		4A56CED8224E855D008493CB /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -113,6 +123,7 @@
 				4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */,
 				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
 				4A56CEC0224E373F008493CB /* CustomInputView.swift */,
+				4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -130,7 +141,9 @@
 			children = (
 				4A799E1E224D8D7C004EFA90 /* LoginVC.swift */,
 				4A56CEB8224DACBC008493CB /* SignupVC.swift */,
-				4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */,
+				4A56CECE224E5DEE008493CB /* ForgotPasswordVC.swift */,
+				4A56CED0224E5FAF008493CB /* AddAccountNameVC.swift */,
+				4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -150,6 +163,7 @@
 			isa = PBXGroup;
 			children = (
 				4A56CEB6224DA9C9008493CB /* Sizes.swift */,
+				4A56CED2224E6255008493CB /* Fonts.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -159,6 +173,7 @@
 			children = (
 				4A799E2B224D921E004EFA90 /* UIView.swift */,
 				4A56CEC6224E3841008493CB /* String.swift */,
+				4A56CED8224E855D008493CB /* NotificationName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -241,21 +256,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
+				4A56CED9224E855D008493CB /* NotificationName.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
-				4A56CECD224E5A25008493CB /* ForgotPasswordVCViewController.swift in Sources */,
 				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
+				4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
+				4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */,
+				4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
 				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
 				4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */,
 				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
+				4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */,
 				4A56CEC7224E3841008493CB /* String.swift in Sources */,
 				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
+				4A56CED3224E6255008493CB /* Fonts.swift in Sources */,
 				4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -25,7 +25,7 @@ class SignupVC: UIViewController {
         let label = UILabel()
         label.text = "Sign Up"
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 34.0)
+        label.font = largeTitleFont
         return label
     }()
     
@@ -126,7 +126,8 @@ extension SignupVC: BackButtonDelegate, MainActionButtonDelegate {
     
     func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
         if buttonUseType == .signUp {
-            // do something here
+            let addAccountNameVC = AddAccountNameVC()
+            self.navigationController?.pushViewController(addAccountNameVC, animated: true)
         }
     }
 

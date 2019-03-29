@@ -24,7 +24,7 @@ class LoginVC: UIViewController {
         let label = UILabel()
         label.text = "Log In"
         label.textColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 34.0)
+        label.font = largeTitleFont
         return label
     }()
     
@@ -85,7 +85,7 @@ extension LoginVC: CustomInputViewDelegate {
     }
     
     func forgotPasswordButtonPressed() {
-        let forgotPasswordVC = ForgotPasswordVCViewController()
+        let forgotPasswordVC = ForgotPasswordVC()
         self.navigationController?.pushViewController(forgotPasswordVC, animated: true)
     }
 }
