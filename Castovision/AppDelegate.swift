@@ -12,11 +12,30 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController?
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        setupInitialEntryVC()
         return true
+    }
+    
+    func setupInitialEntryVC() {
+        // initialize the device window
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.backgroundColor = .white
+        
+        // instantiate the loginVC
+        let loginVC = LoginVC()
+        
+        // setup the navigation controller and set the loginVC as the root view controller
+        navigationController = UINavigationController(rootViewController: loginVC)
+        navigationController?.isNavigationBarHidden = true
+        
+        // set the initial view controller of the window as the navigation controller, then present it
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+        
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

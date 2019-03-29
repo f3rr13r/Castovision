@@ -7,21 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB4224DA281008493CB /* MainActionButton.swift */; };
+		4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB6224DA9C9008493CB /* Sizes.swift */; };
+		4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB8224DACBC008493CB /* SignupVC.swift */; };
+		4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */; };
+		4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */; };
+		4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBE224DB7B5008493CB /* BackButton.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
-		4A799E0B224D899D004EFA90 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E0A224D899D004EFA90 /* ViewController.swift */; };
-		4A799E0E224D899D004EFA90 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0C224D899D004EFA90 /* Main.storyboard */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
+		4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E1E224D8D7C004EFA90 /* LoginVC.swift */; };
+		4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E20224D8E93004EFA90 /* BaseView.swift */; };
+		4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E23224D8F33004EFA90 /* LogoImageView.swift */; };
+		4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E26224D9054004EFA90 /* BaseImageView.swift */; };
+		4A799E2C224D921E004EFA90 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E2B224D921E004EFA90 /* UIView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A56CEB4224DA281008493CB /* MainActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButton.swift; sourceTree = "<group>"; };
+		4A56CEB6224DA9C9008493CB /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
+		4A56CEB8224DACBC008493CB /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
+		4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButtonType.swift; sourceTree = "<group>"; };
+		4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
+		4A56CEBE224DB7B5008493CB /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		4A799E0A224D899D004EFA90 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		4A799E0D224D899D004EFA90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4A799E12224D89A1004EFA90 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4A799E14224D89A1004EFA90 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A799E1E224D8D7C004EFA90 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		4A799E20224D8E93004EFA90 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		4A799E23224D8F33004EFA90 /* LogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImageView.swift; sourceTree = "<group>"; };
+		4A799E26224D9054004EFA90 /* BaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseImageView.swift; sourceTree = "<group>"; };
+		4A799E2B224D921E004EFA90 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +72,87 @@
 		4A799E07224D899D004EFA90 /* Castovision */ = {
 			isa = PBXGroup;
 			children = (
+				4A799E2A224D920C004EFA90 /* Services */,
+				4A799E29224D9204004EFA90 /* Extensions */,
+				4A799E28224D91ED004EFA90 /* Utilities */,
+				4A799E1C224D8CE8004EFA90 /* Models */,
+				4A799E1B224D8CE2004EFA90 /* Views */,
+				4A799E1A224D8CD0004EFA90 /* Controllers */,
 				4A799E08224D899D004EFA90 /* AppDelegate.swift */,
-				4A799E0A224D899D004EFA90 /* ViewController.swift */,
-				4A799E0C224D899D004EFA90 /* Main.storyboard */,
 				4A799E0F224D89A1004EFA90 /* Assets.xcassets */,
 				4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */,
 				4A799E14224D89A1004EFA90 /* Info.plist */,
 			);
 			path = Castovision;
+			sourceTree = "<group>";
+		};
+		4A799E1A224D8CD0004EFA90 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				4A799E1D224D8D50004EFA90 /* Authentication */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		4A799E1B224D8CE2004EFA90 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A799E22224D8F1B004EFA90 /* Base */,
+				4A799E23224D8F33004EFA90 /* LogoImageView.swift */,
+				4A56CEB4224DA281008493CB /* MainActionButton.swift */,
+				4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */,
+				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4A799E1C224D8CE8004EFA90 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		4A799E1D224D8D50004EFA90 /* Authentication */ = {
+			isa = PBXGroup;
+			children = (
+				4A799E1E224D8D7C004EFA90 /* LoginVC.swift */,
+				4A56CEB8224DACBC008493CB /* SignupVC.swift */,
+			);
+			path = Authentication;
+			sourceTree = "<group>";
+		};
+		4A799E22224D8F1B004EFA90 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				4A799E20224D8E93004EFA90 /* BaseView.swift */,
+				4A799E26224D9054004EFA90 /* BaseImageView.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		4A799E28224D91ED004EFA90 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				4A56CEB6224DA9C9008493CB /* Sizes.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		4A799E29224D9204004EFA90 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				4A799E2B224D921E004EFA90 /* UIView.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		4A799E2A224D920C004EFA90 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,7 +215,6 @@
 			files = (
 				4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */,
 				4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */,
-				4A799E0E224D899D004EFA90 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -135,7 +225,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4A799E0B224D899D004EFA90 /* ViewController.swift in Sources */,
+				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
+				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
+				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
+				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
+				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
+				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
+				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
+				4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */,
+				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
+				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
+				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
 				4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -143,14 +243,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		4A799E0C224D899D004EFA90 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4A799E0D224D899D004EFA90 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
