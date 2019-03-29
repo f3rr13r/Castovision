@@ -13,6 +13,11 @@
 		4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */; };
 		4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */; };
 		4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEBE224DB7B5008493CB /* BackButton.swift */; };
+		4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEC0224E373F008493CB /* CustomInputView.swift */; };
+		4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEC4224E37A7008493CB /* BaseLabel.swift */; };
+		4A56CEC7224E3841008493CB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEC6224E3841008493CB /* String.swift */; };
+		4A56CECB224E513A008493CB /* BaseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CECA224E513A008493CB /* BaseButton.swift */; };
+		4A56CECD224E5A25008493CB /* ForgotPasswordVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
@@ -30,6 +35,11 @@
 		4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButtonType.swift; sourceTree = "<group>"; };
 		4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTitleView.swift; sourceTree = "<group>"; };
 		4A56CEBE224DB7B5008493CB /* BackButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
+		4A56CEC0224E373F008493CB /* CustomInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputView.swift; sourceTree = "<group>"; };
+		4A56CEC4224E37A7008493CB /* BaseLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseLabel.swift; sourceTree = "<group>"; };
+		4A56CEC6224E3841008493CB /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		4A56CECA224E513A008493CB /* BaseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseButton.swift; sourceTree = "<group>"; };
+		4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVCViewController.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,6 +112,7 @@
 				4A56CEB4224DA281008493CB /* MainActionButton.swift */,
 				4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */,
 				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
+				4A56CEC0224E373F008493CB /* CustomInputView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -119,6 +130,7 @@
 			children = (
 				4A799E1E224D8D7C004EFA90 /* LoginVC.swift */,
 				4A56CEB8224DACBC008493CB /* SignupVC.swift */,
+				4A56CECC224E5A25008493CB /* ForgotPasswordVCViewController.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -128,6 +140,8 @@
 			children = (
 				4A799E20224D8E93004EFA90 /* BaseView.swift */,
 				4A799E26224D9054004EFA90 /* BaseImageView.swift */,
+				4A56CEC4224E37A7008493CB /* BaseLabel.swift */,
+				4A56CECA224E513A008493CB /* BaseButton.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -144,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				4A799E2B224D921E004EFA90 /* UIView.swift */,
+				4A56CEC6224E3841008493CB /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -227,8 +242,11 @@
 			files = (
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
+				4A56CECD224E5A25008493CB /* ForgotPasswordVCViewController.swift in Sources */,
 				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
+				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
+				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
 				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
@@ -236,6 +254,8 @@
 				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
+				4A56CEC7224E3841008493CB /* String.swift in Sources */,
+				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
 				4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

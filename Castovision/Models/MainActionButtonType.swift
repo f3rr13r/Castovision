@@ -14,4 +14,5 @@ enum MainActionButtonType {
     case goToLogIn
     case signUp
     case logIn
+    case forgotPassword
 }
