@@ -80,7 +80,7 @@ class MainActionButton: UIButton {
         layer.cornerRadius = 4.0
         layer.borderWidth = hasBorderStyling ? 1.0 : 0.0
         layer.borderColor = hasBorderStyling ? buttonColor.cgColor : nil
-        titleLabel?.font = UIFont.systemFont(ofSize: 14.0, weight: .medium)
+        titleLabel?.font = defaultButtonFont
         addTarget(self, action: #selector(buttonWasTapped), for: .touchUpInside)
     }
     

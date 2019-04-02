@@ -13,4 +13,5 @@ let mediumFont: UIFont.Weight = UIFont.Weight.medium
 let regularFont: UIFont.Weight = UIFont.Weight.regular
 
 let largeTitleFont: UIFont = UIFont.boldSystemFont(ofSize: 34.0)
+let defaultButtonFont: UIFont = UIFont.systemFont(ofSize: 14.0, weight: .medium)
 let defaultContentFont: UIFont = UIFont.systemFont(ofSize: 14.0)

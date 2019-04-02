@@ -22,6 +22,16 @@ class AddAccountImageVC: UIViewController {
     let logoImageView = LogoImageView()
     let backButton = BackButton()
     
+    let skipButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Skip", for: .normal)
+        button.setTitleColor(.gray, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 6.0, left: 20.0, bottom: 6.0, right: 20.0)
+        button.titleLabel?.font = defaultButtonFont
+        button.addTarget(self, action: #selector(skipButtonPressed), for: .touchUpInside)
+        return button
+    }()
+    
     let accountImageTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Profile Picture"
@@ -39,29 +49,50 @@ class AddAccountImageVC: UIViewController {
         return label
     }()
     
-    let profileImageUploadButton: UIButton = {
+    let addPhotoButton = MainActionButton(buttonUseType: .openImagePickerVC, buttonTitle: "Select Profile Picture", buttonColour: .red, isDisabled: false)
+    
+    let profileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.layer.cornerRadius = 80.0
+        iv.layer.masksToBounds = true
+        iv.isHidden = true
+        return iv
+    }()
+    
+    let changeProfileImageButton: UIButton = {
         let button = UIButton()
-        button.setImage(#imageLiteral(resourceName: "empty-profile-icon").withRenderingMode(.alwaysTemplate), for: .normal)
-        button.imageView?.tintColor = .black
-        button.imageView?.contentMode = .scaleAspectFill
-        button.layer.cornerRadius = 80.0
-        button.addTarget(self, action: #selector(profileImageUploadButtonPressed), for: .touchUpInside)
+        button.backgroundColor = .lightGray
+        button.layer.cornerRadius = 4.0
+        button.setTitle("Change Image", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.contentEdgeInsets = UIEdgeInsets(top: 6.0, left: 16.0, bottom: 6.0, right: 16.0)
+        button.titleLabel?.font = defaultButtonFont
+        button.addTarget(self, action: #selector(openImagePickerVC), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     
-    let permissionDeniedView = PermissionDeniedView(title: "Camera Access Denied", message: "Castovision is unable to access your camera or phone library, and so cannot provide this feature. You can update the camera access permission at anytime inside of your phone settings")
-    
-    // image picker controller
-    lazy var imagePickerVC: UIImagePickerController = {
-        let vc = UIImagePickerController()
-        vc.allowsEditing = true
-        return vc
-    }()
+    let savePhotoButton = MainActionButton(buttonUseType: .saveProfileImage, buttonTitle: "Save Profile Picture", buttonColour: .red, isDisabled: false)
+
+    let permissionDeniedView = PermissionDeniedView(title: "Camera Access Denied", message: "Castovision is unable to access your camera or phone library, and so cannot provide this feature. You can update the app's camera access permissions at anytime by going to castovision inside your phone settings", canShowButton: false)
     
     // variables
-    var canEnableSaveButton: Bool = false {
+    var profileImage: UIImage? = nil {
         didSet {
-            // update the main action button state
+            if let profileImage = self.profileImage {
+                profileImageView.image = profileImage
+                profileImageView.isHidden = false
+                changeProfileImageButton.isHidden = false
+                addPhotoButton.isHidden = true
+                savePhotoButton.isHidden = false
+            } else {
+                profileImageView.image = nil
+                profileImageView.isHidden = true
+                changeProfileImageButton.isHidden = true
+                addPhotoButton.isHidden = false
+                savePhotoButton.isHidden = true
+            }
         }
     }
 
@@ -95,14 +126,18 @@ class AddAccountImageVC: UIViewController {
     
     func checkCameraUsagePermissionState(andRequestPermissionIfNecessary canRequestPermission: Bool = true) {
         if AVCaptureDevice.authorizationStatus(for: .video) == .authorized {
-            if permissionDeniedView.isVisible() {
-                permissionDeniedView.hide()
+            DispatchQueue.main.async {
+                if self.permissionDeniedView.isVisible() {
+                    self.permissionDeniedView.hide()
+                }
             }
         } else if AVCaptureDevice.authorizationStatus(for: .video) == .denied {
-            permissionDeniedView.show()
+            DispatchQueue.main.async {
+                self.permissionDeniedView.show()
+            }
         } else {
             if canRequestPermission {
-                requestCameraUsagePermissions()
+                self.requestCameraUsagePermissions()
             }
         }
     }
@@ -115,7 +150,8 @@ class AddAccountImageVC: UIViewController {
     
     func handleChildDelegates() {
         backButton.delegate = self
-        imagePickerVC.delegate = self
+        addPhotoButton.delegate = self
+        savePhotoButton.delegate = self
     }
     
     func anchorSubviews() {
@@ -128,24 +164,35 @@ class AddAccountImageVC: UIViewController {
         self.view.addSubview(logoImageView)
         logoImageView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: self.view.safeAreaLayoutGuide.centerXAnchor, centreYAnchor: nil, widthAnchor: 30.0, heightAnchor: 30.0, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0))
         
+        self.view.addSubview(skipButton)
+        skipButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: backButton.centerYAnchor)
+        
         self.view.addSubview(accountImageTitleLabel)
         accountImageTitleLabel.anchor(withTopAnchor: logoImageView.bottomAnchor, leadingAnchor: self.view.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 24.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         
         self.view.addSubview(accountImageInstructionLabel)
         accountImageInstructionLabel.anchor(withTopAnchor: accountImageTitleLabel.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 6.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         
+        self.view.addSubview(addPhotoButton)
+        addPhotoButton.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 50.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: -6.0, right: -horizontalPadding))
+        
         let profileImageButtonDiamater: CGFloat = 160.0
-        self.view.addSubview(profileImageUploadButton)
-        profileImageUploadButton.anchor(withTopAnchor: accountImageInstructionLabel.bottomAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: self.view.safeAreaLayoutGuide.centerXAnchor, centreYAnchor: nil, widthAnchor: profileImageButtonDiamater, heightAnchor: profileImageButtonDiamater, padding: .init(top: 48.0, left: 0.0, bottom: 0.0, right: 0.0))
+        self.view.addSubview(profileImageView)
+        profileImageView.anchor(withTopAnchor: accountImageInstructionLabel.bottomAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: self.view.safeAreaLayoutGuide.centerXAnchor, centreYAnchor: nil, widthAnchor: profileImageButtonDiamater, heightAnchor: profileImageButtonDiamater, padding: .init(top: 48.0, left: 0.0, bottom: 0.0, right: 0.0))
+        
+        self.view.addSubview(changeProfileImageButton)
+        changeProfileImageButton.anchor(withTopAnchor: profileImageView.bottomAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: profileImageView.centerXAnchor, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 24.0, left: 0.0, bottom: 0.0, right: 0.0))
+        
+        savePhotoButton.isHidden = true
+        self.view.addSubview(savePhotoButton)
+        savePhotoButton.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 50.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: -6.0, right: -horizontalPadding))
         
         /*-- no camera permissions view --*/
         self.view.addSubview(permissionDeniedView)
         permissionDeniedView.anchor(withTopAnchor: accountImageTitleLabel.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
-        
-        
     }
     
-    @objc func profileImageUploadButtonPressed() {
+    @objc func openImagePickerVC() {
         let phoneCameraOptionsAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let openCameraOption = UIAlertAction(title: "Camera", style: .default, handler: { (action: UIAlertAction) in
             self.presentImagePickerVC(withSourceType: .camera)
@@ -166,12 +213,30 @@ class AddAccountImageVC: UIViewController {
         phoneCameraOptionsAlert.addAction(cancelOption)
         self.present(phoneCameraOptionsAlert, animated: true, completion: nil)
     }
+    
+    @objc func skipButtonPressed() {
+        navigateIntoMainApp()
+    }
+    
+    func navigateIntoMainApp() {
+        self.navigationController?.navigateIntoMainApp()
+    }
 }
 
 // button delegate methods
-extension AddAccountImageVC: BackButtonDelegate {
+extension AddAccountImageVC: BackButtonDelegate, MainActionButtonDelegate {
     func backButtonPressed() {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
+        if buttonUseType == .openImagePickerVC {
+            openImagePickerVC()
+        }
+        
+        if buttonUseType == .saveProfileImage {
+            navigateIntoMainApp()
+        }
     }
 }
 
@@ -179,6 +244,13 @@ extension AddAccountImageVC: BackButtonDelegate {
 extension AddAccountImageVC: UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
     func presentImagePickerVC(withSourceType sourceType: UIImagePickerController.SourceType) {
+        let imagePickerVC: UIImagePickerController = {
+            let vc = UIImagePickerController()
+            vc.delegate = self
+            vc.allowsEditing = true
+            return vc
+        }()
+        
         if UIImagePickerController.isSourceTypeAvailable(sourceType) {
             imagePickerVC.sourceType = sourceType
             self.present(imagePickerVC, animated: true, completion: nil)
@@ -197,7 +269,6 @@ extension AddAccountImageVC: UINavigationControllerDelegate, UIImagePickerContro
     }
     
     func updateProfileImageUploadButton(withImage image: UIImage) {
-        profileImageUploadButton.setImage(image, for: .normal)
-        canEnableSaveButton = true
+        profileImage = image
     }
 }

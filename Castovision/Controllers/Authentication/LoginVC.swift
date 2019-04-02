@@ -99,7 +99,7 @@ extension LoginVC: MainActionButtonDelegate {
             self.navigationController?.pushViewController(signUpVC, animated: true)
             break
         case .logIn:
-            // do something here
+            self.navigationController?.navigateIntoMainApp(withAnimation: true)
             break
         default: return
         }

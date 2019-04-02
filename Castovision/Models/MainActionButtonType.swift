@@ -15,4 +15,6 @@ enum MainActionButtonType {
     case signUp
     case logIn
     case forgotPassword
+    case openImagePickerVC
+    case saveProfileImage
 }
