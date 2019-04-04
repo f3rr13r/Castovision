@@ -11,7 +11,7 @@ import UIKit
 class MainAppNavigationVC: UITabBarController {
 
     let feedVC = FeedVC(collectionViewLayout: UICollectionViewFlowLayout())
-    let createTapeVC = CreateTapeVC()
+    let createTapeVC = AddProjectNameVC()
     let profileVC = ProfileVC()
     
     override func viewDidLoad() {
@@ -25,24 +25,24 @@ class MainAppNavigationVC: UITabBarController {
         self.tabBar.tintColor = .red
         self.tabBar.unselectedItemTintColor = UIColor.init(red: 211/255, green: 211/255, blue: 211/255, alpha: 1.0)
         
-        let feedNavigationVC = configureNavigationController(withRootViewController: feedVC, title: "Feed", tabBarItemTitle: "Feed", tabBarItemImageName: "tab-bar-home-icon", searchBarNeeds: true, andTagValue: 0)
+        let feedNavigationVC = configureNavigationController(withRootViewController: feedVC, tabBarItemTitle: "Feed", tabBarItemImageName: "tab-bar-home-icon", searchBarNeeds: true, andTagValue: 0)
         
-        let createTapeNavigationVC = configureNavigationController(withRootViewController: createTapeVC, title: "Add Selftape", tabBarItemTitle: "Add Selftape", tabBarItemImageName: "tab-bar-camera-icon", searchBarNeeds: false, andTagValue: 1)
+        let createTapeNavigationVC = configureNavigationController(withRootViewController: createTapeVC, tabBarItemTitle: "Add Self-tape", tabBarItemImageName: "tab-bar-camera-icon", searchBarNeeds: false, andTagValue: 1)
         
-        let profileNavigationVC = configureNavigationController(withRootViewController: profileVC, title: "Profile", tabBarItemTitle: "Profile", tabBarItemImageName: "tab-bar-profile-icon", searchBarNeeds: false, andTagValue: 2)
+        let profileNavigationVC = configureNavigationController(withRootViewController: profileVC, tabBarItemTitle: "Profile", tabBarItemImageName: "tab-bar-profile-icon", searchBarNeeds: false, andTagValue: 2)
         
         let navigationControllersList: [UINavigationController] = [feedNavigationVC, createTapeNavigationVC, profileNavigationVC]
         self.viewControllers = navigationControllersList
     }
     
-    func configureNavigationController(withRootViewController rootViewController: UIViewController, title: String, tabBarItemTitle: String, tabBarItemImageName: String, searchBarNeeds needsSearchBar: Bool, andTagValue tagValue: Int) -> UINavigationController {
+    func configureNavigationController(withRootViewController rootViewController: UIViewController, tabBarItemTitle: String, tabBarItemImageName: String, searchBarNeeds needsSearchBar: Bool, andTagValue tagValue: Int) -> UINavigationController {
         /*-- instantiate navigation controller with root view controller --*/
         let navigationController = UINavigationController(rootViewController: rootViewController)
         
         /*-- set navigation bar specified styles and config --*/
+        navigationController.navigationBar.tintColor = .black
         navigationController.navigationBar.backgroundColor = .white
         navigationController.navigationBar.prefersLargeTitles = true
-        navigationController.navigationBar.topItem?.title = title
         navigationController.navigationBar.isTranslucent = false
         
         /*-- set navigation item specified styles and config --*/

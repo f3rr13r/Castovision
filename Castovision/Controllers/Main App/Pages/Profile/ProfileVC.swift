@@ -12,5 +12,6 @@ class ProfileVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureNavigationBar(withTitle: "Profile", withSearchBar: false)
     }
 }

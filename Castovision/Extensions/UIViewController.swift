@@ -10,7 +10,10 @@ import UIKit
 
 extension UIViewController {
     
-    func configureNavigationBar(withSearchBar needsSearchBar: Bool) {
+    func configureNavigationBar(withTitle title: String, withSearchBar needsSearchBar: Bool) {
+        
+        /*-- set the title --*/
+        self.navigationItem.title = title
         
         /*-- logo (required) --*/
         let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30.0, height: 30.0))
@@ -24,7 +27,7 @@ extension UIViewController {
             searchController.searchBar.sizeToFit()
             searchController.delegate = self as? UISearchControllerDelegate
             searchController.obscuresBackgroundDuringPresentation = false
-            searchController.searchBar.placeholder = "Search my self-tapes..."
+            searchController.searchBar.placeholder = "Search by project name..."
             self.navigationItem.searchController = searchController
             self.navigationItem.hidesSearchBarWhenScrolling = true
         }

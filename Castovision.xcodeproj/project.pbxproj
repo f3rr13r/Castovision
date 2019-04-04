@@ -8,11 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
-		4A36DBBC2253760500F76E1B /* CreateTapeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* CreateTapeVC.swift */; };
+		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
 		4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBD2253761800F76E1B /* ProfileVC.swift */; };
 		4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBF22537CDC00F76E1B /* UINavigationController.swift */; };
 		4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBC122538E6A00F76E1B /* FeedVC.swift */; };
 		4A36DBC4225394D700F76E1B /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBC3225394D700F76E1B /* UIViewController.swift */; };
+		4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBC82253B3EA00F76E1B /* AddProjectPasswordVC.swift */; };
+		4A36DBCD2253BD8500F76E1B /* BaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBCC2253BD8500F76E1B /* BaseCell.swift */; };
+		4A36DBCF2253C44300F76E1B /* BaseReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBCE2253C44300F76E1B /* BaseReusableView.swift */; };
 		4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB4224DA281008493CB /* MainActionButton.swift */; };
 		4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB6224DA9C9008493CB /* Sizes.swift */; };
 		4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB8224DACBC008493CB /* SignupVC.swift */; };
@@ -37,15 +40,23 @@
 		4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E23224D8F33004EFA90 /* LogoImageView.swift */; };
 		4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E26224D9054004EFA90 /* BaseImageView.swift */; };
 		4A799E2C224D921E004EFA90 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E2B224D921E004EFA90 /* UIView.swift */; };
+		4AFB2B66225535F600F99B16 /* AddProjectScenesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */; };
+		4AFB2B6C225616F900F99B16 /* AddNewSceneFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6B225616F900F99B16 /* AddNewSceneFooterView.swift */; };
+		4AFB2B6E225617F200F99B16 /* AddSceneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6D225617F200F99B16 /* AddSceneCell.swift */; };
+		4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6F22561F7C00F99B16 /* Colours.swift */; };
+		4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
-		4A36DBBB2253760500F76E1B /* CreateTapeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTapeVC.swift; sourceTree = "<group>"; };
+		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
 		4A36DBBD2253761800F76E1B /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
 		4A36DBBF22537CDC00F76E1B /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		4A36DBC122538E6A00F76E1B /* FeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedVC.swift; sourceTree = "<group>"; };
 		4A36DBC3225394D700F76E1B /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
+		4A36DBC82253B3EA00F76E1B /* AddProjectPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectPasswordVC.swift; sourceTree = "<group>"; };
+		4A36DBCC2253BD8500F76E1B /* BaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCell.swift; sourceTree = "<group>"; };
+		4A36DBCE2253C44300F76E1B /* BaseReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseReusableView.swift; sourceTree = "<group>"; };
 		4A56CEB4224DA281008493CB /* MainActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButton.swift; sourceTree = "<group>"; };
 		4A56CEB6224DA9C9008493CB /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
 		4A56CEB8224DACBC008493CB /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
@@ -72,6 +83,11 @@
 		4A799E23224D8F33004EFA90 /* LogoImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoImageView.swift; sourceTree = "<group>"; };
 		4A799E26224D9054004EFA90 /* BaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseImageView.swift; sourceTree = "<group>"; };
 		4A799E2B224D921E004EFA90 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
+		4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectScenesVC.swift; sourceTree = "<group>"; };
+		4AFB2B6B225616F900F99B16 /* AddNewSceneFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneFooterView.swift; sourceTree = "<group>"; };
+		4AFB2B6D225617F200F99B16 /* AddSceneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSceneCell.swift; sourceTree = "<group>"; };
+		4AFB2B6F22561F7C00F99B16 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditionProject.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,11 +113,37 @@
 		4A36DBB82253759200F76E1B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
-				4A36DBBB2253760500F76E1B /* CreateTapeVC.swift */,
-				4A36DBBD2253761800F76E1B /* ProfileVC.swift */,
-				4A36DBC122538E6A00F76E1B /* FeedVC.swift */,
+				4A36DBC72253B34400F76E1B /* Feed */,
+				4A36DBC62253B33C00F76E1B /* Profile */,
+				4A36DBC52253B32B00F76E1B /* AddSelfTape */,
 			);
 			path = Pages;
+			sourceTree = "<group>";
+		};
+		4A36DBC52253B32B00F76E1B /* AddSelfTape */ = {
+			isa = PBXGroup;
+			children = (
+				4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */,
+				4A36DBC82253B3EA00F76E1B /* AddProjectPasswordVC.swift */,
+				4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */,
+			);
+			path = AddSelfTape;
+			sourceTree = "<group>";
+		};
+		4A36DBC62253B33C00F76E1B /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				4A36DBBD2253761800F76E1B /* ProfileVC.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		4A36DBC72253B34400F76E1B /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				4A36DBC122538E6A00F76E1B /* FeedVC.swift */,
+			);
+			path = Feed;
 			sourceTree = "<group>";
 		};
 		4A799DFC224D899C004EFA90 = {
@@ -149,13 +191,11 @@
 		4A799E1B224D8CE2004EFA90 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4AFB2B6A225616CA00F99B16 /* CollectionReusableViews */,
+				4AFB2B69225616BA00F99B16 /* Buttons */,
+				4AFB2B682256169800F99B16 /* Views */,
+				4AFB2B672256168000F99B16 /* Cells */,
 				4A799E22224D8F1B004EFA90 /* Base */,
-				4A799E23224D8F33004EFA90 /* LogoImageView.swift */,
-				4A56CEB4224DA281008493CB /* MainActionButton.swift */,
-				4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */,
-				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
-				4A56CEC0224E373F008493CB /* CustomInputView.swift */,
-				4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */,
+				4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -187,6 +228,8 @@
 				4A799E26224D9054004EFA90 /* BaseImageView.swift */,
 				4A56CEC4224E37A7008493CB /* BaseLabel.swift */,
 				4A56CECA224E513A008493CB /* BaseButton.swift */,
+				4A36DBCC2253BD8500F76E1B /* BaseCell.swift */,
+				4A36DBCE2253C44300F76E1B /* BaseReusableView.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -196,6 +239,7 @@
 			children = (
 				4A56CEB6224DA9C9008493CB /* Sizes.swift */,
 				4A56CED2224E6255008493CB /* Fonts.swift */,
+				4AFB2B6F22561F7C00F99B16 /* Colours.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -217,6 +261,42 @@
 			children = (
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4AFB2B672256168000F99B16 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				4AFB2B6D225617F200F99B16 /* AddSceneCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		4AFB2B682256169800F99B16 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4A56CEBC224DAFEE008493CB /* LargeTitleView.swift */,
+				4A799E23224D8F33004EFA90 /* LogoImageView.swift */,
+				4A56CEC0224E373F008493CB /* CustomInputView.swift */,
+				4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4AFB2B69225616BA00F99B16 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				4A56CEB4224DA281008493CB /* MainActionButton.swift */,
+				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
+		4AFB2B6A225616CA00F99B16 /* CollectionReusableViews */ = {
+			isa = PBXGroup;
+			children = (
+				4AFB2B6B225616F900F99B16 /* AddNewSceneFooterView.swift */,
+			);
+			path = CollectionReusableViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -290,29 +370,37 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */,
+				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
 				4A56CED9224E855D008493CB /* NotificationName.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
 				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
+				4AFB2B6C225616F900F99B16 /* AddNewSceneFooterView.swift in Sources */,
 				4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
 				4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
+				4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */,
 				4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
+				4AFB2B66225535F600F99B16 /* AddProjectScenesVC.swift in Sources */,
 				4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */,
 				4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */,
 				4A36DBC4225394D700F76E1B /* UIViewController.swift in Sources */,
+				4AFB2B6E225617F200F99B16 /* AddSceneCell.swift in Sources */,
+				4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
 				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
 				4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */,
 				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
+				4A36DBCD2253BD8500F76E1B /* BaseCell.swift in Sources */,
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
-				4A36DBBC2253760500F76E1B /* CreateTapeVC.swift in Sources */,
+				4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */,
 				4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */,
 				4A56CEC7224E3841008493CB /* String.swift in Sources */,
+				4A36DBCF2253C44300F76E1B /* BaseReusableView.swift in Sources */,
 				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
 				4A56CED3224E6255008493CB /* Fonts.swift in Sources */,
 				4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */,

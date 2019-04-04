@@ -15,7 +15,7 @@ class FeedVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        self.configureNavigationBar(withSearchBar: true)
+        self.configureNavigationBar(withTitle: "Feed", withSearchBar: true)
         self.configureCollectionView()
     }
     
@@ -33,7 +33,6 @@ class FeedVC: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return 30
     }
 

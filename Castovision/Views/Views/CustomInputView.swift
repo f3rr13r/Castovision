@@ -14,6 +14,9 @@ enum CustomInputType: String {
     case name = "First and Last Name(s)"
     case password = "Password"
     case reEnterPassword = "Re-enter Password"
+    case projectName = "Enter the project name"
+    case projectPassword = "Enter an access password"
+    case reEnterProjectPassword = "Re-enter the access password"
 }
 
 protocol CustomInputViewDelegate {
