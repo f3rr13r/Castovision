@@ -9,21 +9,12 @@
 import UIKit
 
 protocol AddSceneCellDelegate {
-    func addNewTakeButtonPressed()
+    func addNewTakeButtonPressed(insideAuditionScene auditionScene: Int)
 }
 
 private let takesCellId = "takesCellId"
 
 class AddSceneCell: BaseCell {
-    
-    // injector variables
-    var sceneNumber: Int? {
-        didSet {
-            if let sceneNumber = self.sceneNumber {
-                sceneTitleLabel.text = "Scene \(sceneNumber)"
-            }
-        }
-    }
     
     // views
     let sceneTitleLabel: UILabel = {
@@ -37,6 +28,7 @@ class AddSceneCell: BaseCell {
     lazy var takesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: width, height: height)
+        layout.sectionInset = UIEdgeInsets(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.dataSource = self
@@ -87,12 +79,34 @@ class AddSceneCell: BaseCell {
     // variables
     let width: CGFloat = screenWidth - (horizontalPadding * 2)
     let height: CGFloat = screenWidth * 0.5
+    
+    var auditionScene: AuditionScene? {
+        didSet {
+            if let auditionScene = self.auditionScene {
+                self.sceneNumber = auditionScene.sceneNumber
+                self.takes = auditionScene.sceneTakes
+            }
+        }
+    }
+    
+    var sceneNumber: Int? {
+        didSet {
+            if let sceneNumber = self.sceneNumber {
+                sceneTitleLabel.text = "Scene \(sceneNumber)"
+            }
+        }
+    }
+    
     var takes: [String] = [] {
         didSet {
             takesCollectionView.reloadData()
             takesCollectionViewHeightConstraint.constant = takesCollectionView.collectionViewLayout.collectionViewContentSize.height
             self.layoutIfNeeded()
         }
+    }
+    
+    func setupSceneCell(withAuditionScene auditionScene: AuditionScene) {
+        self.auditionScene = auditionScene
     }
     
     override func setupViews() {
@@ -102,21 +116,21 @@ class AddSceneCell: BaseCell {
     }
     
     override func systemLayoutSizeFitting(_ targetSize: CGSize, withHorizontalFittingPriority horizontalFittingPriority: UILayoutPriority, verticalFittingPriority: UILayoutPriority) -> CGSize {
-        return contentView.systemLayoutSizeFitting(CGSize(width: width, height: 1))
+        return contentView.systemLayoutSizeFitting(CGSize(width: screenWidth - (horizontalPadding * 2), height: 1))
     }
     
     func anchorSubviews() {
         self.contentView.addSubview(sceneTitleLabel)
-        sceneTitleLabel.anchor(withTopAnchor: self.contentView.topAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 14.0)
+        sceneTitleLabel.anchor(withTopAnchor: self.contentView.topAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: width, heightAnchor: 14.0)
         
         self.contentView.addSubview(takesCollectionView)
-        takesCollectionView.anchor(withTopAnchor: sceneTitleLabel.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
+        takesCollectionView.anchor(withTopAnchor: sceneTitleLabel.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: width, heightAnchor: nil)
         
         takesCollectionViewHeightConstraint = NSLayoutConstraint(item: takesCollectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1.0, constant: takesCollectionView.collectionViewLayout.collectionViewContentSize.height)
         addConstraint(takesCollectionViewHeightConstraint)
         
         self.contentView.addSubview(addTakeButton)
-        addTakeButton.anchor(withTopAnchor: takesCollectionView.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: self.contentView.bottomAnchor, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: height, padding: .init(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0))
+        addTakeButton.anchor(withTopAnchor: takesCollectionView.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: self.contentView.bottomAnchor, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: width, heightAnchor: height, padding: .init(top: 20.0, left: 0.0, bottom: 0.0, right: 0.0))
         
         addTakeButton.addSubview(addTakeButtonContentContainer)
         addTakeButtonContentContainer.anchor(withTopAnchor: nil, leadingAnchor: addTakeButton.leadingAnchor, bottomAnchor: nil, trailingAnchor: addTakeButton.trailingAnchor, centreXAnchor: addTakeButton.centerXAnchor, centreYAnchor: addTakeButton.centerYAnchor)
@@ -129,8 +143,8 @@ class AddSceneCell: BaseCell {
     }
     
     @objc func addTakeButtonPressed() {
-        self.takes.append("")
-        delegate?.addNewTakeButtonPressed()
+        guard let auditionScene = self.auditionScene else { return }
+        delegate?.addNewTakeButtonPressed(insideAuditionScene: auditionScene.sceneNumber)
     }
 }
 

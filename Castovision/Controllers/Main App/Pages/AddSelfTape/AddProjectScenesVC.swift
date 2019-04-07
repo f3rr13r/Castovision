@@ -28,12 +28,9 @@ class AddProjectScenesVC: UIViewController {
     let saveProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save Project", buttonColour: UIColor.red, isDisabled: true)
     
     // variables
-    var scenes: [String] = [] {
+    var auditionScenes: [AuditionScene] = [] {
         didSet {
-            projectScenesCollectionView.reloadData()
-            DispatchQueue.main.async {
-                self.projectScenesCollectionView.scrollToItem(at: IndexPath(item: self.scenes.count - 1, section: 0), at: .bottom, animated: true)
-            }
+            updateCollectionViewState()
         }
     }
     
@@ -42,6 +39,14 @@ class AddProjectScenesVC: UIViewController {
         self.view.backgroundColor = .white
         self.configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
         anchorSubviews()
+    }
+    
+    func updateCollectionViewState() {
+        self.projectScenesCollectionView.reloadData()
+        self.projectScenesCollectionView.invalidateIntrinsicContentSize()
+        DispatchQueue.main.async {
+            self.projectScenesCollectionView.scrollToItem(at: IndexPath(item: self.auditionScenes.count - 1, section: 0), at: .bottom, animated: true)
+        }
     }
     
     func anchorSubviews() {
@@ -56,14 +61,14 @@ class AddProjectScenesVC: UIViewController {
 // collection view datasource, delegate and delegate flow layout methods
 extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return scenes.count
+        return self.auditionScenes.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let sceneCell = collectionView.dequeueReusableCell(withReuseIdentifier: projectSceneCellId, for: indexPath) as? AddSceneCell else {
             return UICollectionViewCell()
         }
-        sceneCell.sceneNumber = indexPath.item + 1
+        sceneCell.setupSceneCell(withAuditionScene: auditionScenes[indexPath.item])
         sceneCell.delegate = self
         return sceneCell
     }
@@ -86,7 +91,7 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let bottomEdgeInset: CGFloat = self.scenes.count == 0 ? 0.0 : 20.0
+        let bottomEdgeInset: CGFloat = self.auditionScenes.count == 0 ? 0.0 : 20.0
         return UIEdgeInsets(top: 20.0, left: 0.0, bottom: bottomEdgeInset, right: 0.0)
     }
     
@@ -101,14 +106,20 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
 
 // scene cell delegate methods
 extension AddProjectScenesVC: AddSceneCellDelegate {
-    func addNewTakeButtonPressed() {
-        print("Add new take button pressed")
+    func addNewTakeButtonPressed(insideAuditionScene auditionScene: Int) {
+        for i in 0..<self.auditionScenes.count {
+            if self.auditionScenes[i].sceneNumber == auditionScene {
+                self.auditionScenes[i].sceneTakes.append("")
+            }
+        }
+        updateCollectionViewState()
     }
 }
 
 // footer delegate methods
 extension AddProjectScenesVC: AddNewSceneFooterViewDelegate {
     func addNewSceneButtonPressed() {
-        self.scenes.append("")
+        let auditionScene = AuditionScene(sceneNumber: auditionScenes.count + 1, sceneTakes: [])
+        self.auditionScenes.append(auditionScene)
     }
 }

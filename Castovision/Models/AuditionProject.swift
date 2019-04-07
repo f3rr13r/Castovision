@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Scene {
+struct AuditionScene {
     var sceneNumber: Int
-    var takes: [Int]
+    var sceneTakes: [String]
 }
