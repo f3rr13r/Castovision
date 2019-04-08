@@ -8,27 +8,35 @@
 
 import UIKit
 
+private let sceneHeaderCellId: String = "sceneHeaderCellId"
 private let projectSceneCellId: String = "projectSceneCellId"
-private let addNewSceneFooterId: String = "addNewSceneFooterId"
+private let sceneFooterCellId: String = "sceneFooterCellId"
+private let extendedSceneFooterCellId: String = "extendedSceneFooterCellId"
 
 class AddProjectScenesVC: UIViewController {
-
     lazy var projectScenesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.estimatedItemSize = CGSize(width: screenWidth - (horizontalPadding * 2), height: 10.0)
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.delegate = self
         cv.dataSource = self
-        cv.register(AddSceneCell.self, forCellWithReuseIdentifier: projectSceneCellId)
-        cv.register(AddNewSceneFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: addNewSceneFooterId)
+        cv.contentInsetAdjustmentBehavior = .never
+        cv.register(SceneHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: sceneHeaderCellId)
+        cv.register(SceneCell.self, forCellWithReuseIdentifier: projectSceneCellId)
+        cv.register(AddNewSceneTakeFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: sceneFooterCellId)
+        cv.register(ExpandedAddNewSceneFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: extendedSceneFooterCellId)
         return cv
     }()
     
     let saveProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save Project", buttonColour: UIColor.red, isDisabled: true)
     
     // variables
-    var auditionScenes: [AuditionScene] = [] {
+    var auditionScenes: [AuditionScene] = [
+            AuditionScene(
+                sceneNumber: 1,
+                sceneTakes: []
+            )
+        ] {
         didSet {
             updateCollectionViewState()
         }
@@ -36,6 +44,7 @@ class AddProjectScenesVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        edgesForExtendedLayout = []
         self.view.backgroundColor = .white
         self.configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
         anchorSubviews()
@@ -44,8 +53,8 @@ class AddProjectScenesVC: UIViewController {
     func updateCollectionViewState() {
         self.projectScenesCollectionView.reloadData()
         self.projectScenesCollectionView.invalidateIntrinsicContentSize()
-        DispatchQueue.main.async {
-            self.projectScenesCollectionView.scrollToItem(at: IndexPath(item: self.auditionScenes.count - 1, section: 0), at: .bottom, animated: true)
+        DispatchQueue.main.async {            
+            self.projectScenesCollectionView.scrollToBottomSection()
         }
     }
     
@@ -58,68 +67,105 @@ class AddProjectScenesVC: UIViewController {
     }
 }
 
-// collection view datasource, delegate and delegate flow layout methods
-extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.auditionScenes.count
+// collection view datasource, delegate methods
+extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelegate {
+    // number of sections (scenes)
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return auditionScenes.count
     }
     
+    // number of takes in each scene
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return auditionScenes[section].sceneTakes.count
+    }
+    
+    // scene cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sceneCell = collectionView.dequeueReusableCell(withReuseIdentifier: projectSceneCellId, for: indexPath) as? AddSceneCell else {
+        guard let sceneCell = collectionView.dequeueReusableCell(withReuseIdentifier: projectSceneCellId, for: indexPath) as? SceneCell else {
             return UICollectionViewCell()
         }
-        sceneCell.setupSceneCell(withAuditionScene: auditionScenes[indexPath.item])
-        sceneCell.delegate = self
         return sceneCell
     }
     
-    func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
+    // scene header and footer (including add new scene if expanded)
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        if kind == UICollectionView.elementKindSectionFooter {
-            guard let footer = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: addNewSceneFooterId, for: indexPath) as? AddNewSceneFooterView else {
+        // kind of 'header'
+        if kind == UICollectionView.elementKindSectionHeader {
+            guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sceneHeaderCellId, for: indexPath) as? SceneHeaderView else {
                 return UICollectionReusableView()
             }
-            
-            footer.delegate = self
-            return footer
+            headerView.configureSceneView(withSceneNumber: auditionScenes[indexPath.section].sceneNumber)
+            return headerView
         }
         
-        return UICollectionReusableView()
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        let bottomEdgeInset: CGFloat = self.auditionScenes.count == 0 ? 0.0 : 20.0
-        return UIEdgeInsets(top: 20.0, left: 0.0, bottom: bottomEdgeInset, right: 0.0)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20.0
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        return CGSize(width: screenWidth - (horizontalPadding * 2), height: 50.0)
-    }
-}
-
-// scene cell delegate methods
-extension AddProjectScenesVC: AddSceneCellDelegate {
-    func addNewTakeButtonPressed(insideAuditionScene auditionScene: Int) {
-        for i in 0..<self.auditionScenes.count {
-            if self.auditionScenes[i].sceneNumber == auditionScene {
-                self.auditionScenes[i].sceneTakes.append("")
+        // kind of 'footer'
+        if kind == UICollectionView.elementKindSectionFooter {
+            if indexPath.section == (auditionScenes.count - 1) {
+                // expandable footer
+                guard let expandableFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: extendedSceneFooterCellId, for: indexPath) as? ExpandedAddNewSceneFooterView else {
+                        return UICollectionReusableView()
+                    }
+                expandableFooter.configureSceneFooterView(withSceneNumber: self.auditionScenes[indexPath.section].sceneNumber)
+                expandableFooter.delegate = self
+                return expandableFooter
+            } else {
+               // default footer
+                guard let defaultFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sceneFooterCellId, for: indexPath) as? AddNewSceneTakeFooterView else {
+                        return UICollectionReusableView()
+                }
+                defaultFooter.configureSceneFooterView(withSceneNumber: self.auditionScenes[indexPath.section].sceneNumber)
+                defaultFooter.delegate = self
+                return defaultFooter
             }
         }
-        updateCollectionViewState()
+        
+        // if neither then something has gone wrong so let's just
+        // send back an empty default reusable view
+        return UICollectionReusableView()
     }
 }
 
-// footer delegate methods
-extension AddProjectScenesVC: AddNewSceneFooterViewDelegate {
-    func addNewSceneButtonPressed() {
-        let auditionScene = AuditionScene(sceneNumber: auditionScenes.count + 1, sceneTakes: [])
-        self.auditionScenes.append(auditionScene)
+// collection view inset and element sizing methods
+extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
+    
+    // section insets
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+    }
+    
+    // header size
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: sceneHeaderViewWidth, height: sceneHeaderViewHeight)
+    }
+    
+    // cell size
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: projectSceneCellContentWidth, height: projectSceneCellContentHeight)
+    }
+    
+    // section cell spacing
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    // footer sizes
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        if section == (auditionScenes.count - 1) {
+            return CGSize(width: expandedAddNewSceneFooterViewWidth, height: expandedAddNewSceneFooterViewHeight)
+        } else {
+            return CGSize(width: addNewSceneTakeFooterViewWidth, height: addNewSceneTakeFooterViewHeight)
+        }
+    }
+}
+
+// cell footers delegate methods
+extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewSceneTakeFooterViewDelegate {
+    func addNewSceneTake(forSceneNumber sceneNumber: Int) {
+        self.auditionScenes[sceneNumber - 1].sceneTakes.append("")
+    }
+    
+    func addNewScene() {
+        let newScene = AuditionScene(sceneNumber: auditionScenes.count + 1, sceneTakes: [])
+        auditionScenes.append(newScene)
     }
 }
