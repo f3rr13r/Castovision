@@ -62,9 +62,14 @@ class SignupVC: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         handleChildDelegates()
         anchorSubviews()
     }

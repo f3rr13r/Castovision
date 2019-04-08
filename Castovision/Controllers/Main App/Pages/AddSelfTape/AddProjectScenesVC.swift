@@ -42,10 +42,15 @@ class AddProjectScenesVC: UIViewController {
         }
     }
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
         anchorSubviews()
     }
@@ -161,7 +166,9 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
 // cell footers delegate methods
 extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewSceneTakeFooterViewDelegate {
     func addNewSceneTake(forSceneNumber sceneNumber: Int) {
-        self.auditionScenes[sceneNumber - 1].sceneTakes.append("")
+        let videoCameraVC = VideoCameraVC(sceneNumber: sceneNumber)
+        let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: videoCameraVC)
+        self.present(videoFilmingNavigationVC, animated: true, completion: nil)
     }
     
     func addNewScene() {

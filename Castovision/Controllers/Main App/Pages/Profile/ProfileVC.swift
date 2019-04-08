@@ -10,8 +10,13 @@ import UIKit
 
 class ProfileVC: UIViewController {
 
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Profile", withSearchBar: false)
     }
 }

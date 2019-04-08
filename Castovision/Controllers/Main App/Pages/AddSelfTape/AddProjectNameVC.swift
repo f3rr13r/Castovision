@@ -23,9 +23,14 @@ class AddProjectNameVC: UIViewController {
     
     let nextButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Next", buttonColour: UIColor.red, isDisabled: true)
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Project Name", withSearchBar: false)
         anchorSubviews()
         handleChildDelegates()

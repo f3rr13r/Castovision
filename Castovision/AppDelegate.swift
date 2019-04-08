@@ -13,7 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var navigationController: UINavigationController?
-
+    
+    var orientation: UIInterfaceOrientationMask = .portrait
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupInitialEntryVC()
@@ -35,7 +36,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // set the initial view controller of the window as the navigation controller, then present it
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        
+    }
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return orientation
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

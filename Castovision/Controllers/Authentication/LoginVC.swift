@@ -36,9 +36,14 @@ class LoginVC: UIViewController {
     
     let logInButton = MainActionButton(buttonUseType: .logIn, buttonTitle: "Log In", buttonColour: UIColor.red, isDisabled: true)
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         handleChildDelegates()
         anchorSubviews()
     }

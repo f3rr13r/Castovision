@@ -24,9 +24,14 @@ class AddProjectPasswordVC: UIViewController {
     
     let createProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Create Project", buttonColour: UIColor.red, isDisabled: true)
     
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Project Password", withSearchBar: false)
         anchorSubviews()
         handleChildDelegates()

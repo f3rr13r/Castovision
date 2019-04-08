@@ -28,4 +28,22 @@ extension UINavigationController {
         self.pushViewController(mainAppNavigationVC, animated: false)
     }
     
+    /*--
+     filming camera navigation VC stuff
+    --*/
+    func lockNavigtaionDeviceHorizontally() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.updateDeviceOrientation(toOrientation: .landscapeRight)
+    }
+    
+    func lockNavigationDeviceVertically() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.updateDeviceOrientation(toOrientation: .portrait)
+        
+    }
+    
+    func dismissVideoFilmingNavigationVC() {
+        self.lockNavigationDeviceVertically()
+        self.dismiss(animated: true, completion: nil)
+    }
 }

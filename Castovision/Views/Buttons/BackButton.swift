@@ -18,7 +18,7 @@ class BackButton: UIButton {
     let backArrowIcon: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = #imageLiteral(resourceName: "back-arrow-icon")
+        iv.image = #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysTemplate)
         return iv
     }()
     
@@ -37,7 +37,7 @@ class BackButton: UIButton {
     
     func anchorSubviews() {
         addSubview(backArrowIcon)
-        backArrowIcon.anchor(withTopAnchor: nil, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: centerYAnchor, widthAnchor: 12.0, heightAnchor: 20.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
+        backArrowIcon.anchor(withTopAnchor: nil, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: centerYAnchor, widthAnchor: 22.0, heightAnchor: 22.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
     }
 }
 

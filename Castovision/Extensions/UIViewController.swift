@@ -32,4 +32,14 @@ extension UIViewController {
             self.navigationItem.hidesSearchBarWhenScrolling = true
         }
     }
+    
+    func lockScreenHorizontally() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.updateDeviceOrientation(toOrientation: .landscapeRight)
+    }
+    
+    func lockDeviceVertically() {        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.updateDeviceOrientation(toOrientation: .portrait)
+    }
 }

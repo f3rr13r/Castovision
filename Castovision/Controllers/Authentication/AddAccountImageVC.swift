@@ -95,10 +95,15 @@ class AddAccountImageVC: UIViewController {
             }
         }
     }
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         checkCameraUsagePermissionState()
         handleChildDelegates()
         anchorSubviews()

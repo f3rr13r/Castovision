@@ -12,9 +12,14 @@ private let reuseIdentifier = "Cell"
 
 class FeedVC: UICollectionViewController {
 
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
+        lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Feed", withSearchBar: true)
         self.configureCollectionView()
     }

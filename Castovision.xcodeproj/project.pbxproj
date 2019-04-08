@@ -32,6 +32,8 @@
 		4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */; };
 		4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */; };
 		4A56CED9224E855D008493CB /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED8224E855D008493CB /* NotificationName.swift */; };
+		4A67BC60225BE23500939469 /* videotest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC5F225BE23500939469 /* videotest.swift */; };
+		4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC61225C009000939469 /* AppDelegateHelper.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
@@ -41,6 +43,8 @@
 		4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E26224D9054004EFA90 /* BaseImageView.swift */; };
 		4A799E2C224D921E004EFA90 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E2B224D921E004EFA90 /* UIView.swift */; };
 		4A8F5BFB225BAD4400C4FF8B /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */; };
+		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
+		4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */; };
 		4AF6CD96225A5D7600F3AF87 /* AddNewSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */; };
 		4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */; };
 		4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */; };
@@ -50,6 +54,7 @@
 		4AFB2B6E225617F200F99B16 /* SceneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6D225617F200F99B16 /* SceneCell.swift */; };
 		4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6F22561F7C00F99B16 /* Colours.swift */; };
 		4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */; };
+		6D29D7BDBD20C09F45A2F57E /* Pods_Castovision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5E4DB163392FF55AB82CE60 /* Pods_Castovision.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +83,8 @@
 		4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountImageVC.swift; sourceTree = "<group>"; };
 		4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
 		4A56CED8224E855D008493CB /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
+		4A67BC5F225BE23500939469 /* videotest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videotest.swift; sourceTree = "<group>"; };
+		4A67BC61225C009000939469 /* AppDelegateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateHelper.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -89,6 +96,8 @@
 		4A799E26224D9054004EFA90 /* BaseImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseImageView.swift; sourceTree = "<group>"; };
 		4A799E2B224D921E004EFA90 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
+		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
+		4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFilmingNavigationVC.swift; sourceTree = "<group>"; };
 		4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneView.swift; sourceTree = "<group>"; };
 		4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedAddNewSceneFooterView.swift; sourceTree = "<group>"; };
 		4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneTakeView.swift; sourceTree = "<group>"; };
@@ -98,6 +107,9 @@
 		4AFB2B6D225617F200F99B16 /* SceneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCell.swift; sourceTree = "<group>"; };
 		4AFB2B6F22561F7C00F99B16 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditionProject.swift; sourceTree = "<group>"; };
+		894BB2364F495CF9DF7282EB /* Pods-Castovision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Castovision.release.xcconfig"; path = "Pods/Target Support Files/Pods-Castovision/Pods-Castovision.release.xcconfig"; sourceTree = "<group>"; };
+		89B353886499D7F86AF133AD /* Pods-Castovision.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Castovision.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Castovision/Pods-Castovision.debug.xcconfig"; sourceTree = "<group>"; };
+		F5E4DB163392FF55AB82CE60 /* Pods_Castovision.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Castovision.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +117,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6D29D7BDBD20C09F45A2F57E /* Pods_Castovision.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -133,6 +146,7 @@
 		4A36DBC52253B32B00F76E1B /* AddSelfTape */ = {
 			isa = PBXGroup;
 			children = (
+				4A8F5BFE225BD7D600C4FF8B /* FilmingSelfTape */,
 				4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */,
 				4A36DBC82253B3EA00F76E1B /* AddProjectPasswordVC.swift */,
 				4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */,
@@ -161,6 +175,8 @@
 			children = (
 				4A799E07224D899D004EFA90 /* Castovision */,
 				4A799E06224D899D004EFA90 /* Products */,
+				DA3226E6FC7C159B4A9C4190 /* Pods */,
+				C6D4BA0B8AEF77D0808AAF07 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,6 +279,7 @@
 				4A36DBBF22537CDC00F76E1B /* UINavigationController.swift */,
 				4A36DBC3225394D700F76E1B /* UIViewController.swift */,
 				4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */,
+				4A67BC61225C009000939469 /* AppDelegateHelper.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -272,6 +289,16 @@
 			children = (
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		4A8F5BFE225BD7D600C4FF8B /* FilmingSelfTape */ = {
+			isa = PBXGroup;
+			children = (
+				4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */,
+				4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */,
+				4A67BC5F225BE23500939469 /* videotest.swift */,
+			);
+			path = FilmingSelfTape;
 			sourceTree = "<group>";
 		};
 		4AFB2B672256168000F99B16 /* Cells */ = {
@@ -314,6 +341,23 @@
 			path = CollectionReusableViews;
 			sourceTree = "<group>";
 		};
+		C6D4BA0B8AEF77D0808AAF07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F5E4DB163392FF55AB82CE60 /* Pods_Castovision.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DA3226E6FC7C159B4A9C4190 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				89B353886499D7F86AF133AD /* Pods-Castovision.debug.xcconfig */,
+				894BB2364F495CF9DF7282EB /* Pods-Castovision.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -321,9 +365,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4A799E17224D89A1004EFA90 /* Build configuration list for PBXNativeTarget "Castovision" */;
 			buildPhases = (
+				11EAA9BC95493B1787E42C68 /* [CP] Check Pods Manifest.lock */,
 				4A799E01224D899D004EFA90 /* Sources */,
 				4A799E02224D899D004EFA90 /* Frameworks */,
 				4A799E03224D899D004EFA90 /* Resources */,
+				C48CC855FAAF9BBC8FF60970 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -380,6 +426,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		11EAA9BC95493B1787E42C68 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Castovision-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		C48CC855FAAF9BBC8FF60970 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-Castovision/Pods-Castovision-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Castovision/Pods-Castovision-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		4A799E01224D899D004EFA90 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -388,6 +473,7 @@
 				4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */,
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */,
+				4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */,
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
 				4A56CED9224E855D008493CB /* NotificationName.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
@@ -396,6 +482,7 @@
 				4AFB2B6C225616F900F99B16 /* AddNewSceneTakeFooterView.swift in Sources */,
 				4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
+				4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */,
 				4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */,
@@ -409,11 +496,13 @@
 				4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */,
 				4A36DBC4225394D700F76E1B /* UIViewController.swift in Sources */,
 				4AFB2B6E225617F200F99B16 /* SceneCell.swift in Sources */,
+				4A67BC60225BE23500939469 /* videotest.swift in Sources */,
 				4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
 				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
 				4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */,
 				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
+				4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */,
 				4A36DBCD2253BD8500F76E1B /* BaseCell.swift in Sources */,
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
@@ -561,6 +650,7 @@
 		};
 		4A799E18224D89A1004EFA90 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 89B353886499D7F86AF133AD /* Pods-Castovision.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -579,6 +669,7 @@
 		};
 		4A799E19224D89A1004EFA90 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 894BB2364F495CF9DF7282EB /* Pods-Castovision.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;

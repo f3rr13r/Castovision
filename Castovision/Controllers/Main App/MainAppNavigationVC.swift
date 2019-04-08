@@ -26,10 +26,12 @@ class MainAppNavigationVC: UITabBarController {
         self.tabBar.unselectedItemTintColor = UIColor.init(red: 211/255, green: 211/255, blue: 211/255, alpha: 1.0)
         
         let feedNavigationVC = configureNavigationController(withRootViewController: feedVC, tabBarItemTitle: "Feed", tabBarItemImageName: "tab-bar-home-icon", searchBarNeeds: true, andTagValue: 0)
+        feedNavigationVC.lockNavigationDeviceVertically()
         
         let createTapeNavigationVC = configureNavigationController(withRootViewController: createTapeVC, tabBarItemTitle: "Add Self-tape", tabBarItemImageName: "tab-bar-camera-icon", searchBarNeeds: false, andTagValue: 1)
         
         let profileNavigationVC = configureNavigationController(withRootViewController: profileVC, tabBarItemTitle: "Profile", tabBarItemImageName: "tab-bar-profile-icon", searchBarNeeds: false, andTagValue: 2)
+        profileNavigationVC.lockNavigationDeviceVertically()
         
         let navigationControllersList: [UINavigationController] = [feedNavigationVC, createTapeNavigationVC, profileNavigationVC]
         self.viewControllers = navigationControllersList
