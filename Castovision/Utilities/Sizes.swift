@@ -23,7 +23,6 @@ let safeAreaScreenHeight: CGFloat = screenHeight - (safeAreaTopPadding + safeAre
 let horizontalPadding: CGFloat = 20.0
 
 // specific custom sizing
-
 let feedCellWidth: CGFloat = screenWidth - (horizontalPadding * 2.0)
 let feedCellHeight: CGFloat = screenWidth * 0.6
 
@@ -50,3 +49,6 @@ let addNewSceneTakeFooterViewHeight = addNewSceneTakeViewHeight
 
 let expandedAddNewSceneFooterViewWidth = projectSceneCellContentWidth
 let expandedAddNewSceneFooterViewHeight = addNewSceneTakeViewHeight + 20.0 + addNewSceneViewHeight
+
+let trimmerViewWidth: CGFloat = (screenWidth - (safeAreaTopPadding + safeAreaBottomPadding + 10.0))
+let trimmerViewHeight: CGFloat = 60.0

@@ -34,6 +34,9 @@
 		4A56CED9224E855D008493CB /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED8224E855D008493CB /* NotificationName.swift */; };
 		4A67BC60225BE23500939469 /* videotest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC5F225BE23500939469 /* videotest.swift */; };
 		4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC61225C009000939469 /* AppDelegateHelper.swift */; };
+		4A67BC64225CAC2B00939469 /* EditSceneTakeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */; };
+		4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */; };
+		4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC68225D0CC600939469 /* SelfTapeProject.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
@@ -85,6 +88,9 @@
 		4A56CED8224E855D008493CB /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
 		4A67BC5F225BE23500939469 /* videotest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videotest.swift; sourceTree = "<group>"; };
 		4A67BC61225C009000939469 /* AppDelegateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateHelper.swift; sourceTree = "<group>"; };
+		4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSceneTakeVC.swift; sourceTree = "<group>"; };
+		4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelfTapeService.swift; sourceTree = "<group>"; };
+		4A67BC68225D0CC600939469 /* SelfTapeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfTapeProject.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -231,6 +237,7 @@
 			children = (
 				4A56CEBA224DAD79008493CB /* MainActionButtonType.swift */,
 				4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */,
+				4A67BC68225D0CC600939469 /* SelfTapeProject.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -287,6 +294,7 @@
 		4A799E2A224D920C004EFA90 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -297,6 +305,7 @@
 				4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */,
 				4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */,
 				4A67BC5F225BE23500939469 /* videotest.swift */,
+				4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */,
 			);
 			path = FilmingSelfTape;
 			sourceTree = "<group>";
@@ -453,10 +462,12 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Castovision/Pods-Castovision-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
+				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -472,6 +483,7 @@
 			files = (
 				4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */,
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
+				4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */,
 				4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */,
 				4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */,
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
@@ -480,6 +492,7 @@
 				4AF6CD9C225A65B200F3AF87 /* SceneHeaderView.swift in Sources */,
 				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
 				4AFB2B6C225616F900F99B16 /* AddNewSceneTakeFooterView.swift in Sources */,
+				4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */,
 				4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
 				4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */,
@@ -512,6 +525,7 @@
 				4A36DBCF2253C44300F76E1B /* BaseReusableView.swift in Sources */,
 				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
 				4A56CED3224E6255008493CB /* Fonts.swift in Sources */,
+				4A67BC64225CAC2B00939469 /* EditSceneTakeVC.swift in Sources */,
 				4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */,
 				4A8F5BFB225BAD4400C4FF8B /* UICollectionView.swift in Sources */,
 				4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */,
