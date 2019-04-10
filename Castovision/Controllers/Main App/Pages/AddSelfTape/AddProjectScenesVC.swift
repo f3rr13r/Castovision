@@ -28,8 +28,6 @@ class AddProjectScenesVC: UIViewController {
         return cv
     }()
     
-    let saveProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save Project", buttonColour: UIColor.red, isDisabled: true)
-    
     // variables
     var needsScrollingAnimation: Bool = false
     var selfTapeProject: Project = Project() {
@@ -48,6 +46,7 @@ class AddProjectScenesVC: UIViewController {
         self.view.backgroundColor = .white
         lockDeviceVertically()
         configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
+        addNavigationRightButton()
         anchorSubviews()
     }
     
@@ -73,12 +72,18 @@ class AddProjectScenesVC: UIViewController {
         }
     }
     
+    func addNavigationRightButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveSelfTapeProject))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+    }
+
     func anchorSubviews() {
-        self.view.addSubview(saveProjectButton)
-        saveProjectButton.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 50.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: -20.0, right: -horizontalPadding))
-        
         self.view.addSubview(projectScenesCollectionView)
-        projectScenesCollectionView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: saveProjectButton.topAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: -20.0, right: -horizontalPadding))
+        projectScenesCollectionView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
+    }
+    
+    @objc func saveSelfTapeProject() {
+        
     }
 }
 
@@ -106,9 +111,11 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
             return UICollectionViewCell()
         }
         if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item] {
+            /*-- configure the cell --*/
             sceneCell.configureCell(withTake: sceneTake)
             sceneCell.delegate = self
         }
+        
         return sceneCell
     }
     
@@ -202,19 +209,22 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
 }
 
 extension AddProjectScenesVC: SceneTakeCellDelegate {
-    func deleteTakeButtonPressed(withTake: Take) {
-        showPopUpAlertView()
+    func deleteTake(take: Take) {
+        showDeleteTakePopUpAlertView(withTake: take)
     }
-    
-    func showPopUpAlertView() {
-        let deleteTakeConfirmationAlert = UIAlertController(title: "Delete Take?", message: "Do you want to delete this take? This action is permenant, and cannot be undone", preferredStyle: .actionSheet)
+
+    func showDeleteTakePopUpAlertView(withTake take: Take) {
+        let deleteTakeConfirmationAlert = UIAlertController(title: nil, message: "Do you want to delete this take? This action is permenant, and cannot be undone", preferredStyle: .actionSheet)
         
         let deleteTakeOption = UIAlertAction(title: "Delete Take", style: .default) { (deleteTakeOptionClicked) in
-            
+            AddSelfTapeService.instance.deleteSceneTake(withValue: take, completion: { (updatedSelfTapeProject) in
+                print(updatedSelfTapeProject)
+                self.selfTapeProject = updatedSelfTapeProject
+            })
         }
         deleteTakeOption.setValue(UIColor.red, forKey: "titleTextColor")
         
-        let cancelOption = UIAlertAction(title: "No Thanks", style: .default) { (cancelOptionClicked) in
+        let cancelOption = UIAlertAction(title: "No Thanks", style: .cancel) { (cancelOptionClicked) in
             deleteTakeConfirmationAlert.dismiss(animated: true, completion: nil)
         }
         cancelOption.setValue(UIColor.black, forKey: "titleTextColor")

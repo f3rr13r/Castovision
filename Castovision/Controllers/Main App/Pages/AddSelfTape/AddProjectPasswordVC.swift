@@ -33,8 +33,19 @@ class AddProjectPasswordVC: UIViewController {
         self.view.backgroundColor = .white
         lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Project Password", withSearchBar: false)
+        addNavigationRightButton()
         anchorSubviews()
         handleChildDelegates()
+    }
+    
+    func addNavigationRightButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(saveSelfTapeProject))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+    }
+    
+    @objc func saveSelfTapeProject() {
+        let addProjectScenesVC = AddProjectScenesVC()
+        self.navigationController?.pushViewController(addProjectScenesVC, animated: true)
     }
     
     func anchorSubviews() {
@@ -52,14 +63,6 @@ class AddProjectPasswordVC: UIViewController {
     }
     
     func handleChildDelegates() {
-        createProjectButton.delegate = self
-    }
-}
-
-// delegate methods
-extension AddProjectPasswordVC: MainActionButtonDelegate {
-    func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
-        let addProjectScenesVC = AddProjectScenesVC()
-        self.navigationController?.pushViewController(addProjectScenesVC, animated: true)
+        
     }
 }

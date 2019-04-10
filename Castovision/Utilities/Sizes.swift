@@ -48,7 +48,7 @@ let addNewSceneTakeFooterViewWidth = addNewSceneTakeViewWidth
 let addNewSceneTakeFooterViewHeight = addNewSceneTakeViewHeight
 
 let expandedAddNewSceneFooterViewWidth = projectSceneCellContentWidth
-let expandedAddNewSceneFooterViewHeight = addNewSceneTakeViewHeight + 20.0 + addNewSceneViewHeight
+let expandedAddNewSceneFooterViewHeight = addNewSceneTakeViewHeight + 20.0 + addNewSceneViewHeight + 20.0
 
 let trimmerViewWidth: CGFloat = (screenWidth - (safeAreaTopPadding + safeAreaBottomPadding + 10.0))
 let trimmerViewHeight: CGFloat = 60.0

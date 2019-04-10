@@ -21,8 +21,6 @@ class AddProjectNameVC: UIViewController {
     
     let auditionNameInputView = CustomInputView(inputType: .projectName)
     
-    let nextButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Next", buttonColour: UIColor.red, isDisabled: true)
-    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -32,8 +30,19 @@ class AddProjectNameVC: UIViewController {
         self.view.backgroundColor = .white
         lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Project Name", withSearchBar: false)
+        addNavigationRightButton()
         anchorSubviews()
         handleChildDelegates()
+    }
+    
+    func addNavigationRightButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(saveSelfTapeProject))
+        self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+    }
+    
+    @objc func saveSelfTapeProject() {
+        let addProjectPasswordVC = AddProjectPasswordVC()
+        self.navigationController?.pushViewController(addProjectPasswordVC, animated: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,20 +56,9 @@ class AddProjectNameVC: UIViewController {
         
         self.view.addSubview(auditionNameInputView)
         auditionNameInputView.anchor(withTopAnchor: instructionLabel.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
-        
-        self.view.addSubview(nextButton)
-        nextButton.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 50.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: -20.0, right: -horizontalPadding))
     }
     
     func handleChildDelegates() {
-        nextButton.delegate = self
-    }
-}
-
-// delegate methods
-extension AddProjectNameVC: MainActionButtonDelegate {
-    func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
-        let addProjectPasswordVC = AddProjectPasswordVC()
-        self.navigationController?.pushViewController(addProjectPasswordVC, animated: true)
+        // do stuff here
     }
 }

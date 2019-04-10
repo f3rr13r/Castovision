@@ -19,13 +19,15 @@ class AddNewSceneView: BaseView {
     let plusIconImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = #imageLiteral(resourceName: "add-icon")
+        iv.image = #imageLiteral(resourceName: "add-icon").withRenderingMode(.alwaysTemplate)
+        iv.tintColor = .red
         return iv
     }()
     let addNewSceneLabel: UILabel = {
         let label = UILabel()
         label.text = "Add New Scene"
-        label.textColor = .black
+        //label.textColor = .black
+        label.textColor = .red
         label.font = defaultButtonFont
         return label
     }()
@@ -35,8 +37,10 @@ class AddNewSceneView: BaseView {
     
     override func setupView() {
         super.setupView()
-        backgroundColor = grey
+        //backgroundColor = grey
         layer.cornerRadius = 6.0
+        layer.borderColor = UIColor.red.cgColor
+        layer.borderWidth = 2.0
         setupTapGestureRecognizer()
         anchorSubviews()
     }

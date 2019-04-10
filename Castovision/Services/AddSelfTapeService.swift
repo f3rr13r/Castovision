@@ -58,7 +58,7 @@ class AddSelfTapeService {
                             let currentTakeVideoThumbnail = sceneTakes[takeIndex].videoThumbnailUrl,
                             sceneTakes[takeIndex].videoThumbnailUrl == videoThumbnailOfTakeToDelete {
                             if videoThumbnailOfTakeToDelete == currentTakeVideoThumbnail {
-                                sceneTakes.remove(at: takeIndex)
+                                _selfTapeProject.scenes?[sceneIndex].takes?.remove(at: takeIndex)
                                 completion(_selfTapeProject)
                             }
                         }
