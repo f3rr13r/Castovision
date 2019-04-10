@@ -9,7 +9,7 @@
 import UIKit
 
 private let sceneHeaderCellId: String = "sceneHeaderCellId"
-private let projectSceneCellId: String = "projectSceneCellId"
+private let projectSceneTakeCellId: String = "projectSceneCellId"
 private let sceneFooterCellId: String = "sceneFooterCellId"
 private let extendedSceneFooterCellId: String = "extendedSceneFooterCellId"
 
@@ -22,7 +22,7 @@ class AddProjectScenesVC: UIViewController {
         cv.dataSource = self
         cv.contentInsetAdjustmentBehavior = .never
         cv.register(SceneHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: sceneHeaderCellId)
-        cv.register(SceneCell.self, forCellWithReuseIdentifier: projectSceneCellId)
+        cv.register(SceneTakeCell.self, forCellWithReuseIdentifier: projectSceneTakeCellId)
         cv.register(AddNewSceneTakeFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: sceneFooterCellId)
         cv.register(ExpandedAddNewSceneFooterView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: extendedSceneFooterCellId)
         return cv
@@ -31,10 +31,10 @@ class AddProjectScenesVC: UIViewController {
     let saveProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save Project", buttonColour: UIColor.red, isDisabled: true)
     
     // variables
-    var isInitialProjectLoad: Bool = true
+    var needsScrollingAnimation: Bool = false
     var selfTapeProject: Project = Project() {
         didSet {
-            updateCollectionViewState(withScrollingAnimation: !isInitialProjectLoad)
+            updateCollectionViewState()
         }
     }
     
@@ -58,15 +58,15 @@ class AddProjectScenesVC: UIViewController {
     
     func getCurrentSelfTapeProject() {
         AddSelfTapeService.instance.getUpdatedSelfTapeProject { (updatedProject) in
+            self.needsScrollingAnimation = false
             self.selfTapeProject = updatedProject
-            self.isInitialProjectLoad = false
         }
     }
     
-    func updateCollectionViewState(withScrollingAnimation needsScrollingAnimation: Bool) {
+    func updateCollectionViewState() {
         self.projectScenesCollectionView.reloadData()
         self.projectScenesCollectionView.invalidateIntrinsicContentSize()
-        if needsScrollingAnimation {
+        if self.needsScrollingAnimation {
             DispatchQueue.main.async {
                 self.projectScenesCollectionView.scrollToBottomSection()
             }
@@ -102,8 +102,12 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
     
     // scene cell
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let sceneCell = collectionView.dequeueReusableCell(withReuseIdentifier: projectSceneCellId, for: indexPath) as? SceneCell else {
+        guard let sceneCell = collectionView.dequeueReusableCell(withReuseIdentifier: projectSceneTakeCellId, for: indexPath) as? SceneTakeCell else {
             return UICollectionViewCell()
+        }
+        if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item] {
+            sceneCell.configureCell(withTake: sceneTake)
+            sceneCell.delegate = self
         }
         return sceneCell
     }
@@ -197,6 +201,31 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension AddProjectScenesVC: SceneTakeCellDelegate {
+    func deleteTakeButtonPressed(withTake: Take) {
+        showPopUpAlertView()
+    }
+    
+    func showPopUpAlertView() {
+        let deleteTakeConfirmationAlert = UIAlertController(title: "Delete Take?", message: "Do you want to delete this take? This action is permenant, and cannot be undone", preferredStyle: .actionSheet)
+        
+        let deleteTakeOption = UIAlertAction(title: "Delete Take", style: .default) { (deleteTakeOptionClicked) in
+            
+        }
+        deleteTakeOption.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        let cancelOption = UIAlertAction(title: "No Thanks", style: .default) { (cancelOptionClicked) in
+            deleteTakeConfirmationAlert.dismiss(animated: true, completion: nil)
+        }
+        cancelOption.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        deleteTakeConfirmationAlert.addAction(deleteTakeOption)
+        deleteTakeConfirmationAlert.addAction(cancelOption)
+        
+        self.present(deleteTakeConfirmationAlert, animated: true, completion: nil)
+    }
+}
+
 // cell footers delegate methods
 extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewSceneTakeFooterViewDelegate {
     func addNewSceneTake(forSceneNumber sceneNumber: Int) {
@@ -207,6 +236,7 @@ extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewScene
     
     func addNewScene() {
         AddSelfTapeService.instance.addNewProjectScene { (updatedSelfTapeProject) in
+            self.needsScrollingAnimation = true
             self.selfTapeProject = updatedSelfTapeProject
         }
     }

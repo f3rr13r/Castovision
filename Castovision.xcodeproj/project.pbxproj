@@ -32,11 +32,12 @@
 		4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */; };
 		4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */; };
 		4A56CED9224E855D008493CB /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED8224E855D008493CB /* NotificationName.swift */; };
-		4A67BC60225BE23500939469 /* videotest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC5F225BE23500939469 /* videotest.swift */; };
 		4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC61225C009000939469 /* AppDelegateHelper.swift */; };
 		4A67BC64225CAC2B00939469 /* EditSceneTakeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */; };
 		4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */; };
 		4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC68225D0CC600939469 /* SelfTapeProject.swift */; };
+		4A67BC6B225E052200939469 /* TakeSavedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6A225E052200939469 /* TakeSavedModal.swift */; };
+		4A67BC6E225E0E8400939469 /* VideoThumbnailGeneratorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6D225E0E8400939469 /* VideoThumbnailGeneratorService.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
 		4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E0F224D89A1004EFA90 /* Assets.xcassets */; };
 		4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */; };
@@ -54,7 +55,7 @@
 		4AF6CD9C225A65B200F3AF87 /* SceneHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD9B225A65B200F3AF87 /* SceneHeaderView.swift */; };
 		4AFB2B66225535F600F99B16 /* AddProjectScenesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */; };
 		4AFB2B6C225616F900F99B16 /* AddNewSceneTakeFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6B225616F900F99B16 /* AddNewSceneTakeFooterView.swift */; };
-		4AFB2B6E225617F200F99B16 /* SceneCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6D225617F200F99B16 /* SceneCell.swift */; };
+		4AFB2B6E225617F200F99B16 /* SceneTakeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6D225617F200F99B16 /* SceneTakeCell.swift */; };
 		4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B6F22561F7C00F99B16 /* Colours.swift */; };
 		4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */; };
 		6D29D7BDBD20C09F45A2F57E /* Pods_Castovision.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5E4DB163392FF55AB82CE60 /* Pods_Castovision.framework */; };
@@ -86,11 +87,12 @@
 		4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountImageVC.swift; sourceTree = "<group>"; };
 		4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
 		4A56CED8224E855D008493CB /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
-		4A67BC5F225BE23500939469 /* videotest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = videotest.swift; sourceTree = "<group>"; };
 		4A67BC61225C009000939469 /* AppDelegateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateHelper.swift; sourceTree = "<group>"; };
 		4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSceneTakeVC.swift; sourceTree = "<group>"; };
 		4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelfTapeService.swift; sourceTree = "<group>"; };
 		4A67BC68225D0CC600939469 /* SelfTapeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfTapeProject.swift; sourceTree = "<group>"; };
+		4A67BC6A225E052200939469 /* TakeSavedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeSavedModal.swift; sourceTree = "<group>"; };
+		4A67BC6D225E0E8400939469 /* VideoThumbnailGeneratorService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoThumbnailGeneratorService.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4A799E08224D899D004EFA90 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4A799E0F224D89A1004EFA90 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -110,7 +112,7 @@
 		4AF6CD9B225A65B200F3AF87 /* SceneHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneHeaderView.swift; sourceTree = "<group>"; };
 		4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectScenesVC.swift; sourceTree = "<group>"; };
 		4AFB2B6B225616F900F99B16 /* AddNewSceneTakeFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneTakeFooterView.swift; sourceTree = "<group>"; };
-		4AFB2B6D225617F200F99B16 /* SceneCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCell.swift; sourceTree = "<group>"; };
+		4AFB2B6D225617F200F99B16 /* SceneTakeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTakeCell.swift; sourceTree = "<group>"; };
 		4AFB2B6F22561F7C00F99B16 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		4AFB2B7122564ADA00F99B16 /* AuditionProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuditionProject.swift; sourceTree = "<group>"; };
 		894BB2364F495CF9DF7282EB /* Pods-Castovision.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Castovision.release.xcconfig"; path = "Pods/Target Support Files/Pods-Castovision/Pods-Castovision.release.xcconfig"; sourceTree = "<group>"; };
@@ -295,6 +297,7 @@
 			isa = PBXGroup;
 			children = (
 				4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */,
+				4A67BC6D225E0E8400939469 /* VideoThumbnailGeneratorService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -304,8 +307,8 @@
 			children = (
 				4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */,
 				4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */,
-				4A67BC5F225BE23500939469 /* videotest.swift */,
 				4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */,
+				4A67BC6A225E052200939469 /* TakeSavedModal.swift */,
 			);
 			path = FilmingSelfTape;
 			sourceTree = "<group>";
@@ -313,7 +316,7 @@
 		4AFB2B672256168000F99B16 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				4AFB2B6D225617F200F99B16 /* SceneCell.swift */,
+				4AFB2B6D225617F200F99B16 /* SceneTakeCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -487,6 +490,7 @@
 				4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */,
 				4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */,
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
+				4A67BC6B225E052200939469 /* TakeSavedModal.swift in Sources */,
 				4A56CED9224E855D008493CB /* NotificationName.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
 				4AF6CD9C225A65B200F3AF87 /* SceneHeaderView.swift in Sources */,
@@ -508,8 +512,7 @@
 				4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */,
 				4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */,
 				4A36DBC4225394D700F76E1B /* UIViewController.swift in Sources */,
-				4AFB2B6E225617F200F99B16 /* SceneCell.swift in Sources */,
-				4A67BC60225BE23500939469 /* videotest.swift in Sources */,
+				4AFB2B6E225617F200F99B16 /* SceneTakeCell.swift in Sources */,
 				4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,
 				4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */,
@@ -522,6 +525,7 @@
 				4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */,
 				4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */,
 				4A56CEC7224E3841008493CB /* String.swift in Sources */,
+				4A67BC6E225E0E8400939469 /* VideoThumbnailGeneratorService.swift in Sources */,
 				4A36DBCF2253C44300F76E1B /* BaseReusableView.swift in Sources */,
 				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
 				4A56CED3224E6255008493CB /* Fonts.swift in Sources */,

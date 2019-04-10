@@ -210,8 +210,20 @@ class VideoCameraVC: UIViewController {
     }
     
     func navigateToEditSceneVC(withVideoURL videoURL: URL) {
-        let editSceneTakeVC = EditSceneTakeVC(videoURL: videoURL)
+        // get the duration of the video for the take's endTime
+        let startTime = 0.0
+        let endTime = getVideoEndTime(fromVideoURL: videoURL)
+        let take = Take(videoUrl: videoURL, startTime: startTime, endTime: endTime, numberOfViews: 0)
+        print("startTime: ", startTime)
+        print("endTime: ", endTime)
+        let editSceneTakeVC = EditSceneTakeVC(take: take, sceneNumber: self._sceneNumber)
         self.navigationController?.pushViewController(editSceneTakeVC, animated: true)
+    }
+    
+    func getVideoEndTime(fromVideoURL videoURL: URL) -> Double {
+        let asset = AVAsset(url: videoURL)
+        let endTime = asset.duration.seconds
+        return endTime
     }
 }
 

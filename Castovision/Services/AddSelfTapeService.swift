@@ -48,5 +48,24 @@ class AddSelfTapeService {
         self._selfTapeProject.scenes?[sceneNumber - 1].takes?.append(take)
         completion()
     }
+    
+    func deleteSceneTake(withValue take: Take, completion: (Project) -> ()) {
+        if let projectScenes = _selfTapeProject.scenes {
+            for sceneIndex in 0..<projectScenes.count {
+                if var sceneTakes = projectScenes[sceneIndex].takes {
+                    for takeIndex in 0..<sceneTakes.count {
+                        if let videoThumbnailOfTakeToDelete = take.videoThumbnailUrl,
+                            let currentTakeVideoThumbnail = sceneTakes[takeIndex].videoThumbnailUrl,
+                            sceneTakes[takeIndex].videoThumbnailUrl == videoThumbnailOfTakeToDelete {
+                            if videoThumbnailOfTakeToDelete == currentTakeVideoThumbnail {
+                                sceneTakes.remove(at: takeIndex)
+                                completion(_selfTapeProject)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 

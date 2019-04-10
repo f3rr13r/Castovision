@@ -8,6 +8,7 @@
 
 import UIKit
 import AVKit
+import CoreMedia
 import PryntTrimmerView
 
 class EditSceneTakeVC: UIViewController {
@@ -23,6 +24,18 @@ class EditSceneTakeVC: UIViewController {
         let button = BackButton()
         button.backgroundColor = .clear
         button.backArrowIcon.tintColor = .white
+        return button
+    }()
+    
+    let saveTakeButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor.red
+        button.layer.cornerRadius = 4.0
+        button.setTitle("Save Take", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = defaultButtonFont
+        button.contentEdgeInsets = UIEdgeInsets(top: 4.0, left: 16.0, bottom: 4.0, right: 16.0)
+        button.addTarget(self, action: #selector(saveTakeButtonPressed), for: .touchUpInside)
         return button
     }()
     
@@ -53,7 +66,16 @@ class EditSceneTakeVC: UIViewController {
         return tv
     }()
     
-    private var _videoURL: URL
+    // we won't instantiate this until needed
+    var saveTakeModal: TakeSavedModal = {
+        let modal = TakeSavedModal()
+        modal.layer.zPosition = 1.0
+        return modal
+    }()
+    
+    // take and scene number
+    private var _take: Take
+    private var _sceneNumber: Int
     
     // video player variables
     var player: AVPlayer?
@@ -62,6 +84,7 @@ class EditSceneTakeVC: UIViewController {
     var trimmerPositionChangedTimer: Timer?
     var startTime: Double?
     var endTime: Double?
+    let preferredCMTimeScale: CMTimeScale = CMTimeScale(UInt32(1000))
     
     var isVideoPlaying: Bool = false {
         didSet {
@@ -73,8 +96,9 @@ class EditSceneTakeVC: UIViewController {
         }
     }
     
-    init(videoURL: URL) {
-        self._videoURL = videoURL
+    init(take: Take, sceneNumber: Int) {
+        self._take = take
+        self._sceneNumber = sceneNumber
         super.init(nibName: nil, bundle: nil)
         self.setupAVPlayer()
     }
@@ -92,6 +116,7 @@ class EditSceneTakeVC: UIViewController {
     
     func handleChildDelegates() {
         backButton.delegate = self
+        saveTakeModal.delegate = self
     }
     
     func anchorSubviews() {
@@ -102,6 +127,10 @@ class EditSceneTakeVC: UIViewController {
         // back button
         interactionsView.addSubview(backButton)
         backButton.anchor(withTopAnchor: interactionsView.safeAreaLayoutGuide.topAnchor, leadingAnchor: interactionsView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: 0.0))
+        
+        // save take button
+        interactionsView.addSubview(saveTakeButton)
+        saveTakeButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: interactionsView.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: backButton.centerYAnchor, widthAnchor: nil, heightAnchor: 36.0, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0))
         
         // toggle play button
         interactionsView.addSubview(togglePlayButton)
@@ -122,13 +151,41 @@ class EditSceneTakeVC: UIViewController {
     func setupTrimmerView() {
         /*-- for some reason the trimmer view requies the main branch here --*/
         DispatchQueue.main.async {
-            self.trimmerView.minDuration = 0.0
-            let videoAsset = AVAsset(url: self._videoURL)
-            let maxDurationCMTime = CMTimeGetSeconds(videoAsset.duration)
-            let maxDuration = Double(maxDurationCMTime)
-            self.trimmerView.maxDuration = maxDuration
-            self.trimmerView.delegate = self
-            self.trimmerView.asset = AVAsset(url: self._videoURL)
+            if let videoUrl = self._take.videoUrl,
+                let startTime = self._take.startTime,
+                let endTime = self._take.endTime {
+                self.trimmerView.minDuration = startTime
+                self.trimmerView.maxDuration = endTime
+                self.trimmerView.asset = AVAsset(url: videoUrl)
+
+                self.trimmerView.moveLeftHandle(to: CMTime(seconds: startTime, preferredTimescale: self.preferredCMTimeScale))
+                self.trimmerView.moveRightHandle(to: CMTime(seconds: endTime, preferredTimescale: self.preferredCMTimeScale))
+            }
+        }
+    }
+    
+    @objc func saveTakeButtonPressed() {
+        if let trimmerViewStartTime = self.trimmerView.startTime,
+            let trimmerViewEndTime = self.trimmerView.endTime {
+            let updatedStartTime = CMTimeGetSeconds(trimmerViewStartTime)
+            let updatedEndTime = CMTimeGetSeconds(trimmerViewEndTime)
+            let videoDurationCMTime = CMTimeSubtract(trimmerViewEndTime, trimmerViewStartTime)
+            let updatedVideoDuration = CMTimeGetSeconds(videoDurationCMTime)
+            
+            self._take.startTime = updatedStartTime
+            self._take.endTime = updatedEndTime
+            self._take.videoDuration = updatedVideoDuration
+            
+            VideoThumbnailGeneratorService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
+                self._take.videoThumbnailUrl = thumbnailImageData
+                
+                AddSelfTapeService.instance.addNewSceneTake(withValue: self._take, forSceneNumber: self._sceneNumber) {
+                    
+                    self.view.addSubview(saveTakeModal)
+                    saveTakeModal.fillSuperview()
+                    saveTakeModal.showModal()
+                }
+            })
         }
     }
 }
@@ -140,17 +197,39 @@ extension EditSceneTakeVC: BackButtonDelegate {
     }
 }
 
+// custom modal view delegate methods
+extension EditSceneTakeVC: TakeSavedModalDelegate {
+    func filmAnotherTakeButtonPressed() {
+        saveTakeModal.hide {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    func dismissButtonPressed() {
+        saveTakeModal.hide {
+            self.navigationController?.dismissVideoFilmingNavigationVC()
+        }
+    }
+}
+
 // video playback methods
 extension EditSceneTakeVC {
     func setupAVPlayer() {
         // instantiate the player item
-        let playerItem: AVPlayerItem = AVPlayerItem(url: self._videoURL)
+        guard let videoUrl = self._take.videoUrl else {
+            // handle the error
+            return
+        }
+        let playerItem: AVPlayerItem = AVPlayerItem(url: videoUrl)
         
         // notifications for video when video ends
         NotificationCenter.default.addObserver(self, selector: #selector(itemDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
         
         // instantiate the av player
         player = AVPlayer(playerItem: playerItem)
+        
+        let startTime = self._take.startTime ?? 0.0
+        player?.seek(to: CMTime(seconds: startTime, preferredTimescale: self.preferredCMTimeScale))
         
         // instantiate the av player layer
         playerLayer = AVPlayerLayer(player: player)
@@ -174,7 +253,6 @@ extension EditSceneTakeVC {
     }
     
     @objc func itemDidFinishPlaying(_ notification: Notification) {
-        print("item did finish playing")
         player?.pause()
         if let startTime = trimmerView.startTime {
             player?.seek(to: startTime)
