@@ -14,39 +14,39 @@ class AddSelfTapeService {
     
     typealias updateCompletion = () -> ()
     
-    private var selfTapeProject: Project = Project()
+    private var _selfTapeProject: Project = Project()
     
     func initializeNewSelfTapeProject() {
+        self._selfTapeProject = Project()
+        self._selfTapeProject.scenes = []
         let scene: Scene = Scene(sceneNumber: 1, takes: [], numberOfViews: nil)
-        self.selfTapeProject.scenes?.append(scene)
+        self._selfTapeProject.scenes?.append(scene)
     }
     
     func getUpdatedSelfTapeProject(completion: (Project) -> ()) {
-        completion(selfTapeProject)
+        completion(_selfTapeProject)
     }
     
     func updateProjectName(withValue value: String, completion: updateCompletion) {
-        selfTapeProject.projectName = value
+        _selfTapeProject.projectName = value
+        completion()
     }
     
     func updateProjectPassword(withValue value: String, completion: updateCompletion) {
-        selfTapeProject.projectPassword = value
+        _selfTapeProject.projectPassword = value
+        completion()
     }
     
     func addNewProjectScene(completion: (Project) -> ()) {
-        let newSceneNumber = selfTapeProject.scenes!.count + 1
+        let newSceneNumber = self._selfTapeProject.scenes!.count + 1
         let newScene = Scene(sceneNumber: newSceneNumber, takes: [], numberOfViews: nil)
-        self.selfTapeProject.scenes?.append(newScene)
-        completion(self.selfTapeProject)
+        self._selfTapeProject.scenes?.append(newScene)
+        completion(self._selfTapeProject)
     }
     
     func addNewSceneTake(withValue take: Take, forSceneNumber sceneNumber: Int, completion: updateCompletion) {
-        for i in 0..<self.selfTapeProject.scenes!.count {
-            if self.selfTapeProject.scenes![i].sceneNumber == sceneNumber {
-                self.selfTapeProject.scenes![i].takes?.append(take)
-                completion()
-            }
-        }
+        self._selfTapeProject.scenes?[sceneNumber - 1].takes?.append(take)
+        completion()
     }
 }
 

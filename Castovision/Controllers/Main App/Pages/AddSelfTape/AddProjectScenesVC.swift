@@ -31,14 +31,10 @@ class AddProjectScenesVC: UIViewController {
     let saveProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save Project", buttonColour: UIColor.red, isDisabled: true)
     
     // variables
-    var auditionScenes: [AuditionScene] = [
-            AuditionScene(
-                sceneNumber: 1,
-                sceneTakes: []
-            )
-        ] {
+    var isInitialProjectLoad: Bool = true
+    var selfTapeProject: Project = Project() {
         didSet {
-            updateCollectionViewState()
+            updateCollectionViewState(withScrollingAnimation: !isInitialProjectLoad)
         }
     }
     
@@ -51,15 +47,29 @@ class AddProjectScenesVC: UIViewController {
         edgesForExtendedLayout = []
         self.view.backgroundColor = .white
         lockDeviceVertically()
-        self.configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
+        configureNavigationBar(withTitle: "Add Scenes", withSearchBar: false)
         anchorSubviews()
     }
     
-    func updateCollectionViewState() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        getCurrentSelfTapeProject()
+    }
+    
+    func getCurrentSelfTapeProject() {
+        AddSelfTapeService.instance.getUpdatedSelfTapeProject { (updatedProject) in
+            self.selfTapeProject = updatedProject
+            self.isInitialProjectLoad = false
+        }
+    }
+    
+    func updateCollectionViewState(withScrollingAnimation needsScrollingAnimation: Bool) {
         self.projectScenesCollectionView.reloadData()
         self.projectScenesCollectionView.invalidateIntrinsicContentSize()
-        DispatchQueue.main.async {            
-            self.projectScenesCollectionView.scrollToBottomSection()
+        if needsScrollingAnimation {
+            DispatchQueue.main.async {
+                self.projectScenesCollectionView.scrollToBottomSection()
+            }
         }
     }
     
@@ -76,12 +86,18 @@ class AddProjectScenesVC: UIViewController {
 extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelegate {
     // number of sections (scenes)
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return auditionScenes.count
+        guard let scenesCount = selfTapeProject.scenes?.count else {
+            return 0
+        }
+        return scenesCount
     }
     
     // number of takes in each scene
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return auditionScenes[section].sceneTakes.count
+        guard let takesCount = selfTapeProject.scenes?[section].takes?.count else {
+            return 0
+        }
+        return takesCount
     }
     
     // scene cell
@@ -99,18 +115,29 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
             guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sceneHeaderCellId, for: indexPath) as? SceneHeaderView else {
                 return UICollectionReusableView()
             }
-            headerView.configureSceneView(withSceneNumber: auditionScenes[indexPath.section].sceneNumber)
+            guard let sceneNumber = self.selfTapeProject.scenes?[indexPath.section].sceneNumber else {
+                return UICollectionReusableView()
+            }
+            headerView.configureSceneView(withSceneNumber: sceneNumber)
             return headerView
         }
         
         // kind of 'footer'
         if kind == UICollectionView.elementKindSectionFooter {
-            if indexPath.section == (auditionScenes.count - 1) {
+            guard let scenesCount = selfTapeProject.scenes?.count else {
+                return UICollectionReusableView()
+            }
+            
+            if indexPath.section == (scenesCount - 1) {
                 // expandable footer
                 guard let expandableFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: extendedSceneFooterCellId, for: indexPath) as? ExpandedAddNewSceneFooterView else {
                         return UICollectionReusableView()
                     }
-                expandableFooter.configureSceneFooterView(withSceneNumber: self.auditionScenes[indexPath.section].sceneNumber)
+                guard let sceneNumber = self.selfTapeProject.scenes?[indexPath.section].sceneNumber else {
+                    return UICollectionReusableView()
+                }
+                
+                expandableFooter.configureSceneFooterView(withSceneNumber: sceneNumber)
                 expandableFooter.delegate = self
                 return expandableFooter
             } else {
@@ -118,7 +145,10 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
                 guard let defaultFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sceneFooterCellId, for: indexPath) as? AddNewSceneTakeFooterView else {
                         return UICollectionReusableView()
                 }
-                defaultFooter.configureSceneFooterView(withSceneNumber: self.auditionScenes[indexPath.section].sceneNumber)
+                guard let sceneNumber = selfTapeProject.scenes?[indexPath.item].sceneNumber else {
+                    return UICollectionReusableView()
+                }
+                defaultFooter.configureSceneFooterView(withSceneNumber: sceneNumber)
                 defaultFooter.delegate = self
                 return defaultFooter
             }
@@ -155,7 +185,11 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
     
     // footer sizes
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        if section == (auditionScenes.count - 1) {
+        guard let scenesCount = self.selfTapeProject.scenes?.count else {
+            return CGSize.zero
+        }
+        
+        if section == (scenesCount - 1) {
             return CGSize(width: expandedAddNewSceneFooterViewWidth, height: expandedAddNewSceneFooterViewHeight)
         } else {
             return CGSize(width: addNewSceneTakeFooterViewWidth, height: addNewSceneTakeFooterViewHeight)
@@ -172,7 +206,8 @@ extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewScene
     }
     
     func addNewScene() {
-        let newScene = AuditionScene(sceneNumber: auditionScenes.count + 1, sceneTakes: [])
-        auditionScenes.append(newScene)
+        AddSelfTapeService.instance.addNewProjectScene { (updatedSelfTapeProject) in
+            self.selfTapeProject = updatedSelfTapeProject
+        }
     }
 }
