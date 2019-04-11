@@ -119,6 +119,18 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
         return sceneCell
     }
     
+    // cell selection
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item],
+            let sceneNumber = selfTapeProject.scenes?[indexPath.section].sceneNumber {
+            let editSceneTakeVC = EditSceneTakeVC(take: sceneTake, sceneNumber: sceneNumber)
+            let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: editSceneTakeVC)
+            self.present(videoFilmingNavigationVC, animated: true, completion: nil)
+        } else {
+            print("Couldn't get the scene take or scene number")
+        }
+    }
+    
     // scene header and footer (including add new scene if expanded)
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         // kind of 'header'
@@ -210,10 +222,6 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
 
 extension AddProjectScenesVC: SceneTakeCellDelegate {
     func deleteTake(take: Take) {
-        showDeleteTakePopUpAlertView(withTake: take)
-    }
-
-    func showDeleteTakePopUpAlertView(withTake take: Take) {
         let deleteTakeConfirmationAlert = UIAlertController(title: nil, message: "Do you want to delete this take? This action is permenant, and cannot be undone", preferredStyle: .actionSheet)
         
         let deleteTakeOption = UIAlertAction(title: "Delete Take", style: .default) { (deleteTakeOptionClicked) in

@@ -151,15 +151,12 @@ class EditSceneTakeVC: UIViewController {
     func setupTrimmerView() {
         /*-- for some reason the trimmer view requies the main branch here --*/
         DispatchQueue.main.async {
-            if let videoUrl = self._take.videoUrl,
-                let startTime = self._take.startTime,
-                let endTime = self._take.endTime {
-                self.trimmerView.minDuration = startTime
-                self.trimmerView.maxDuration = endTime
-                self.trimmerView.asset = AVAsset(url: videoUrl)
-
-                self.trimmerView.moveLeftHandle(to: CMTime(seconds: startTime, preferredTimescale: self.preferredCMTimeScale))
-                self.trimmerView.moveRightHandle(to: CMTime(seconds: endTime, preferredTimescale: self.preferredCMTimeScale))
+            if let videoUrl = self._take.videoUrl {
+                let videoAsset = AVAsset(url: videoUrl)
+                
+                self.trimmerView.asset = videoAsset
+                self.trimmerView.minDuration = 0.0
+                self.trimmerView.maxDuration = videoAsset.duration.seconds
             }
         }
     }
@@ -167,24 +164,28 @@ class EditSceneTakeVC: UIViewController {
     @objc func saveTakeButtonPressed() {
         if let trimmerViewStartTime = self.trimmerView.startTime,
             let trimmerViewEndTime = self.trimmerView.endTime {
-            let updatedStartTime = CMTimeGetSeconds(trimmerViewStartTime)
-            let updatedEndTime = CMTimeGetSeconds(trimmerViewEndTime)
             let videoDurationCMTime = CMTimeSubtract(trimmerViewEndTime, trimmerViewStartTime)
             let updatedVideoDuration = CMTimeGetSeconds(videoDurationCMTime)
-            
-            self._take.startTime = updatedStartTime
-            self._take.endTime = updatedEndTime
+
             self._take.videoDuration = updatedVideoDuration
-            
-            VideoThumbnailGeneratorService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
+
+            VideoHelperMethodsService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
                 self._take.videoThumbnailUrl = thumbnailImageData
                 
-                AddSelfTapeService.instance.addNewSceneTake(withValue: self._take, forSceneNumber: self._sceneNumber) {
-                    
-                    self.view.addSubview(saveTakeModal)
-                    saveTakeModal.fillSuperview()
-                    saveTakeModal.showModal()
-                }
+                VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
+                    if didCropSuccessfully {
+                        DispatchQueue.main.async {
+                            print(croppedVideo!)
+                            self._take.videoUrl = croppedVideo
+                            
+                            AddSelfTapeService.instance.addNewSceneTake(withValue: self._take, forSceneNumber: self._sceneNumber) {
+                                self.view.addSubview(self.saveTakeModal)
+                                self.saveTakeModal.fillSuperview()
+                                self.saveTakeModal.showModal()
+                            }
+                        }
+                    }
+                })
             })
         }
     }
@@ -227,9 +228,6 @@ extension EditSceneTakeVC {
         
         // instantiate the av player
         player = AVPlayer(playerItem: playerItem)
-        
-        let startTime = self._take.startTime ?? 0.0
-        player?.seek(to: CMTime(seconds: startTime, preferredTimescale: self.preferredCMTimeScale))
         
         // instantiate the av player layer
         playerLayer = AVPlayerLayer(player: player)

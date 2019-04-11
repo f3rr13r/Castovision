@@ -40,16 +40,12 @@ struct Take {
     var videoThumbnailUrl: Data?
     var videoUrl: URL?
     var videoDuration: Double?
-    var startTime: Double?
-    var endTime: Double?
     var numberOfViews: Int?
     
-    init(videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, startTime: Double? = nil, endTime: Double? = nil, numberOfViews: Int? = nil) {
+    init(videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, numberOfViews: Int? = nil) {
         self.videoThumbnailUrl = videoThumbnailUrl
         self.videoUrl = videoUrl
         self.videoDuration = videoDuration
-        self.startTime = startTime
-        self.endTime = endTime
         self.numberOfViews = numberOfViews
     }
 }

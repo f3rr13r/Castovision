@@ -22,8 +22,6 @@ class AddProjectPasswordVC: UIViewController {
     let auditionPasswordInputView = CustomInputView(inputType: .projectPassword)
     let reEnterPasswordInputView = CustomInputView(inputType: .reEnterProjectPassword)
     
-    let createProjectButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Create Project", buttonColour: UIColor.red, isDisabled: true)
-    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -57,9 +55,6 @@ class AddProjectPasswordVC: UIViewController {
         
         self.view.addSubview(reEnterPasswordInputView)
         reEnterPasswordInputView.anchor(withTopAnchor: auditionPasswordInputView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
-        
-        self.view.addSubview(createProjectButton)
-        createProjectButton.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: 50.0, padding: .init(top: 0.0, left: horizontalPadding, bottom: -20.0, right: -horizontalPadding))
     }
     
     func handleChildDelegates() {
