@@ -123,9 +123,8 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item],
             let sceneNumber = selfTapeProject.scenes?[indexPath.section].sceneNumber {
-            let editSceneTakeVC = EditSceneTakeVC(take: sceneTake, sceneNumber: sceneNumber)
-            let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: editSceneTakeVC)
-            self.present(videoFilmingNavigationVC, animated: true, completion: nil)
+        
+            // we will go to a view viewer here
         } else {
             print("Couldn't get the scene take or scene number")
         }
