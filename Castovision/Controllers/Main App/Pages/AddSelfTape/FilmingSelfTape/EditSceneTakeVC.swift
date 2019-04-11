@@ -82,9 +82,6 @@ class EditSceneTakeVC: UIViewController {
     var playerLayer: AVPlayerLayer?
     var playbackTimeCheckerTimer: Timer?
     var trimmerPositionChangedTimer: Timer?
-    var startTime: Double?
-    var endTime: Double?
-    let preferredCMTimeScale: CMTimeScale = CMTimeScale(UInt32(1000))
     
     var isVideoPlaying: Bool = false {
         didSet {
@@ -155,6 +152,7 @@ class EditSceneTakeVC: UIViewController {
                 let videoAsset = AVAsset(url: videoUrl)
                 
                 self.trimmerView.asset = videoAsset
+                self.trimmerView.delegate = self
                 self.trimmerView.minDuration = 0.0
                 self.trimmerView.maxDuration = videoAsset.duration.seconds
             }
@@ -217,10 +215,8 @@ extension EditSceneTakeVC: TakeSavedModalDelegate {
 extension EditSceneTakeVC {
     func setupAVPlayer() {
         // instantiate the player item
-        guard let videoUrl = self._take.videoUrl else {
-            // handle the error
-            return
-        }
+        guard let videoUrl = self._take.videoUrl else { return }
+        
         let playerItem: AVPlayerItem = AVPlayerItem(url: videoUrl)
         
         // notifications for video when video ends
@@ -239,11 +235,14 @@ extension EditSceneTakeVC {
     }
     
     @objc func togglePlayButtonPressed() {
+        
+        guard let player = player else { return }
+        
         if !isVideoPlaying {
-            player?.play()
+            player.play()
             startPlaybackTimeChecker()
         } else {
-            player?.pause()
+            player.pause()
             stopPlaybackTimeChecker()
         }
         
@@ -251,7 +250,6 @@ extension EditSceneTakeVC {
     }
     
     @objc func itemDidFinishPlaying(_ notification: Notification) {
-        player?.pause()
         if let startTime = trimmerView.startTime {
             player?.seek(to: startTime)
         }
@@ -270,6 +268,7 @@ extension EditSceneTakeVC {
     }
     
     @objc func onPlaybackTimeChecker() {
+        
         guard let startTime = trimmerView.startTime, let endTime = trimmerView.endTime, let player = player else {
             return
         }
@@ -286,18 +285,18 @@ extension EditSceneTakeVC {
 
 // trimmer view delegate
 extension EditSceneTakeVC: TrimmerViewDelegate {
-    func didChangePositionBar(_ playerTime: CMTime) {
-        handleAVPlayerUpdate(withPlayerTime: playerTime)
-    }
     
     func positionBarStoppedMoving(_ playerTime: CMTime) {
-        stopPlaybackTimeChecker()
-        handleAVPlayerUpdate(withPlayerTime: playerTime)
+        player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+        isVideoPlaying = false
+        //player?.play()
+        startPlaybackTimeChecker()
     }
     
-    func handleAVPlayerUpdate(withPlayerTime playerTime: CMTime) {
-        player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
+    func didChangePositionBar(_ playerTime: CMTime) {
+        stopPlaybackTimeChecker()
         player?.pause()
+        player?.seek(to: playerTime, toleranceBefore: CMTime.zero, toleranceAfter: CMTime.zero)
         isVideoPlaying = false
     }
 }
