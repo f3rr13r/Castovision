@@ -192,28 +192,38 @@ class EditSceneTakeVC: UIViewController {
             let updatedVideoDuration = CMTimeGetSeconds(videoDurationCMTime)
 
             self._take.videoDuration = updatedVideoDuration
+    
             VideoHelperMethodsService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
                 self._take.videoThumbnailUrl = thumbnailImageData
                 
-                VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
-                    if didCropSuccessfully {
-                        DispatchQueue.main.async {
-                            print(croppedVideo!)
-                            self._take.videoUrl = croppedVideo
-                            
-                            AddSelfTapeService.instance.addNewSceneTake(withValue: self._take, forSceneNumber: self._sceneNumber) {
-                                self.needSaveButtonLoadingState = false
-                                
-                                self.view.addSubview(self.saveTakeModal)
-                                self.saveTakeModal.fillSuperview()
-                                self.saveTakeModal.showModal()
+                guard let currentItemDuration = player?.currentItem?.duration else { return }
+                let originalVideoDuration = CMTimeGetSeconds(currentItemDuration)
+                
+                if updatedVideoDuration != originalVideoDuration {
+                    VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
+                        if didCropSuccessfully {
+                            DispatchQueue.main.async {
+                                self._take.videoUrl = croppedVideo
+                                self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
                             }
                         }
-                    }
-                })
+                    })
+                } else {
+                    self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
+                }
             })
         } else {
             self.needSaveButtonLoadingState = false
+        }
+    }
+    
+    func addNewScene(withValue value: Take, forSceneNumber sceneNumber: Int) {
+        AddSelfTapeService.instance.addNewSceneTake(withValue: value, forSceneNumber: sceneNumber) {
+            self.needSaveButtonLoadingState = false
+            
+            self.view.addSubview(self.saveTakeModal)
+            self.saveTakeModal.fillSuperview()
+            self.saveTakeModal.showModal()
         }
     }
 }

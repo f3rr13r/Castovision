@@ -26,6 +26,18 @@ class AddProjectPasswordVC: UIViewController {
         return false
     }
     
+    var projectPassword = ProjectPassword(password: "", reEnteredPassword: "") {
+        didSet {
+            if self.projectPassword.password.count > 0 &&
+               self.projectPassword.reEnteredPassword.count > 0 &&
+                self.projectPassword.password == self.projectPassword.reEnteredPassword {
+                self.navigationItem.rightBarButtonItem?.isEnabled = true
+            } else {
+                self.navigationItem.rightBarButtonItem?.isEnabled = false
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -39,11 +51,14 @@ class AddProjectPasswordVC: UIViewController {
     func addNavigationRightButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(saveSelfTapeProject))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     @objc func saveSelfTapeProject() {
-        let addProjectScenesVC = AddProjectScenesVC()
-        self.navigationController?.pushViewController(addProjectScenesVC, animated: true)
+        AddSelfTapeService.instance.updateProjectPassword(withValue: self.projectPassword.password) {
+            let addProjectScenesVC = AddProjectScenesVC()
+            self.navigationController?.pushViewController(addProjectScenesVC, animated: true)
+        }
     }
     
     func anchorSubviews() {
@@ -58,6 +73,31 @@ class AddProjectPasswordVC: UIViewController {
     }
     
     func handleChildDelegates() {
-        
+        auditionPasswordInputView.delegate = self
+        reEnterPasswordInputView.delegate = self
+    }
+}
+
+// delegate methods
+extension AddProjectPasswordVC: CustomInputViewDelegate {
+    func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
+        updateInputValue(withType: inputType, andPasswordValue: inputValue)
+    }
+    
+    func inputClearButtonPressed(inputType: CustomInputType) {
+        updateInputValue(withType: inputType, andPasswordValue: "")
+    }
+    
+    func updateInputValue(withType inputType: CustomInputType, andPasswordValue passwordValue: String) {
+        switch inputType {
+        case .projectPassword:
+            self.projectPassword.password = passwordValue
+            break
+        case .reEnterProjectPassword:
+            self.projectPassword.reEnteredPassword = passwordValue
+            break
+        default:
+            break
+        }
     }
 }

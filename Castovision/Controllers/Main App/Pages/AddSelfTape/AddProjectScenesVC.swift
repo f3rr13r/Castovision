@@ -33,7 +33,14 @@ class AddProjectScenesVC: UIViewController {
     var needsScrollingAnimation: Bool = false
     var selfTapeProject: Project = Project() {
         didSet {
+            checkCurrentSelfTapeProjectState()
             updateCollectionViewState()
+        }
+    }
+    
+    var canEnableSaveButton: Bool = false {
+        didSet {
+            self.navigationItem.rightBarButtonItem?.isEnabled = self.canEnableSaveButton
         }
     }
     
@@ -63,6 +70,22 @@ class AddProjectScenesVC: UIViewController {
         }
     }
     
+    func checkCurrentSelfTapeProjectState() {
+        canEnableSaveButton = false
+        
+        selfTapeProject.scenes?.forEach({ (scene) in
+            guard let sceneTakes = scene.takes else {
+                canEnableSaveButton = false
+                return
+            }
+            
+            if sceneTakes.count > 0 {
+                canEnableSaveButton = true
+                return
+            }
+        })
+    }
+    
     func updateCollectionViewState() {
         self.projectScenesCollectionView.reloadData()
         self.projectScenesCollectionView.invalidateIntrinsicContentSize()
@@ -76,6 +99,7 @@ class AddProjectScenesVC: UIViewController {
     func addNavigationRightButton() {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveSelfTapeProject))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     func anchorSubviews() {
@@ -229,7 +253,6 @@ extension AddProjectScenesVC: SceneTakeCellDelegate {
         
         let deleteTakeOption = UIAlertAction(title: "Delete Take", style: .default) { (deleteTakeOptionClicked) in
             AddSelfTapeService.instance.deleteSceneTake(withValue: take, completion: { (updatedSelfTapeProject) in
-                print(updatedSelfTapeProject)
                 self.selfTapeProject = updatedSelfTapeProject
             })
         }
