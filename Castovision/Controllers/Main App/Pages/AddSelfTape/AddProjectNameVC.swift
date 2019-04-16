@@ -21,6 +21,12 @@ class AddProjectNameVC: UIViewController {
     
     let auditionNameInputView = CustomInputView(inputType: .projectName)
     
+    var projectName: String = "" {
+        didSet {
+            self.navigationItem.rightBarButtonItem?.isEnabled = self.projectName.count > 0 ? true : false
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -30,19 +36,29 @@ class AddProjectNameVC: UIViewController {
         self.view.backgroundColor = .white
         lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Project Name", withSearchBar: false)
+        addHiddenNavigationLeftButton()
         addNavigationRightButton()
         anchorSubviews()
         handleChildDelegates()
     }
     
+    func addHiddenNavigationLeftButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        self.navigationItem.leftBarButtonItem?.tintColor = .clear
+    }
+    
     func addNavigationRightButton() {
+        // disabled by default. Enabled and disabled dynamically in the projectName injector variable
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(saveSelfTapeProject))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
     
     @objc func saveSelfTapeProject() {
-        let addProjectPasswordVC = AddProjectPasswordVC()
-        self.navigationController?.pushViewController(addProjectPasswordVC, animated: true)
+        AddSelfTapeService.instance.updateProjectName(withValue: self.projectName) {
+            let addProjectPasswordVC = AddProjectPasswordVC()
+            self.navigationController?.pushViewController(addProjectPasswordVC, animated: true)
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +75,21 @@ class AddProjectNameVC: UIViewController {
     }
     
     func handleChildDelegates() {
-        // do stuff here
+        auditionNameInputView.delegate = self
+    }
+}
+
+// delegate methods
+extension AddProjectNameVC: CustomInputViewDelegate {
+    func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
+        updatePageState(withProjectNameValue: inputValue)
+    }
+    
+    func inputClearButtonPressed(inputType: CustomInputType) {
+        updatePageState(withProjectNameValue: "")
+    }
+    
+    func updatePageState(withProjectNameValue projectNameValue: String) {
+        self.projectName = projectNameValue
     }
 }
