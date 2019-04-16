@@ -39,6 +39,14 @@ class EditSceneTakeVC: UIViewController {
         return button
     }()
     
+    let loadingSpinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        spinner.hidesWhenStopped = true
+        spinner.style = .white
+        spinner.stopAnimating()
+        return spinner
+    }()
+    
     let togglePlayButton: UIButton = {
         let button = UIButton()
         button.addTarget(self, action: #selector(togglePlayButtonPressed), for: .touchUpInside)
@@ -93,6 +101,20 @@ class EditSceneTakeVC: UIViewController {
         }
     }
     
+    var needSaveButtonLoadingState: Bool = false {
+        didSet {
+            if self.needSaveButtonLoadingState {
+                saveTakeButton.setTitleColor(.clear, for: .normal)
+                saveTakeButton.isEnabled = false
+                loadingSpinner.startAnimating()
+            } else {
+                loadingSpinner.stopAnimating()
+                saveTakeButton.setTitleColor(.white, for: .normal)
+                saveTakeButton.isEnabled = true
+            }
+        }
+    }
+    
     init(take: Take, sceneNumber: Int) {
         self._take = take
         self._sceneNumber = sceneNumber
@@ -128,6 +150,8 @@ class EditSceneTakeVC: UIViewController {
         // save take button
         interactionsView.addSubview(saveTakeButton)
         saveTakeButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: interactionsView.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: backButton.centerYAnchor, widthAnchor: nil, heightAnchor: 36.0, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -10.0))
+        saveTakeButton.addSubview(loadingSpinner)
+        loadingSpinner.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: saveTakeButton.centerXAnchor, centreYAnchor: saveTakeButton.centerYAnchor)
         
         // toggle play button
         interactionsView.addSubview(togglePlayButton)
@@ -160,13 +184,14 @@ class EditSceneTakeVC: UIViewController {
     }
     
     @objc func saveTakeButtonPressed() {
+        self.needSaveButtonLoadingState = true
+        
         if let trimmerViewStartTime = self.trimmerView.startTime,
             let trimmerViewEndTime = self.trimmerView.endTime {
             let videoDurationCMTime = CMTimeSubtract(trimmerViewEndTime, trimmerViewStartTime)
             let updatedVideoDuration = CMTimeGetSeconds(videoDurationCMTime)
 
             self._take.videoDuration = updatedVideoDuration
-
             VideoHelperMethodsService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
                 self._take.videoThumbnailUrl = thumbnailImageData
                 
@@ -177,6 +202,8 @@ class EditSceneTakeVC: UIViewController {
                             self._take.videoUrl = croppedVideo
                             
                             AddSelfTapeService.instance.addNewSceneTake(withValue: self._take, forSceneNumber: self._sceneNumber) {
+                                self.needSaveButtonLoadingState = false
+                                
                                 self.view.addSubview(self.saveTakeModal)
                                 self.saveTakeModal.fillSuperview()
                                 self.saveTakeModal.showModal()
@@ -185,6 +212,8 @@ class EditSceneTakeVC: UIViewController {
                     }
                 })
             })
+        } else {
+            self.needSaveButtonLoadingState = false
         }
     }
 }

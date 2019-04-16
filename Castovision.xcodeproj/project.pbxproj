@@ -50,6 +50,7 @@
 		4A8F5BFB225BAD4400C4FF8B /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */; };
 		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
 		4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */; };
+		4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27142265F19D00649F2B /* TakeViewerVC.swift */; };
 		4AF6CD96225A5D7600F3AF87 /* AddNewSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */; };
 		4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */; };
 		4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */; };
@@ -108,6 +109,7 @@
 		4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
 		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
 		4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFilmingNavigationVC.swift; sourceTree = "<group>"; };
+		4ADA27142265F19D00649F2B /* TakeViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewerVC.swift; sourceTree = "<group>"; };
 		4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneView.swift; sourceTree = "<group>"; };
 		4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedAddNewSceneFooterView.swift; sourceTree = "<group>"; };
 		4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneTakeView.swift; sourceTree = "<group>"; };
@@ -218,6 +220,7 @@
 		4A799E1A224D8CD0004EFA90 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4ADA27132265F17E00649F2B /* Shared */,
 				4A36DBB3225374C400F76E1B /* Main App */,
 				4A799E1D224D8D50004EFA90 /* Authentication */,
 			);
@@ -314,6 +317,14 @@
 				4A67BC6A225E052200939469 /* TakeSavedModal.swift */,
 			);
 			path = FilmingSelfTape;
+			sourceTree = "<group>";
+		};
+		4ADA27132265F17E00649F2B /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				4ADA27142265F19D00649F2B /* TakeViewerVC.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		4AFB2B672256168000F99B16 /* Cells */ = {
@@ -511,6 +522,7 @@
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */,
 				4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */,
+				4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
 				4AFB2B66225535F600F99B16 /* AddProjectScenesVC.swift in Sources */,
 				4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */,

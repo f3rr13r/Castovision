@@ -20,6 +20,7 @@ class AddProjectScenesVC: UIViewController {
         cv.backgroundColor = .clear
         cv.delegate = self
         cv.dataSource = self
+        cv.showsVerticalScrollIndicator = false
         cv.contentInsetAdjustmentBehavior = .never
         cv.register(SceneHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: sceneHeaderCellId)
         cv.register(SceneTakeCell.self, forCellWithReuseIdentifier: projectSceneTakeCellId)
@@ -123,8 +124,11 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item],
             let sceneNumber = selfTapeProject.scenes?[indexPath.section].sceneNumber {
-        
-            // we will go to a view viewer here
+                // instantiate the takeViewerVC, feed it into the videoFilmingNavigationVC and present it
+                let takeViewerVC = TakeViewerVC(sceneNumber: sceneNumber, takeNumber: indexPath.item + 1, take: sceneTake)
+                let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: takeViewerVC)
+                self.present(videoFilmingNavigationVC, animated: true, completion: nil)
+            
         } else {
             print("Couldn't get the scene take or scene number")
         }
