@@ -10,7 +10,9 @@ import UIKit
 
 class SignupVC: UIViewController {
     
-    // views
+    /*=========================
+     views
+    =========================*/
     let backgroundImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -30,9 +32,7 @@ class SignupVC: UIViewController {
     }()
     
     let emailInputView = CustomInputView(inputType: .emailAddress)
-    
     let passwordInputView = CustomInputView(inputType: .password, initialInputValue: "", showForgotPasswordButton: false)
-    
     let reEnterPasswordInputView = CustomInputView(inputType: .reEnterPassword, initialInputValue: "", showForgotPasswordButton: false)
     
     let legalLabel: UILabel = {
@@ -47,6 +47,27 @@ class SignupVC: UIViewController {
     
     let signUpButton = MainActionButton(buttonUseType: .signUp, buttonTitle: "Sign Up", buttonColour: UIColor.red, isDisabled: true)
     
+    /*========================
+     variables
+    ========================*/
+    var signupInfo: SignupInfo = SignupInfo(emailAddress: "", password: "", reEnterPassword: "") {
+        didSet {
+            if self.signupInfo.emailAddress.count > 0 &&
+               self.signupInfo.emailAddress.isValidEmail() &&
+               self.signupInfo.password.count > 0 &&
+               self.signupInfo.reEnterPassword.count > 0 &&
+                self.signupInfo.password == self.signupInfo.reEnterPassword {
+                signUpButton.enableButton()
+            } else {
+                signUpButton.disableButton()
+            }
+        }
+    }
+    
+    
+    /*=======================
+     class initialization
+    =======================*/
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -66,14 +87,25 @@ class SignupVC: UIViewController {
         return false
     }
     
+    
+    /*========================
+     class life-cycle methods
+    =======================*/
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         lockDeviceVertically()
         handleChildDelegates()
         anchorSubviews()
+        
+        /*-- disable the sign up by default --*/
+        signUpButton.disableButton()
     }
     
+    
+    /*========================
+     custom methods
+    =======================*/
     func handleChildDelegates() {
         emailInputView.delegate = self
         passwordInputView.delegate = self
@@ -115,11 +147,27 @@ class SignupVC: UIViewController {
 // input delegate methods
 extension SignupVC: CustomInputViewDelegate {
     func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
-        // do stuff here
+        updateInputValue(withType: inputType, andValue: inputValue)
     }
     
     func inputClearButtonPressed(inputType: CustomInputType) {
-        // do stuff here
+        updateInputValue(withType: inputType, andValue: "")
+    }
+    
+    func updateInputValue(withType inputType: CustomInputType, andValue value: String) {
+        switch inputType {
+        case .emailAddress:
+            self.signupInfo.emailAddress = value
+            break
+        case .password:
+            self.signupInfo.password = value
+            break
+        case .reEnterPassword:
+            self.signupInfo.reEnterPassword = value
+            break
+        default:
+            break;
+        }
     }
 }
 
@@ -131,9 +179,17 @@ extension SignupVC: BackButtonDelegate, MainActionButtonDelegate {
     
     func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
         if buttonUseType == .signUp {
-            let addAccountNameVC = AddAccountNameVC()
-            self.navigationController?.pushViewController(addAccountNameVC, animated: true)
+            SharedModalService.instance.showCustomOverlayModal(withMessage: "Creating Account")
+            AuthService.instance.signUpUser(with: self.signupInfo) { (signUpResponse) in
+                SharedModalService.instance.hideCustomOverlayModal()
+                if signUpResponse.success {
+                    let addAccountNameVC = AddAccountNameVC()
+                    self.navigationController?.pushViewController(addAccountNameVC, animated: true)
+                } else {
+                    let errorMessageConfig: CustomErrorMessageConfig = CustomErrorMessageConfig(title: "Sign Up Error", body: signUpResponse.errorMessage!)
+                    SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+                }
+            }
         }
     }
-
 }

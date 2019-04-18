@@ -19,6 +19,7 @@ class BackButton: UIButton {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
         iv.image = #imageLiteral(resourceName: "back-icon").withRenderingMode(.alwaysTemplate)
+        iv.tintColor = UIColor.black
         return iv
     }()
     

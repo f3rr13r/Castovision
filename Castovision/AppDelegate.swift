@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,6 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupInitialEntryVC()
+        configureFirebase()
         return true
     }
     
@@ -36,6 +38,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // set the initial view controller of the window as the navigation controller, then present it
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        
+        // now that we have instantiated the navigation controller, let's add the top level modals to it
+        SharedModalService.instance.initializeSharedModalsMethodsClass(withAppDelegate: self, andNavigationController: self.navigationController!)
+    }
+    
+    func configureFirebase() {
+        FirebaseApp.configure()
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

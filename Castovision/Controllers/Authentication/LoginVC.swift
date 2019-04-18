@@ -10,7 +10,9 @@ import UIKit
 
 class LoginVC: UIViewController {
 
-    // views
+    /*=========================
+     views
+     =========================*/
     let backgroundImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
@@ -29,12 +31,26 @@ class LoginVC: UIViewController {
     }()
     
     let emailInputView = CustomInputView(inputType: .emailAddress)
-    
     let passwordInputView = CustomInputView(inputType: .password, initialInputValue: "", showForgotPasswordButton: true)
+
     
     let goToSignUpButton = MainActionButton(buttonUseType: .goToSignUp, buttonTitle: "I don't have an account yet", buttonColour: UIColor.gray, isDisabled: false, isLoading: false, hasBorderStyling: true)
-    
     let logInButton = MainActionButton(buttonUseType: .logIn, buttonTitle: "Log In", buttonColour: UIColor.red, isDisabled: true)
+    
+    /*========================
+     variables
+     ========================*/
+    var loginInfo: LoginInfo = LoginInfo(emailAddress: "", password: "") {
+        didSet {
+            if self.loginInfo.emailAddress.count > 0 &&
+               self.loginInfo.emailAddress.isValidEmail() &&
+                self.loginInfo.password.count > 0 {
+                logInButton.enableButton()
+            } else {
+                logInButton.disableButton()
+            }
+        }
+    }
     
     override var shouldAutorotate: Bool {
         return false
@@ -46,6 +62,9 @@ class LoginVC: UIViewController {
         lockDeviceVertically()
         handleChildDelegates()
         anchorSubviews()
+        
+        /*-- disable the login button by default --*/
+        logInButton.disableButton()
     }
     
     func handleChildDelegates() {
@@ -82,11 +101,23 @@ class LoginVC: UIViewController {
 // input delegate methods
 extension LoginVC: CustomInputViewDelegate {
     func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
-        // do stuff
+        updateInputValue(withType: inputType, andValue: inputValue)
     }
     
     func inputClearButtonPressed(inputType: CustomInputType) {
-        // do stuff
+        updateInputValue(withType: inputType, andValue: "")
+    }
+    
+    func updateInputValue(withType inputType: CustomInputType, andValue value: String) {
+        switch inputType {
+        case .emailAddress:
+            self.loginInfo.emailAddress = value
+            break
+        case .password:
+            self.loginInfo.password = value
+        default:
+            break;
+        }
     }
     
     func forgotPasswordButtonPressed() {
@@ -104,9 +135,22 @@ extension LoginVC: MainActionButtonDelegate {
             self.navigationController?.pushViewController(signUpVC, animated: true)
             break
         case .logIn:
-            self.navigationController?.navigateIntoMainApp(withAnimation: true)
+            logInUser()
             break
         default: return
+        }
+    }
+    
+    private func logInUser() {
+        SharedModalService.instance.showCustomOverlayModal(withMessage: "Logging In")
+        AuthService.instance.logInUser(withLoginInfo: self.loginInfo) { (loginResponse) in
+            SharedModalService.instance.hideCustomOverlayModal()
+            if loginResponse.success {
+                self.navigationController?.navigateIntoMainApp(withAnimation: true)
+            } else {
+                let errorMessageConfig: CustomErrorMessageConfig = CustomErrorMessageConfig(title: "Logging In Error", body: loginResponse.errorMessage!)
+                SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+            }
         }
     }
 }

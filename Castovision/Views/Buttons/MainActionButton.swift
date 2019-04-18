@@ -40,13 +40,21 @@ class MainActionButton: UIButton {
     
     var isDisabled: Bool {
         didSet {
-            updateButtonDisabledState()
+            if self.isDisabled {
+                enableButton()
+            } else {
+                disableButton()
+            }
         }
     }
     
     var isLoading: Bool {
         didSet {
-            updateButtonLoadingState()
+            if self.isLoading {
+                disableLoadingState()
+            } else {
+                enableLoadingState()
+            }
         }
     }
     
@@ -94,6 +102,30 @@ class MainActionButton: UIButton {
     func anchorSubviews() {
         addSubview(loadingSpinner)
         loadingSpinner.fillSuperview()
+    }
+    
+    func disableButton() {
+        self.backgroundColor = buttonColor.withAlphaComponent(0.4)
+        self.isUserInteractionEnabled = false
+    }
+    
+    func enableButton() {
+        self.backgroundColor = buttonColor
+        self.isUserInteractionEnabled = true
+    }
+    
+    func disableLoadingState() {
+        loadingSpinner.isHidden = true
+        loadingSpinner.stopAnimating()
+        self.setTitleColor(self.hasBorderStyling ? buttonColor : UIColor.white, for: .normal)
+        enableButton()
+    }
+    
+    func enableLoadingState() {
+        disableButton()
+        self.setTitleColor(UIColor.clear, for: .normal)
+        loadingSpinner.startAnimating()
+        loadingSpinner.isHidden = false
     }
     
     private func updateButtonDisabledState() {
