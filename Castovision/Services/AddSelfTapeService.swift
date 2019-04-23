@@ -49,6 +49,18 @@ class AddSelfTapeService {
         completion()
     }
     
+    func deleteScene(withSceneNumberToDelete sceneNumberToDelete: Int, completion: (Project) -> ()) {
+        if let projectScenes = _selfTapeProject.scenes {
+            for sceneIndex in 0..<projectScenes.count {
+                if let sceneNumber = projectScenes[sceneIndex].sceneNumber,
+                    sceneNumber == sceneNumberToDelete {
+                        _selfTapeProject.scenes?.remove(at: sceneIndex)
+                        completion(_selfTapeProject)
+                }
+            }
+        }
+    }
+    
     func deleteSceneTake(withValue take: Take, completion: (Project) -> ()) {
         if let projectScenes = _selfTapeProject.scenes {
             for sceneIndex in 0..<projectScenes.count {

@@ -168,7 +168,13 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
             guard let sceneNumber = self.selfTapeProject.scenes?[indexPath.section].sceneNumber else {
                 return UICollectionReusableView()
             }
-            headerView.configureSceneView(withSceneNumber: sceneNumber)
+            
+            /*-- if it is the last scene, and that scene has no takes, show the delete button --*/
+            let needsDeleteButton = indexPath.section != 0 && indexPath.section == (self.selfTapeProject.scenes!.count - 1) ? true : false
+            headerView.configureSceneView(withSceneNumber: sceneNumber, andNeedsDeleteButton: needsDeleteButton)
+            
+            /*-- set the delegate --*/
+            headerView.delegate = self
             return headerView
         }
         
@@ -244,6 +250,29 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
         } else {
             return CGSize(width: addNewSceneTakeFooterViewWidth, height: addNewSceneTakeFooterViewHeight)
         }
+    }
+}
+
+extension AddProjectScenesVC: SceneHeaderViewDelegate {
+    func deleteSceneButtonPressed(withSceneNumber sceneNumber: Int) {
+        let deleteSceneConfirmationAlert = UIAlertController(title: nil, message: "Do you want to delete this entire scene. including all of it's takes? This action is permenant, and cannot be undone", preferredStyle: .actionSheet)
+        
+        let deleteSceneOption = UIAlertAction(title: "Delete Scene", style: .default) { (deleteSceneOptionClicked) in
+            AddSelfTapeService.instance.deleteScene(withSceneNumberToDelete: sceneNumber, completion: { (updatedSelfTapeProject) in
+                self.selfTapeProject = updatedSelfTapeProject
+            })
+        }
+        deleteSceneOption.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        let cancelOption = UIAlertAction(title: "No Thanks", style: .cancel) { (cancelOptionClicked) in
+            deleteSceneConfirmationAlert.dismiss(animated: true, completion: nil)
+        }
+        cancelOption.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        deleteSceneConfirmationAlert.addAction(deleteSceneOption)
+        deleteSceneConfirmationAlert.addAction(cancelOption)
+        
+        self.present(deleteSceneConfirmationAlert, animated: true, completion: nil)
     }
 }
 
