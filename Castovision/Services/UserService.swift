@@ -45,10 +45,14 @@ class UserService {
                         if let data = document.data() {
                             
                             self.currentUser.id = userId
-                            self.currentUser.name = data["name"] as? String ?? "Name not found"
+                            self.currentUser.name = data["profileName"] as? String ?? "Name not found"
                             self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
-                            self.currentUser.accountCreatedDate = data["accountCreatedDate"] as? Date ?? nil
-                            self.currentUser.storageGigabytesRemaining = data["storageGigabytesRemaining"] as? Double ?? 0.0
+                            guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
+                                completion(false)
+                                return
+                            }
+                            self.currentUser.accountCreatedDate = timeStamp.dateValue()
+                            self.currentUser.storageGigabytesRemaining = data["storageMegabytesRemaining"] as? Double ?? 0.0
                             
                             /*-- profile image --*/
                             do {
@@ -86,7 +90,8 @@ class UserService {
     func storeCurrentUserData(atUserId userId: String, withEmailAddress emailAddress: String, completion: @escaping (Bool) -> ()) {
         db.collection(_USERS).document(userId).setData([
             "emailAddress": emailAddress,
-            "storageGigabytesRemaining": 5000
+            "storageMegabytesRemaining": 5000.00,
+            "accountCreatedDate": FieldValue.serverTimestamp()
         ]) { (error) in
             if error != nil {
                 completion(false)
@@ -114,8 +119,7 @@ class UserService {
                             }
                     })
                 } else {
-                    // put a default in the store and route to that
-                    print("Couldn't save image to storage")
+                    completion(false)
                 }
             }
         } else {
@@ -141,7 +145,6 @@ class UserService {
             } else {
                 profileImageStorageRef.downloadURL(completion: { (locationUrl, error) in
                     if error != nil {
-                        print("2. \(String(describing: error?.localizedDescription))")
                         completion(false, nil)
                     } else {
                         completion(true, locationUrl?.absoluteString)

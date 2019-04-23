@@ -223,6 +223,28 @@ class AddAccountImageVC: UIViewController {
         navigateIntoMainApp()
     }
     
+    func saveProfileImageToAccount() {
+        SharedModalService.instance.showCustomOverlayModal(withMessage: "Updating Account")
+        guard let profileImage = self.profileImage else {
+            SharedModalService.instance.hideCustomOverlayModal()
+            showErrorMessage(withMessage: "We were unable to identify your selected image. Please try selecting the image again, then retry")
+            return
+        }
+        UserService.instance.updateUserData(withName: "profileImageUrl", andValue: profileImage) { (updatedSuccessfully) in
+            SharedModalService.instance.hideCustomOverlayModal()
+            if updatedSuccessfully {
+                self.navigateIntoMainApp()
+            } else {
+                self.showErrorMessage(withMessage: "We were unable to update your account with your profile image. Please try again, or click skip to have a go later on")
+            }
+        }
+    }
+    
+    func showErrorMessage(withMessage message: String) {
+        let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: message)
+        SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+    }
+    
     func navigateIntoMainApp() {
         self.navigationController?.navigateIntoMainApp()
     }
@@ -240,7 +262,7 @@ extension AddAccountImageVC: BackButtonDelegate, MainActionButtonDelegate {
         }
         
         if buttonUseType == .saveProfileImage {
-            navigateIntoMainApp()
+            saveProfileImageToAccount()
         }
     }
 }

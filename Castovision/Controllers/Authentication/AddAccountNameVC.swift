@@ -41,6 +41,18 @@ class AddAccountNameVC: UIViewController {
     
     let saveProfileNameButton = MainActionButton(buttonUseType: .unspecified, buttonTitle: "Save", buttonColour: UIColor.red, isDisabled: true)
     
+    // variables
+    var professionalName: String = "" {
+        didSet {
+            if self.professionalName.count > 0 &&
+                !self.professionalName.isValidEmail() {
+                saveProfileNameButton.enableButton()
+            } else {
+                saveProfileNameButton.disableButton()
+            }
+        }
+    }
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -51,9 +63,13 @@ class AddAccountNameVC: UIViewController {
         lockDeviceVertically()
         handleChildDelegates()
         anchorSubviews()
+        
+        /*-- disable the name button by default --*/
+        saveProfileNameButton.disableButton()
     }
     
     func handleChildDelegates() {
+        nameInputView.delegate = self
         saveProfileNameButton.delegate = self
     }
     
@@ -81,7 +97,27 @@ class AddAccountNameVC: UIViewController {
 // button delegate methods
 extension AddAccountNameVC: MainActionButtonDelegate {
     func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
-        let addAccountImageVC = AddAccountImageVC()
-        self.navigationController?.pushViewController(addAccountImageVC, animated: true)
+        SharedModalService.instance.showCustomOverlayModal(withMessage: "Updating Account")
+        UserService.instance.updateUserData(withName: "profileName", andValue: self.professionalName) { (didSaveSuccessfully) in
+            SharedModalService.instance.hideCustomOverlayModal()
+            if didSaveSuccessfully {
+                let addAccountImageVC = AddAccountImageVC()
+                self.navigationController?.pushViewController(addAccountImageVC, animated: true)
+            } else {
+                let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: "We were unable to save your name to your account. Please try again")
+                SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+            }
+        }
+    }
+}
+
+// input delegate methods
+extension AddAccountNameVC: CustomInputViewDelegate {
+    func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
+        self.professionalName = inputValue
+    }
+    
+    func inputClearButtonPressed(inputType: CustomInputType) {
+        self.professionalName = ""
     }
 }
