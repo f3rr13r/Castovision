@@ -117,7 +117,23 @@ class VideoHelperMethodsService {
         else {
             print("TrimVideo - Could not find a suitable export preset for the input video")
             let error = NSError(domain: "com.bighug.ios", code: -1, userInfo: nil)
+            print(error)
             completion(nil, false)
         }
+    }
+    
+    func getVideoFileSizeInMegabytes(withVideoURL videoURL: URL) -> Double {
+        let videoFilePath = videoURL.path
+        
+        do {
+            let attribute = try FileManager.default.attributesOfItem(atPath: videoFilePath)
+            if let size = attribute[FileAttributeKey.size] as? NSNumber {
+                return size.doubleValue / 1000000.0
+            }
+        } catch {
+            print("File size error: \(error)")
+        }
+        
+        return 0.0
     }
 }

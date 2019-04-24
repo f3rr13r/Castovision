@@ -15,13 +15,15 @@ struct User {
     var profileImage: UIImage?
     var accountCreatedDate: Date?
     var storageGigabytesRemaining: Double?
+    var savedEmailAddresses: [String]?
     
-    init(id: String? = nil, name: String? = nil, emailAddress: String? = nil, profileImage: UIImage? = nil, accountCreatedDate: Date? = nil, storageGigabytesRemaining: Double? = nil) {
+    init(id: String? = nil, name: String? = nil, emailAddress: String? = nil, profileImage: UIImage? = nil, accountCreatedDate: Date? = nil, storageGigabytesRemaining: Double? = nil, savedEmailAddresses: [String]? = nil) {
         self.id = id
         self.name = name
         self.emailAddress = emailAddress
         self.profileImage = profileImage
         self.accountCreatedDate = accountCreatedDate
         self.storageGigabytesRemaining = storageGigabytesRemaining
+        self.savedEmailAddresses = savedEmailAddresses
     }
 }

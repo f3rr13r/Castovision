@@ -14,25 +14,27 @@ struct Project {
     var projectName: String?
     var projectPassword: String?
     var scenes: [Scene]?
+    var numberOfViews: Int?
+    var currentMailingList: [String]?
     
-    init(timeStamp: Date? = nil, ownerId: String? = nil, projectName: String? = nil, projectPassword: String? = nil, scenes: [Scene]? = nil) {
-        self.timeStamp = nil
-        self.ownerId = nil
-        self.projectName = nil
-        self.projectPassword = nil
-        self.scenes = nil
+    init(timeStamp: Date? = nil, ownerId: String? = nil, projectName: String? = nil, projectPassword: String? = nil, scenes: [Scene]? = nil, numberOfViews: Int? = nil, currentMailingList: [String]? = []) {
+        self.timeStamp = timeStamp
+        self.ownerId = ownerId
+        self.projectName = projectName
+        self.projectPassword = projectPassword
+        self.scenes = scenes
+        self.numberOfViews = numberOfViews
+        self.currentMailingList = currentMailingList
     }
 }
 
 struct Scene {
     var sceneNumber: Int?
     var takes: [Take]?
-    var numberOfViews: Int?
     
-    init(sceneNumber: Int? = nil, takes: [Take]? = nil, numberOfViews: Int? = nil) {
+    init(sceneNumber: Int? = nil, takes: [Take]? = nil) {
         self.sceneNumber = sceneNumber
         self.takes = takes
-        self.numberOfViews = numberOfViews
     }
 }
 
@@ -41,11 +43,12 @@ struct Take {
     var videoUrl: URL?
     var videoDuration: Double?
     var numberOfViews: Int?
+    var fileSize: Double?
     
-    init(videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, numberOfViews: Int? = nil) {
+    init(videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, fileSize: Double? = nil) {
         self.videoThumbnailUrl = videoThumbnailUrl
         self.videoUrl = videoUrl
         self.videoDuration = videoDuration
-        self.numberOfViews = numberOfViews
+        self.fileSize = fileSize
     }
 }

@@ -174,11 +174,15 @@ class EditSceneTakeVC: UIViewController {
         DispatchQueue.main.async {
             if let videoUrl = self._take.videoUrl {
                 let videoAsset = AVAsset(url: videoUrl)
-                
-                self.trimmerView.asset = videoAsset
                 self.trimmerView.delegate = self
+                
+                /*-- min and max durations need to be set before the trimmer view
+                     asset is established itself --*/
                 self.trimmerView.minDuration = 0.0
                 self.trimmerView.maxDuration = videoAsset.duration.seconds
+                
+                /*-- set the trimmer view asset --*/
+                self.trimmerView.asset = videoAsset
             }
         }
     }
@@ -204,11 +208,13 @@ class EditSceneTakeVC: UIViewController {
                         if didCropSuccessfully {
                             DispatchQueue.main.async {
                                 self._take.videoUrl = croppedVideo
+                                self._take.fileSize = VideoHelperMethodsService.instance.getVideoFileSizeInMegabytes(withVideoURL: self._take.videoUrl!)
                                 self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
                             }
                         }
                     })
                 } else {
+                    self._take.fileSize = VideoHelperMethodsService.instance.getVideoFileSizeInMegabytes(withVideoURL: self._take.videoUrl!)
                     self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
                 }
             })

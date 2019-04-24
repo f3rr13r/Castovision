@@ -47,6 +47,7 @@ class UserService {
                             self.currentUser.id = userId
                             self.currentUser.name = data["profileName"] as? String ?? "Name not found"
                             self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
+                            self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
                             guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
                                 completion(false)
                                 return

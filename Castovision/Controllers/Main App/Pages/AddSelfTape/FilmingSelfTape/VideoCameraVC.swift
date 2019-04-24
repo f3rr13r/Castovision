@@ -210,7 +210,7 @@ class VideoCameraVC: UIViewController {
     }
     
     func navigateToEditSceneVC(withVideoURL videoURL: URL) {
-        let take = Take(videoUrl: videoURL, numberOfViews: 0)
+        let take = Take(videoUrl: videoURL)
         let editSceneTakeVC = EditSceneTakeVC(take: take, sceneNumber: self._sceneNumber)
         self.navigationController?.pushViewController(editSceneTakeVC, animated: true)
     }

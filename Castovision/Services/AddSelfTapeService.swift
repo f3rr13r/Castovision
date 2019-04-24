@@ -19,7 +19,7 @@ class AddSelfTapeService {
     func initializeNewSelfTapeProject() {
         self._selfTapeProject = Project()
         self._selfTapeProject.scenes = []
-        let scene: Scene = Scene(sceneNumber: 1, takes: [], numberOfViews: nil)
+        let scene: Scene = Scene(sceneNumber: 1, takes: [])
         self._selfTapeProject.scenes?.append(scene)
     }
     
@@ -37,9 +37,14 @@ class AddSelfTapeService {
         completion()
     }
     
+    func updateProjectEmailAddressList(withMailingList mailingList: [String], completion: updateCompletion) {
+        _selfTapeProject.currentMailingList = mailingList
+        completion()
+    }
+    
     func addNewProjectScene(completion: (Project) -> ()) {
         let newSceneNumber = self._selfTapeProject.scenes!.count + 1
-        let newScene = Scene(sceneNumber: newSceneNumber, takes: [], numberOfViews: nil)
+        let newScene = Scene(sceneNumber: newSceneNumber, takes: [])
         self._selfTapeProject.scenes?.append(newScene)
         completion(self._selfTapeProject)
     }
@@ -78,6 +83,11 @@ class AddSelfTapeService {
                 }
             }
         }
+    }
+    
+    /*-- upload to the firestore and firebase storage bucket --*/
+    func upload(selfTapeProject: Project, withMailingList mailingList: [String], completion: (Bool) -> ()) {
+        /*-- do something here --*/
     }
 }
 

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import UICircularProgressRing
 
 private let sceneHeaderCellId: String = "sceneHeaderCellId"
 private let projectSceneTakeCellId: String = "projectSceneCellId"
@@ -14,6 +15,40 @@ private let sceneFooterCellId: String = "sceneFooterCellId"
 private let extendedSceneFooterCellId: String = "extendedSceneFooterCellId"
 
 class AddProjectScenesVC: UIViewController {
+    let availableGigabytesContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = lightGrey
+        return view
+    }()
+    
+    let buyMoreStorageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Buy More", for: .normal)
+        button.setTitleColor(UIColor.white, for: .normal)
+        button.backgroundColor = UIColor.red
+        button.titleLabel?.font = defaultButtonFont
+        button.layer.cornerRadius = 4.0
+        button.contentEdgeInsets = UIEdgeInsets(top: 4.0, left: 16.0, bottom: 4.0, right: 16.0)
+        button.addTarget(self, action: #selector(buyMoreStorage), for: .touchUpInside)
+        return button
+    }()
+    
+    let remainingStorageTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Available Storage"
+        label.font = smallContentFont
+        label.textColor = darkGrey
+        return label
+    }()
+    
+    let remainingStorageLabel: UILabel = {
+        let label = UILabel()
+        label.font = smallTitleFont
+        label.textColor = UIColor.black
+        label.text = "-"
+        return label
+    }()
+    
     lazy var projectScenesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -33,10 +68,13 @@ class AddProjectScenesVC: UIViewController {
     var needsScrollingAnimation: Bool = false
     var selfTapeProject: Project = Project() {
         didSet {
+            updateAvailableStorageBar()
             checkCurrentSelfTapeProjectState()
             updateCollectionViewState()
         }
     }
+    var remainingStorage: Double = UserService.instance.currentUser.storageGigabytesRemaining!
+    var fileSizeTotal: Double = 0
     
     var canEnableSaveButton: Bool = false {
         didSet {
@@ -79,9 +117,10 @@ class AddProjectScenesVC: UIViewController {
                 return
             }
             
-            if sceneTakes.count > 0 {
+            if sceneTakes.count > 0 && self.remainingStorage > 0.0 {
                 canEnableSaveButton = true
-                return
+            } else {
+                canEnableSaveButton = false
             }
         })
     }
@@ -89,26 +128,57 @@ class AddProjectScenesVC: UIViewController {
     func updateCollectionViewState() {
         self.projectScenesCollectionView.reloadData()
         self.projectScenesCollectionView.invalidateIntrinsicContentSize()
-        if self.needsScrollingAnimation {
-            DispatchQueue.main.async {
-                self.projectScenesCollectionView.scrollToBottomSection()
-            }
-        }
+    }
+    
+    func updateAvailableStorageBar() {
+        fileSizeTotal = 0
+        
+        selfTapeProject.scenes?.forEach({ (scene) in
+            scene.takes?.forEach({ (take) in
+                guard let fileSize = take.fileSize else { return }
+                fileSizeTotal += fileSize
+            })
+        })
+        
+        let fileSizeTotalCGFloat = CGFloat(fileSizeTotal)
+        let remainingStorage: CGFloat = CGFloat(self.remainingStorage) - (fileSizeTotalCGFloat.rounded(toPlaces: 1))
+        self.remainingStorage = Double(remainingStorage)
+        let remainingStorageTrimmed: CGFloat = (remainingStorage / 1000).rounded(toPlaces: 2)
+        
+
+        remainingStorageLabel.text = "\(remainingStorageTrimmed)gb"
     }
     
     func addNavigationRightButton() {
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .done, target: self, action: #selector(saveSelfTapeProject))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(nextButtonPressed))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         self.navigationItem.rightBarButtonItem?.isEnabled = false
     }
 
     func anchorSubviews() {
+        self.view.addSubview(availableGigabytesContainerView)
+        availableGigabytesContainerView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil)
+        
+        availableGigabytesContainerView.addSubview(remainingStorageTitleLabel)
+        remainingStorageTitleLabel.anchor(withTopAnchor: availableGigabytesContainerView.topAnchor, leadingAnchor: availableGigabytesContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 12.0, left: horizontalPadding, bottom: 0.0, right: 0.0))
+        
+        availableGigabytesContainerView.addSubview(remainingStorageLabel)
+        remainingStorageLabel.anchor(withTopAnchor: remainingStorageTitleLabel.bottomAnchor, leadingAnchor: availableGigabytesContainerView.leadingAnchor, bottomAnchor: availableGigabytesContainerView.bottomAnchor, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: -12.0, right: 0.0))
+        
+        availableGigabytesContainerView.addSubview(buyMoreStorageButton)
+        buyMoreStorageButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: availableGigabytesContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: remainingStorageLabel.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -horizontalPadding))
+        
         self.view.addSubview(projectScenesCollectionView)
-        projectScenesCollectionView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
+        projectScenesCollectionView.anchor(withTopAnchor: availableGigabytesContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
     }
     
-    @objc func saveSelfTapeProject() {
-        
+    @objc func buyMoreStorage() {
+        /*-- buy here --*/
+    }
+    
+    @objc func nextButtonPressed() {
+        let addProjectMailingListVC = AddProjectMailingListVC()
+        self.navigationController?.pushViewController(addProjectMailingListVC, animated: true)
     }
 }
 
