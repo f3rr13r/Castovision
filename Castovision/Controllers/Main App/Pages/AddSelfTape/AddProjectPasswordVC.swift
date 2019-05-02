@@ -9,6 +9,13 @@
 import UIKit
 
 class AddProjectPasswordVC: UIViewController {
+    
+    let backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "loading-background")
+        return iv
+    }()
 
     let instructionLabel: UILabel = {
         let label = UILabel()
@@ -62,6 +69,9 @@ class AddProjectPasswordVC: UIViewController {
     }
     
     func anchorSubviews() {
+        self.view.addSubview(backgroundImageView)
+        backgroundImageView.fillSuperview()
+        
         self.view.addSubview(instructionLabel)
         instructionLabel.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         

@@ -15,9 +15,23 @@ private let sceneFooterCellId: String = "sceneFooterCellId"
 private let extendedSceneFooterCellId: String = "extendedSceneFooterCellId"
 
 class AddProjectScenesVC: UIViewController {
+    
+    // views
+    let backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "loading-background")
+        return iv
+    }()
+    
     let availableGigabytesContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = lightGrey
+        view.layer.shadowColor = darkGrey.cgColor
+        view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        view.layer.shadowRadius = 6.0
+        view.layer.shadowOpacity = 0.25
+        view.layer.masksToBounds = false
         return view
     }()
     
@@ -156,6 +170,9 @@ class AddProjectScenesVC: UIViewController {
     }
 
     func anchorSubviews() {
+        self.view.addSubview(backgroundImageView)
+        backgroundImageView.fillSuperview()
+        
         self.view.addSubview(availableGigabytesContainerView)
         availableGigabytesContainerView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil)
         
@@ -166,7 +183,7 @@ class AddProjectScenesVC: UIViewController {
         remainingStorageLabel.anchor(withTopAnchor: remainingStorageTitleLabel.bottomAnchor, leadingAnchor: availableGigabytesContainerView.leadingAnchor, bottomAnchor: availableGigabytesContainerView.bottomAnchor, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: -12.0, right: 0.0))
         
         availableGigabytesContainerView.addSubview(buyMoreStorageButton)
-        buyMoreStorageButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: availableGigabytesContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: remainingStorageLabel.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -horizontalPadding))
+        buyMoreStorageButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: availableGigabytesContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: availableGigabytesContainerView.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -horizontalPadding))
         
         self.view.addSubview(projectScenesCollectionView)
         projectScenesCollectionView.anchor(withTopAnchor: availableGigabytesContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil)

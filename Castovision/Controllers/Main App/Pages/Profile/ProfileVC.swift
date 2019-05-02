@@ -10,13 +10,21 @@ import UIKit
 import UICircularProgressRing
 
 class ProfileVC: UIViewController {
-
+    
     // views
+    let backgroundImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.image = #imageLiteral(resourceName: "loading-background")
+        return iv
+    }()
+    
     let topContainerView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.borderWidth = 0.5
         view.layer.borderColor = grey.cgColor
+        view.layer.cornerRadius = 6.0
         return view
     }()
     
@@ -74,6 +82,7 @@ class ProfileVC: UIViewController {
         view.backgroundColor = .white
         view.layer.borderWidth = 0.5
         view.layer.borderColor = grey.cgColor
+        view.layer.cornerRadius = 6.0
         return view
     }()
     
@@ -189,6 +198,7 @@ class ProfileVC: UIViewController {
         self.configureNavigationBar(withTitle: "Profile", withSearchBar: false)
         getUserData()
         anchorSubviews()
+        setupViewShadowing()
     }
     
     func getUserData() {
@@ -196,8 +206,11 @@ class ProfileVC: UIViewController {
     }
     
     func anchorSubviews() {
+        self.view.addSubview(backgroundImageView)
+        backgroundImageView.fillSuperview()
+        
         self.view.addSubview(topContainerView)
-        topContainerView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: -1.0, bottom: 0.0, right: 1.0))
+        topContainerView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: horizontalPadding, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         
         topContainerView.addSubview(accountDetailsLabel)
         accountDetailsLabel.anchor(withTopAnchor: topContainerView.topAnchor, leadingAnchor: topContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: topContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
@@ -221,7 +234,7 @@ class ProfileVC: UIViewController {
         profileAccountCreatedLabel.anchor(withTopAnchor: accountCreatedTitleLabel.bottomAnchor, leadingAnchor: topTextContainerView.leadingAnchor, bottomAnchor:topTextContainerView.bottomAnchor, trailingAnchor: topTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil)
         
         self.view.addSubview(gigabytesRemainingContainerView)
-        gigabytesRemainingContainerView.anchor(withTopAnchor: topContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: -1.0, bottom: 0.0, right: 1.0))
+        gigabytesRemainingContainerView.anchor(withTopAnchor: topContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         
         gigabytesRemainingContainerView.addSubview(gigabytesUsageTitleLabel)
         gigabytesUsageTitleLabel.anchor(withTopAnchor: gigabytesRemainingContainerView.topAnchor, leadingAnchor: gigabytesRemainingContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
@@ -246,6 +259,17 @@ class ProfileVC: UIViewController {
         
         storageTextContainerView.addSubview(remainingGigabytesLabel)
         remainingGigabytesLabel.anchor(withTopAnchor: remainingGigabytesTitleLabel.bottomAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: storageTextContainerView.bottomAnchor, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
+    }
+    
+    func setupViewShadowing() {
+        let viewsToShadow: [UIView] = [topContainerView, gigabytesRemainingContainerView]
+        viewsToShadow.forEach { (view) in
+            view.layer.shadowColor = darkGrey.cgColor
+            view.layer.shadowOffset = CGSize(width: 0, height: 2.0)
+            view.layer.shadowRadius = 6.0
+            view.layer.shadowOpacity = 0.2
+            view.layer.masksToBounds = false
+        }
     }
     
     @objc func buyMoreStorage() {
