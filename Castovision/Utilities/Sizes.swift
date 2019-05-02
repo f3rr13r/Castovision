@@ -23,11 +23,12 @@ let safeAreaScreenHeight: CGFloat = screenHeight - (safeAreaTopPadding + safeAre
 let horizontalPadding: CGFloat = 20.0
 
 // specific custom sizing
-let feedCellWidth: CGFloat = screenWidth - (horizontalPadding * 2.0)
-let feedCellHeight: CGFloat = screenWidth * 0.6
-
 let projectSceneCellContentWidth: CGFloat = screenWidth - (horizontalPadding * 2.0)
 let projectSceneCellContentHeight: CGFloat = projectSceneCellContentWidth * 0.6
+
+let feedCellWidth: CGFloat = projectSceneCellContentWidth
+let feedCellThumbnailImageHeight: CGFloat = projectSceneCellContentHeight
+let feedCellHeight: CGFloat = projectSceneCellContentHeight + 54.0
 
 let projectSceneCellWidth: CGFloat = projectSceneCellContentWidth
 let projectSceneCellHeight: CGFloat = (projectSceneCellContentWidth * 0.6) + 20.0

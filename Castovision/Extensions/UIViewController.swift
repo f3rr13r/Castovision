@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    func configureNavigationBar(withTitle title: String, withSearchBar needsSearchBar: Bool) {
+    func configureNavigationBar(withTitle title: String, withSearchBar needsSearchBar: Bool, withSearchResultsController searchResultsController: UIViewController? = nil) {
         
         /*-- set the title --*/
         self.navigationItem.title = title
@@ -21,10 +21,14 @@ extension UIViewController {
         logoImageView.image = #imageLiteral(resourceName: "logo-padded")
         self.navigationItem.titleView = logoImageView
         
-        /*-- search bar (optional) --*/
+        /*-- search bar (optional -- found only on FeedVC) --*/
         if needsSearchBar {
-            let searchController = UISearchController(searchResultsController: nil)
+            guard let searchResultsController = searchResultsController else { return }
+            let searchController = UISearchController(searchResultsController: searchResultsController)
+            searchController.searchResultsUpdater = searchResultsController as? UISearchResultsUpdating
             searchController.searchBar.sizeToFit()
+            searchController.searchBar.returnKeyType = .done
+            searchController.searchBar.keyboardAppearance = .dark
             searchController.delegate = self as? UISearchControllerDelegate
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.placeholder = "Search by project name..."
@@ -43,3 +47,4 @@ extension UIViewController {
         appDelegate.updateDeviceOrientation(toOrientation: .portrait)
     }
 }
+

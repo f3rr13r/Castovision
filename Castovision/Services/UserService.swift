@@ -23,6 +23,12 @@ class UserService {
         db.settings = settings
     }
     
+    // typealiases
+    typealias failedCompletion = (String) -> ()
+    typealias successCompletion = ([Project]) -> ()
+    typealias scenesSuccessCompletion = ([Scene]) -> ()
+    typealias takesSuccessCompletion = ([Take]) -> ()
+    
     // store current user
     var currentUser = User()
     
@@ -80,6 +86,138 @@ class UserService {
                         completion(false)
                     }
                 }
+            }
+        }
+    }
+    
+    func getCurrentUserAuditions(failedCompletion: @escaping failedCompletion, successCompletion: @escaping successCompletion) {
+        guard let userId = UserDefaults.standard.object(forKey: "userId") as? String else {
+            failedCompletion("Something went wrong when attempting to retrieve your audition projects. Refresh the page by swiping down")
+            return
+        }
+        
+        var auditionProjects: [Project] = []
+        
+        let auditionTapesRef = db.collection(_AUDITION_TAPES)
+        let currentUserAuditionTapeDocuments = auditionTapesRef.whereField(_OWNER_ID, isEqualTo: userId)
+        currentUserAuditionTapeDocuments.getDocuments { (querySnapshot, error) in
+            if error != nil {
+                // completion(someting bad)
+            } else {
+                if let documents = querySnapshot?.documents {
+                    let auditionProjectsCount: Int = documents.count
+                    var updatedProjectsCount: Int = 0
+                    
+                    documents.forEach({ (documentSnapshot) in
+                        let documentData = documentSnapshot.data()
+                        var useableTimeStamp: Date = Date()
+                        if let serverTimeStamp = documentData["createdDate"] as? Timestamp {
+                            useableTimeStamp = serverTimeStamp.dateValue()
+                        }
+                        
+                        /*-- initialzie project --*/
+                        var auditionProject = Project(
+                            timeStamp: useableTimeStamp,
+                            ownerId: userId,
+                            projectName: documentData["projectName"] as? String ?? "No project name found",
+                            projectPassword: documentData["projectPassword"] as? String ?? "No project password found",
+                            scenes: [],
+                            numberOfViews: documentData["numberOfViews"] as? Int ?? 0,
+                            currentMailingList: []
+                        )
+                        
+                        guard let scenesObjectData = documentData["scenes"] as? [[String: Any]] else {
+                            print("Something went wrong")
+                            return
+                        }
+                        
+                        /*-- model the scenes data into something workable --*/
+                        self.modelSceneObjectDataToAuditionScenes(withObjectData: scenesObjectData, failedCompletion: { (failedMessage) in
+                            failedCompletion(failedMessage)
+                        }, successCompletion: { (scenes) in
+                            auditionProject.scenes = scenes
+                            
+                            auditionProjects.append(auditionProject)
+                            
+                            updatedProjectsCount += 1
+                            if updatedProjectsCount == auditionProjectsCount {
+                                successCompletion(auditionProjects)
+                            }
+                        })
+                    })
+                }
+            }
+        }
+    }
+    
+    func modelSceneObjectDataToAuditionScenes(withObjectData objectData: [[String: Any]], failedCompletion: @escaping failedCompletion, successCompletion: scenesSuccessCompletion) {
+        var scenes: [Scene] = []
+        
+        let scenesCount = objectData.count
+        var updatedScenesCount = 0
+        
+        for sceneObjectData in objectData {
+            guard let sceneNumber = sceneObjectData["sceneNumber"] as? Int,
+                let sceneTakesObjectData = sceneObjectData["takes"] as? [[String: Any]] else {
+                    failedCompletion("Failed to get scene data")
+                    return
+            }
+            var scene: Scene = Scene(sceneNumber: sceneNumber, takes: [])
+            
+            /*-- model the takes data into something workable --*/
+            modelTaskObjectDataToTakes(withObjectData: sceneTakesObjectData, failedCompletion: { (failedMessage) in
+                failedCompletion(failedMessage)
+            }) { (takes) in
+                scene.takes = takes
+                scenes.append(scene)
+                
+                updatedScenesCount += 1
+                if updatedScenesCount == scenesCount {
+                    successCompletion(scenes)
+                }
+            }
+        }
+    }
+    
+    func modelTaskObjectDataToTakes(withObjectData objectData: [[String: Any]], failedCompletion: @escaping failedCompletion, successCompletion: takesSuccessCompletion) {
+        var takes: [Take] = []
+        
+        let takesCount = objectData.count
+        var updatedTakesCount = 0
+        
+        for takeObjectData in objectData {
+            
+            // get the basic data
+            guard let fileSize = takeObjectData["fileSize"] as? Double,
+                let videoDuration = takeObjectData["videoDuration"] as? Double,
+                let videoUrlString = takeObjectData["videoUrl"] as? String,
+                let videoThumbnailUrlString = takeObjectData["videoThumbnailUrl"] as? String,
+                let videoUrl = URL(string: videoUrlString),
+                let videoThumbnailUrl = URL(string: videoThumbnailUrlString) else {
+                    failedCompletion("Failed to get scene take data")
+                    return
+            }
+            
+            // make data from the video thumbnail url
+            do {
+                let videoThumbnailUrlData = try Data(contentsOf: videoThumbnailUrl)
+                
+                let take: Take = Take(
+                    videoThumbnailUrl: videoThumbnailUrlData,
+                    videoUrl: videoUrl,
+                    videoDuration: videoDuration,
+                    fileSize: fileSize
+                )
+                
+                takes.append(take)
+                
+                updatedTakesCount += 1
+                if takesCount == updatedTakesCount {
+                    successCompletion(takes)
+                }
+                
+            } catch let error {
+                failedCompletion(error.localizedDescription)
             }
         }
     }

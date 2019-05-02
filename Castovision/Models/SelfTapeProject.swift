@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Project {
+struct Project: Encodable {
     var timeStamp: Date?
     var ownerId: String?
     var projectName: String?
@@ -28,7 +28,7 @@ struct Project {
     }
 }
 
-struct Scene {
+struct Scene: Encodable {
     var sceneNumber: Int?
     var takes: [Take]?
     
@@ -38,7 +38,7 @@ struct Scene {
     }
 }
 
-struct Take {
+struct Take: Encodable {
     var videoThumbnailUrl: Data?
     var videoUrl: URL?
     var videoDuration: Double?

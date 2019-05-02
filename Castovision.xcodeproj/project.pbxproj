@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A0FD5AE227702D9002D1CBD /* UploadStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */; };
+		4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1639912278AC950039890A /* FeedSearchVC.swift */; };
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
 		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
 		4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBD2253761800F76E1B /* ProfileVC.swift */; };
@@ -24,6 +26,7 @@
 		4A3EE312227074AE0081E332 /* SavedEmailAddressesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE311227074AE0081E332 /* SavedEmailAddressesVC.swift */; };
 		4A3EE314227081980081E332 /* SavedAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE313227081980081E332 /* SavedAddressCell.swift */; };
 		4A3EE31622709F1D0081E332 /* EmailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE31522709F1D0081E332 /* EmailAddressCell.swift */; };
+		4A3EE3182271BA4B0081E332 /* UploadProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE3172271BA4B0081E332 /* UploadProjectVC.swift */; };
 		4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB4224DA281008493CB /* MainActionButton.swift */; };
 		4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB6224DA9C9008493CB /* Sizes.swift */; };
 		4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB8224DACBC008493CB /* SignupVC.swift */; };
@@ -58,6 +61,7 @@
 		4A8F5BFB225BAD4400C4FF8B /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */; };
 		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
 		4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */; };
+		4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF11842277572C0047FC31 /* FeedCell.swift */; };
 		4AC356DF22672F5F005DBBBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC356DE22672F5F005DBBBD /* User.swift */; };
 		4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27142265F19D00649F2B /* TakeViewerVC.swift */; };
 		4ADA27172266279A00649F2B /* AddProjectPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27162266279A00649F2B /* AddProjectPassword.swift */; };
@@ -79,6 +83,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadStatus.swift; sourceTree = "<group>"; };
+		4A1639912278AC950039890A /* FeedSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchVC.swift; sourceTree = "<group>"; };
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
 		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
 		4A36DBBD2253761800F76E1B /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -96,6 +102,7 @@
 		4A3EE311227074AE0081E332 /* SavedEmailAddressesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedEmailAddressesVC.swift; sourceTree = "<group>"; };
 		4A3EE313227081980081E332 /* SavedAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedAddressCell.swift; sourceTree = "<group>"; };
 		4A3EE31522709F1D0081E332 /* EmailAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressCell.swift; sourceTree = "<group>"; };
+		4A3EE3172271BA4B0081E332 /* UploadProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProjectVC.swift; sourceTree = "<group>"; };
 		4A56CEB4224DA281008493CB /* MainActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButton.swift; sourceTree = "<group>"; };
 		4A56CEB6224DA9C9008493CB /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
 		4A56CEB8224DACBC008493CB /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
@@ -132,6 +139,7 @@
 		4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
 		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
 		4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFilmingNavigationVC.swift; sourceTree = "<group>"; };
+		4AAF11842277572C0047FC31 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4AC356DE22672F5F005DBBBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4ADA27142265F19D00649F2B /* TakeViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewerVC.swift; sourceTree = "<group>"; };
 		4ADA27162266279A00649F2B /* AddProjectPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectPassword.swift; sourceTree = "<group>"; };
@@ -193,6 +201,7 @@
 				4A36DBC82253B3EA00F76E1B /* AddProjectPasswordVC.swift */,
 				4AFB2B65225535F600F99B16 /* AddProjectScenesVC.swift */,
 				4A3EE30F227063FE0081E332 /* AddProjectMailingListVC.swift */,
+				4A3EE3172271BA4B0081E332 /* UploadProjectVC.swift */,
 			);
 			path = AddSelfTape;
 			sourceTree = "<group>";
@@ -209,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				4A36DBC122538E6A00F76E1B /* FeedVC.swift */,
+				4A1639912278AC950039890A /* FeedSearchVC.swift */,
 			);
 			path = Feed;
 			sourceTree = "<group>";
@@ -290,6 +300,7 @@
 				4ADA27162266279A00649F2B /* AddProjectPassword.swift */,
 				4ADA271C2266349500649F2B /* AuthenticationModels.swift */,
 				4AC356DE22672F5F005DBBBD /* User.swift */,
+				4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -384,6 +395,7 @@
 				4AFB2B6D225617F200F99B16 /* SceneTakeCell.swift */,
 				4A3EE313227081980081E332 /* SavedAddressCell.swift */,
 				4A3EE31522709F1D0081E332 /* EmailAddressCell.swift */,
+				4AAF11842277572C0047FC31 /* FeedCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -536,6 +548,7 @@
 				"${BUILT_PRODUCTS_DIR}/CameraManager/CameraManager.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/MarqueeLabel/MarqueeLabel.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
@@ -551,6 +564,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CameraManager.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MarqueeLabel.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
@@ -576,6 +590,7 @@
 				4ADA272122663A0A00649F2B /* Routes.swift in Sources */,
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */,
+				4A0FD5AE227702D9002D1CBD /* UploadStatus.swift in Sources */,
 				4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */,
 				4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */,
 				4A67BC70225E3FA400939469 /* UIButton.swift in Sources */,
@@ -594,6 +609,7 @@
 				4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4ADA271B226633A800649F2B /* AuthService.swift in Sources */,
+				4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */,
 				4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */,
 				4A3EE312227074AE0081E332 /* SavedEmailAddressesVC.swift in Sources */,
 				4A3EE310227063FE0081E332 /* AddProjectMailingListVC.swift in Sources */,
@@ -617,12 +633,14 @@
 				4A3EE314227081980081E332 /* SavedAddressCell.swift in Sources */,
 				4A56CEBB224DAD79008493CB /* MainActionButtonType.swift in Sources */,
 				4A56CEBF224DB7B5008493CB /* BackButton.swift in Sources */,
+				4A3EE3182271BA4B0081E332 /* UploadProjectVC.swift in Sources */,
 				4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */,
 				4A36DBCD2253BD8500F76E1B /* BaseCell.swift in Sources */,
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
 				4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */,
 				4A3EE30C2268E7AA0081E332 /* CustomErrorMessageModal.swift in Sources */,
+				4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */,
 				4A3EE30E226F67390081E332 /* CGFloat.swift in Sources */,
 				4A3EE31622709F1D0081E332 /* EmailAddressCell.swift in Sources */,
 				4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */,

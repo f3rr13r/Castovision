@@ -170,7 +170,8 @@ class AddProjectMailingListVC: UIViewController {
     }
     
     @objc func sendSelfTapeProject() {
-        // do something here
+        let uploadingProjectVC = UploadProjectVC()
+        self.navigationController?.pushViewController(uploadingProjectVC, animated: true)
     }
     
     func anchorSubviews() {

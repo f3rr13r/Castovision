@@ -56,6 +56,26 @@ class LoginVC: UIViewController {
         return false
     }
     
+//    override func loadView() {
+//        super.loadView()
+//        // check if user is already logged in. if they are then go straight into
+//        // main app
+//        if UserDefaults.standard.object(forKey: "userId") != nil {
+//            self.navigationController?.navigateIntoMainApp(withAnimation: false)
+//        }
+//    }
+    
+    override func loadView() {
+        super.loadView()
+        /*--
+         check if we user is already logged in, and if so
+         then navigate into the main app
+        --*/
+        if UserDefaults.standard.object(forKey: "userId") != nil {
+            self.navigationController?.navigateIntoMainApp(withAnimation: true)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
