@@ -192,7 +192,7 @@ class FeedCell: BaseCell {
         // cell shadowing
         layer.shadowColor = darkGrey.cgColor
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        layer.shadowRadius = 8.0
+        layer.shadowRadius = 4.0
         layer.shadowOpacity = 0.2
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath

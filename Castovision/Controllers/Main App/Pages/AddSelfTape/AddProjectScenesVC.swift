@@ -51,7 +51,6 @@ class AddProjectScenesVC: UIViewController {
     
     lazy var projectScenesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.delegate = self

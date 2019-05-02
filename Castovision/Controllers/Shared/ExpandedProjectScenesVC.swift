@@ -22,7 +22,6 @@ class ExpandedProjectScenesVC: UIViewController {
     private let _takeCellId: String = "takeCellId"
     lazy var scenesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionHeadersPinToVisibleBounds = true
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.delegate = self

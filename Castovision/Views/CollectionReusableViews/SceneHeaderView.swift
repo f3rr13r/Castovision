@@ -52,7 +52,7 @@ class SceneHeaderView: BaseReusableView {
     
     override func setupViews() {
         super.setupViews()
-        self.backgroundColor = .white
+        //self.backgroundColor = .white
         anchorChildViews()
     }
     
