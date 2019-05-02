@@ -32,7 +32,7 @@ class AddNewSceneTakeFooterView: BaseReusableView {
     
     func anchorSubviews() {
         addSubview(addNewSceneTakeView)
-        addNewSceneTakeView.anchor(withTopAnchor: topAnchor, leadingAnchor: leadingAnchor, bottomAnchor: bottomAnchor, trailingAnchor: trailingAnchor, centreXAnchor: centerXAnchor, centreYAnchor: nil, widthAnchor: addNewSceneTakeViewWidth, heightAnchor: addNewSceneTakeViewHeight)
+        addNewSceneTakeView.anchor(withTopAnchor: topAnchor, leadingAnchor: leadingAnchor, bottomAnchor: bottomAnchor, trailingAnchor: trailingAnchor, centreXAnchor: centerXAnchor, centreYAnchor: nil, widthAnchor: addNewSceneTakeViewWidth, heightAnchor: addNewSceneTakeViewHeight, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
     }
 }
 

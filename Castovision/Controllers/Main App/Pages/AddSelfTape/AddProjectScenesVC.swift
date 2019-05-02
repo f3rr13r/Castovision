@@ -169,7 +169,7 @@ class AddProjectScenesVC: UIViewController {
         buyMoreStorageButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: availableGigabytesContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: remainingStorageLabel.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -horizontalPadding))
         
         self.view.addSubview(projectScenesCollectionView)
-        projectScenesCollectionView.anchor(withTopAnchor: availableGigabytesContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
+        projectScenesCollectionView.anchor(withTopAnchor: availableGigabytesContainerView.bottomAnchor, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: self.view.safeAreaLayoutGuide.bottomAnchor, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil)
     }
     
     @objc func buyMoreStorage() {
@@ -207,7 +207,7 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
         }
         if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item] {
             /*-- configure the cell --*/
-            sceneCell.configureCell(withTake: sceneTake, isSceneDeletable: true)
+            sceneCell.configureCell(withTake: sceneTake, takeNumber: indexPath.item + 1, isSceneDeletable: true)
             sceneCell.delegate = self
         }
         
@@ -301,7 +301,7 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
     
     // cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: projectSceneCellContentWidth, height: projectSceneCellContentHeight)
+        return CGSize(width: projectSceneCellWidth, height: projectSceneCellHeight)
     }
     
     // section cell spacing

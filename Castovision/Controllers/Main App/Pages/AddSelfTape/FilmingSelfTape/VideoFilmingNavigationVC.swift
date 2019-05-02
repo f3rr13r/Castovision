@@ -10,12 +10,9 @@ import UIKit
 
 class VideoFilmingNavigationVC: UINavigationController {
     
-//    override var shouldAutorotate: Bool {
-//        return false
-//    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = UIColor.black
         self.isNavigationBarHidden = true
         self.lockNavigtaionDeviceHorizontally()
     }

@@ -104,7 +104,7 @@ extension ExpandedProjectScenesVC: UICollectionViewDelegate, UICollectionViewDat
             let sceneTakeCell = collectionView.dequeueReusableCell(withReuseIdentifier: self._takeCellId, for: indexPath) as? SceneTakeCell else {
                 return UICollectionViewCell()
         }
-        sceneTakeCell.configureCell(withTake: take, isSceneDeletable: false)
+        sceneTakeCell.configureCell(withTake: take, takeNumber: indexPath.item + 1, isSceneDeletable: false)
         return sceneTakeCell
     }
     
@@ -135,7 +135,7 @@ extension ExpandedProjectScenesVC: UICollectionViewDelegateFlowLayout {
     
     // cell size
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: projectSceneCellContentWidth, height: projectSceneCellContentHeight)
+        return CGSize(width: projectSceneCellWidth, height: projectSceneCellHeight)
     }
     
     // section cell spacing

@@ -226,7 +226,7 @@ class FeedCell: BaseCell {
         metadataContainerView.anchor(withTopAnchor: thumbnailImageView.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: self.contentView.bottomAnchor, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         
         metadataContainerView.addSubview(sendButton)
-        sendButton.anchor(withTopAnchor: metadataContainerView.topAnchor, leadingAnchor: nil, bottomAnchor: metadataContainerView.bottomAnchor, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 12.0, left: 0.0, bottom: -12.0, right: -8.0))
+        sendButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: metadataContainerView.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -8.0))
         
         let rightPadding: CGFloat = 16.0 + sendButton.frame.width
         

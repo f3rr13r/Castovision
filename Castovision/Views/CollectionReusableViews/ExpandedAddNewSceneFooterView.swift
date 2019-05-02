@@ -33,10 +33,10 @@ class ExpandedAddNewSceneFooterView: BaseReusableView {
     
     func anchorSubviews() {
         addSubview(addNewSceneTakeView)
-        addNewSceneTakeView.anchor(withTopAnchor: topAnchor, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: addNewSceneTakeViewWidth, heightAnchor: addNewSceneTakeViewHeight)
+        addNewSceneTakeView.anchor(withTopAnchor: topAnchor, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: addNewSceneTakeViewWidth, heightAnchor: addNewSceneTakeViewHeight, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         
         addSubview(addNewSceneView)
-        addNewSceneView.anchor(withTopAnchor: addNewSceneTakeView.bottomAnchor, leadingAnchor: leadingAnchor, bottomAnchor: bottomAnchor, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: addNewSceneViewWidth, heightAnchor: addNewSceneViewHeight, padding: .init(top: 20.0, left: 0.0, bottom: -20.0, right: 0.0))
+        addNewSceneView.anchor(withTopAnchor: addNewSceneTakeView.bottomAnchor, leadingAnchor: leadingAnchor, bottomAnchor: bottomAnchor, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: addNewSceneViewWidth, heightAnchor: addNewSceneViewHeight, padding: .init(top: 20.0, left: horizontalPadding, bottom: -20.0, right: -horizontalPadding))
     }
 }
 
