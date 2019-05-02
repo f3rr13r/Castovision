@@ -16,7 +16,7 @@ class LoginVC: UIViewController {
     let backgroundImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.image = #imageLiteral(resourceName: "castovision-logo-background")
+        iv.image = #imageLiteral(resourceName: "loading-background")
         return iv
     }()
     
@@ -56,15 +56,6 @@ class LoginVC: UIViewController {
         return false
     }
     
-//    override func loadView() {
-//        super.loadView()
-//        // check if user is already logged in. if they are then go straight into
-//        // main app
-//        if UserDefaults.standard.object(forKey: "userId") != nil {
-//            self.navigationController?.navigateIntoMainApp(withAnimation: false)
-//        }
-//    }
-    
     override func loadView() {
         super.loadView()
         /*--
@@ -96,11 +87,11 @@ class LoginVC: UIViewController {
     
     func anchorSubviews() {
         self.view.addSubview(backgroundImageView)
-        backgroundImageView.anchor(withTopAnchor: nil, leadingAnchor: self.view.leadingAnchor, bottomAnchor: self.view.bottomAnchor, trailingAnchor: self.view.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: screenWidth * 1.25, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0))
+        backgroundImageView.fillSuperview()
         
         self.view.addSubview(logoImageView)
         logoImageView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: self.view.safeAreaLayoutGuide.centerXAnchor, centreYAnchor: nil, widthAnchor: 30.0, heightAnchor: 30.0, padding: .init(top: 6.0, left: 0.0, bottom: 0.0, right: 0.0))
-        
+
         self.view.addSubview(logInTitleLabel)
         logInTitleLabel.anchor(withTopAnchor: logoImageView.bottomAnchor, leadingAnchor: self.view.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 24.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
         

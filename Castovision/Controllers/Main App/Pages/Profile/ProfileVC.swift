@@ -196,9 +196,20 @@ class ProfileVC: UIViewController {
         self.view.backgroundColor = lightGrey
         lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Profile", withSearchBar: false)
+        addHiddenNavigationLeftButton()
+        addNavigationRightButton()
         getUserData()
         anchorSubviews()
         setupViewShadowing()
+    }
+    
+    func addHiddenNavigationLeftButton() {
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        self.navigationItem.leftBarButtonItem?.tintColor = .clear
+    }
+    
+    func addNavigationRightButton() {
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "settings-icon"), style: .plain, target: self, action: #selector(settingsButtonPressed))
     }
     
     func getUserData() {
@@ -270,6 +281,11 @@ class ProfileVC: UIViewController {
             view.layer.shadowOpacity = 0.2
             view.layer.masksToBounds = false
         }
+    }
+    
+    @objc func settingsButtonPressed() {
+        let settingsVC = SettingsVC()
+        self.navigationController?.pushViewController(settingsVC, animated: true)
     }
     
     @objc func buyMoreStorage() {

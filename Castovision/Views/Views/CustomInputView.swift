@@ -74,6 +74,7 @@ class CustomInputView: BaseView {
     
     let input: UITextField = {
         let textField = UITextField()
+        textField.backgroundColor = .white
         textField.layer.cornerRadius = 4.0
         textField.layer.borderWidth = 1.0
         textField.layer.borderColor = UIColor.gray.cgColor
@@ -107,7 +108,6 @@ class CustomInputView: BaseView {
     
     override func setupView() {
         super.setupView()
-        backgroundColor = .white
         setupChildDelegates()
     }
     

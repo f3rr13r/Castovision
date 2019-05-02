@@ -12,6 +12,11 @@
 		4A1175B4227B06BD0088AD6F /* ProjectViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175B3227B06BD0088AD6F /* ProjectViewerVC.swift */; };
 		4A1175B6227B07910088AD6F /* ExpandedProjectScenesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175B5227B07910088AD6F /* ExpandedProjectScenesVC.swift */; };
 		4A1175B9227B2D6B0088AD6F /* SceneTakeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175B8227B2D6B0088AD6F /* SceneTakeCell.swift */; };
+		4A1175BE227B4D520088AD6F /* SettingsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175BD227B4D520088AD6F /* SettingsVC.swift */; };
+		4A1175C0227B55170088AD6F /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175BF227B55170088AD6F /* LoadingView.swift */; };
+		4A1175C6227B6E800088AD6F /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175C5227B6E800088AD6F /* UIImageView.swift */; };
+		4A1175C8227B85DF0088AD6F /* Pacman-loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */; };
+		4A1175CA227BAEAD0088AD6F /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */; };
 		4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1639912278AC950039890A /* FeedSearchVC.swift */; };
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
 		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
@@ -91,6 +96,11 @@
 		4A1175B3227B06BD0088AD6F /* ProjectViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViewerVC.swift; sourceTree = "<group>"; };
 		4A1175B5227B07910088AD6F /* ExpandedProjectScenesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedProjectScenesVC.swift; sourceTree = "<group>"; };
 		4A1175B8227B2D6B0088AD6F /* SceneTakeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTakeCell.swift; sourceTree = "<group>"; };
+		4A1175BD227B4D520088AD6F /* SettingsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsVC.swift; sourceTree = "<group>"; };
+		4A1175BF227B55170088AD6F /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		4A1175C5227B6E800088AD6F /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
+		4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Pacman-loading.gif"; sourceTree = "<group>"; };
+		4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		4A1639912278AC950039890A /* FeedSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchVC.swift; sourceTree = "<group>"; };
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
 		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
@@ -180,6 +190,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4A1175BC227B4CBB0088AD6F /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				4A1175BD227B4D520088AD6F /* SettingsVC.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		4A36DBB3225374C400F76E1B /* Main App */ = {
 			isa = PBXGroup;
 			children = (
@@ -192,6 +210,7 @@
 		4A36DBB82253759200F76E1B /* Pages */ = {
 			isa = PBXGroup;
 			children = (
+				4A1175BC227B4CBB0088AD6F /* Settings */,
 				4A36DBC72253B34400F76E1B /* Feed */,
 				4A36DBC62253B33C00F76E1B /* Profile */,
 				4A36DBC52253B32B00F76E1B /* AddSelfTape */,
@@ -266,6 +285,7 @@
 				4A799E1B224D8CE2004EFA90 /* Views */,
 				4A799E1A224D8CD0004EFA90 /* Controllers */,
 				4A799E08224D899D004EFA90 /* AppDelegate.swift */,
+				4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */,
 				4A799E0F224D89A1004EFA90 /* Assets.xcassets */,
 				4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */,
 				4A799E14224D89A1004EFA90 /* Info.plist */,
@@ -359,6 +379,8 @@
 				4A67BC61225C009000939469 /* AppDelegateHelper.swift */,
 				4A67BC6F225E3FA400939469 /* UIButton.swift */,
 				4A3EE30D226F67390081E332 /* CGFloat.swift */,
+				4A1175C5227B6E800088AD6F /* UIImageView.swift */,
+				4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -418,6 +440,7 @@
 				4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */,
 				4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */,
 				4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */,
+				4A1175BF227B55170088AD6F /* LoadingView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -520,6 +543,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */,
+				4A1175C8227B85DF0088AD6F /* Pacman-loading.gif in Resources */,
 				4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */,
 				4ADA27192266320100649F2B /* GoogleService-Info.plist in Resources */,
 			);
@@ -600,6 +624,7 @@
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */,
 				4A0FD5AE227702D9002D1CBD /* UploadStatus.swift in Sources */,
+				4A1175C0227B55170088AD6F /* LoadingView.swift in Sources */,
 				4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */,
 				4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */,
 				4A67BC70225E3FA400939469 /* UIButton.swift in Sources */,
@@ -625,6 +650,7 @@
 				4A3EE312227074AE0081E332 /* SavedEmailAddressesVC.swift in Sources */,
 				4A3EE310227063FE0081E332 /* AddProjectMailingListVC.swift in Sources */,
 				4AF6CD96225A5D7600F3AF87 /* AddNewSceneView.swift in Sources */,
+				4A1175C6227B6E800088AD6F /* UIImageView.swift in Sources */,
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */,
 				4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */,
@@ -632,6 +658,7 @@
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
 				4A1175B6227B07910088AD6F /* ExpandedProjectScenesVC.swift in Sources */,
 				4AFB2B66225535F600F99B16 /* AddProjectScenesVC.swift in Sources */,
+				4A1175BE227B4D520088AD6F /* SettingsVC.swift in Sources */,
 				4A3EE3072268E61A0081E332 /* SharedModalService.swift in Sources */,
 				4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */,
 				4A3EE30A2268E70F0081E332 /* CustomOverlayModal.swift in Sources */,
@@ -651,6 +678,7 @@
 				4A799E1F224D8D7C004EFA90 /* LoginVC.swift in Sources */,
 				4A799E2C224D921E004EFA90 /* UIView.swift in Sources */,
 				4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */,
+				4A1175CA227BAEAD0088AD6F /* CachingPlayerItem.swift in Sources */,
 				4A3EE30C2268E7AA0081E332 /* CustomErrorMessageModal.swift in Sources */,
 				4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */,
 				4A3EE30E226F67390081E332 /* CGFloat.swift in Sources */,

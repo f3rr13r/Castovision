@@ -34,7 +34,6 @@ extension UIViewController {
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.placeholder = "Search by project name..."
             self.navigationItem.searchController = searchController
-            self.navigationItem.hidesSearchBarWhenScrolling = true
         }
     }
     

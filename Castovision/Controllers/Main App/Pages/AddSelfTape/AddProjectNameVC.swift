@@ -55,7 +55,6 @@ class AddProjectNameVC: UIViewController {
     }
     
     func addNavigationRightButton() {
-        // disabled by default. Enabled and disabled dynamically in the projectName injector variable
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Next", style: .done, target: self, action: #selector(saveSelfTapeProject))
         self.navigationItem.rightBarButtonItem?.tintColor = UIColor.red
         self.navigationItem.rightBarButtonItem?.isEnabled = false
