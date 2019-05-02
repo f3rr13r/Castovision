@@ -141,7 +141,11 @@ class UserService {
                             
                             updatedProjectsCount += 1
                             if updatedProjectsCount == auditionProjectsCount {
-                                successCompletion(auditionProjects)
+                                /*-- order the projects array by date descending --*/
+                                let orderedProjectsArray: [Project] = auditionProjects.sorted(by: { $0.timeStamp!.timeIntervalSince1970 > $1.timeStamp!.timeIntervalSince1970 })
+                                
+                                /*-- pass back the array --*/
+                                successCompletion(orderedProjectsArray)
                             }
                         })
                     })

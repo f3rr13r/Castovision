@@ -51,6 +51,7 @@ class AddProjectScenesVC: UIViewController {
     
     lazy var projectScenesCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
+        layout.sectionHeadersPinToVisibleBounds = true
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = .clear
         cv.delegate = self
@@ -207,7 +208,7 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
         }
         if let sceneTake = selfTapeProject.scenes?[indexPath.section].takes?[indexPath.item] {
             /*-- configure the cell --*/
-            sceneCell.configureCell(withTake: sceneTake)
+            sceneCell.configureCell(withTake: sceneTake, isSceneDeletable: true)
             sceneCell.delegate = self
         }
         
@@ -291,7 +292,7 @@ extension AddProjectScenesVC: UICollectionViewDelegateFlowLayout {
     
     // section insets
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
+        return UIEdgeInsets(top: 0.0, left: horizontalPadding, bottom: 0.0, right: horizontalPadding)
     }
     
     // header size

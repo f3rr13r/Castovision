@@ -28,7 +28,7 @@ let projectSceneCellContentHeight: CGFloat = projectSceneCellContentWidth * 0.6
 
 let feedCellWidth: CGFloat = projectSceneCellContentWidth
 let feedCellThumbnailImageHeight: CGFloat = projectSceneCellContentHeight
-let feedCellHeight: CGFloat = projectSceneCellContentHeight + 54.0
+let feedCellHeight: CGFloat = projectSceneCellContentHeight + 64.0
 
 let projectSceneCellWidth: CGFloat = projectSceneCellContentWidth
 let projectSceneCellHeight: CGFloat = (projectSceneCellContentWidth * 0.6) + 20.0

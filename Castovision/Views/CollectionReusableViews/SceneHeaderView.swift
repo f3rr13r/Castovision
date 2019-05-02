@@ -52,13 +52,18 @@ class SceneHeaderView: BaseReusableView {
     
     override func setupViews() {
         super.setupViews()
+        self.backgroundColor = .white
+        anchorChildViews()
+    }
+    
+    func anchorChildViews() {
         addSubview(deleteSceneButton)
         deleteSceneButton.anchor(withTopAnchor: topAnchor, leadingAnchor: nil, bottomAnchor: bottomAnchor, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         deleteSceneButton.addSubview(deleteSceneButtonIconImageView)
-        deleteSceneButtonIconImageView.anchor(withTopAnchor: nil, leadingAnchor: deleteSceneButton.leadingAnchor, bottomAnchor: nil, trailingAnchor: deleteSceneButton.trailingAnchor, centreXAnchor: nil, centreYAnchor: deleteSceneButton.centerYAnchor, widthAnchor: 20.0, heightAnchor: 20.0, padding: .init(top: 0.0, left: screenWidth * 0.5, bottom: 0.0, right: 0.0))
+        deleteSceneButtonIconImageView.anchor(withTopAnchor: nil, leadingAnchor: deleteSceneButton.leadingAnchor, bottomAnchor: nil, trailingAnchor: deleteSceneButton.trailingAnchor, centreXAnchor: nil, centreYAnchor: deleteSceneButton.centerYAnchor, widthAnchor: 20.0, heightAnchor: 20.0, padding: .init(top: 0.0, left: screenWidth * 0.5, bottom: 0.0, right: -horizontalPadding))
         
         addSubview(sceneTitleLabel)
-        sceneTitleLabel.anchor(withTopAnchor: nil, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: centerYAnchor, widthAnchor: sceneHeaderViewWidth, heightAnchor: nil)
+        sceneTitleLabel.anchor(withTopAnchor: nil, leadingAnchor: leadingAnchor, bottomAnchor: nil, trailingAnchor: trailingAnchor, centreXAnchor: nil, centreYAnchor: centerYAnchor, widthAnchor: sceneHeaderViewWidth, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: 0.0))
     }
     
     @objc func deleteSceneButtonPressed() {

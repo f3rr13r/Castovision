@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MarqueeLabel
 
 extension UIViewController {
     
@@ -14,7 +15,7 @@ extension UIViewController {
         
         /*-- set the title --*/
         self.navigationItem.title = title
-        
+
         /*-- logo (required) --*/
         let logoImageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 30.0, height: 30.0))
         logoImageView.contentMode = .scaleAspectFit

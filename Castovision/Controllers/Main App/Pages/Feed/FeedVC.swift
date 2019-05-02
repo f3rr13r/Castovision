@@ -92,14 +92,17 @@ class FeedVC: UICollectionViewController {
 // feed cell delegate methods
 extension FeedVC: FeedCellDelegate {
     func playProjectVideoButtonPressed(withProjectInfo projectInfo: Project) {
-        print("FEED VC - play project video button pressed")
+        let projectViewerVC = ProjectViewerVC()
+        self.navigationController?.pushViewController(projectViewerVC, animated: true)
     }
     
     func expandButtonPressed(withProjectInfo projectInfo: Project) {
-        print("FEED VC - expand button pressed")
+        let expandedProjectScenesVC = ExpandedProjectScenesVC(projectInfo: projectInfo)
+        self.navigationController?.pushViewController(expandedProjectScenesVC, animated: true)
     }
     
     func sendButtonPressed(withProjectInfo projectInfo: Project) {
-        print("FEED VC - send button pressed")
+        let sendProjectEmailVC = SendProjectEmailVC()
+        self.navigationController?.pushViewController(sendProjectEmailVC, animated: true)
     }
 }

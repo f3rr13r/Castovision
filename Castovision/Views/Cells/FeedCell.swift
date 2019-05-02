@@ -37,15 +37,11 @@ class FeedCell: BaseCell {
     
     lazy var expandProjectButton: UIButton = {
         let button = UIButton()
+        button.setTitle("Show scenes", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = defaultButtonFont
+        button.contentEdgeInsets = UIEdgeInsets(top: 4.0, left: 12.0, bottom: 4.0, right: 12.0)
         return button
-    }()
-    
-    let expandProjectButtonIconImageView: UIImageView = {
-        let iv = UIImageView()
-        iv.contentMode = .scaleAspectFit
-        iv.image = #imageLiteral(resourceName: "list-icon").withRenderingMode(.alwaysTemplate)
-        iv.tintColor = .white
-        return iv
     }()
     
     let numberOfViewsContainerBlurView: UIVisualEffectView = {
@@ -111,6 +107,13 @@ class FeedCell: BaseCell {
         return marqueeLabel
     }()
     
+    let projectCreatedDateLabel: UILabel = {
+        let label = UILabel()
+        label.font = smallContentFont
+        label.textColor = darkGrey
+        return label
+    }()
+    
     lazy var sendButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = .red
@@ -133,6 +136,7 @@ class FeedCell: BaseCell {
         
         guard let thumbnailImageData = projectInfo.scenes?[0].takes?[0].videoThumbnailUrl,
               let projectName = projectInfo.projectName,
+              let projectCreatedDate = projectInfo.timeStamp,
               let numberOfViews = projectInfo.numberOfViews else {
             return
         }
@@ -141,6 +145,11 @@ class FeedCell: BaseCell {
         projectNameLabel.text = projectName
         
         viewsLabel.text = "\(numberOfViews)"
+        
+        // created date
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, yyyy"
+        projectCreatedDateLabel.text = dateFormatter.string(from: projectCreatedDate)
         
         getProjectDuration(withProject: projectInfo)
     }
@@ -200,8 +209,6 @@ class FeedCell: BaseCell {
         expandProjectContainerBlurView.anchor(withTopAnchor: thumbnailImageView.topAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: thumbnailImageView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: 0.0, bottom: 0.0, right: -8.0))
         expandProjectContainerBlurView.contentView.addSubview(expandProjectButton)
         expandProjectButton.fillSuperview()
-        expandProjectButton.addSubview(expandProjectButtonIconImageView)
-        expandProjectButtonIconImageView.anchor(withTopAnchor: expandProjectButton.topAnchor, leadingAnchor: expandProjectButton.leadingAnchor, bottomAnchor: expandProjectButton.bottomAnchor, trailingAnchor: expandProjectButton.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: 24.0, heightAnchor: 24.0, padding: .init(top: 2.0, left: 8.0, bottom: -2.0, right: -8.0))
         
         contentView.addSubview(numberOfViewsContainerBlurView)
         numberOfViewsContainerBlurView.anchor(withTopAnchor: nil, leadingAnchor: thumbnailImageView.leadingAnchor, bottomAnchor: thumbnailImageView.bottomAnchor, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 8.0, bottom: -8.0, right: 0.0))
@@ -219,7 +226,7 @@ class FeedCell: BaseCell {
         metadataContainerView.anchor(withTopAnchor: thumbnailImageView.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: self.contentView.bottomAnchor, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         
         metadataContainerView.addSubview(sendButton)
-        sendButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: metadataContainerView.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -8.0))
+        sendButton.anchor(withTopAnchor: metadataContainerView.topAnchor, leadingAnchor: nil, bottomAnchor: metadataContainerView.bottomAnchor, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 12.0, left: 0.0, bottom: -12.0, right: -8.0))
         
         let rightPadding: CGFloat = 16.0 + sendButton.frame.width
         
@@ -228,6 +235,9 @@ class FeedCell: BaseCell {
         
         metadataContainerView.addSubview(projectNameLabel)
         projectNameLabel.anchor(withTopAnchor: projectNameTitleLabel.bottomAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 8.0, bottom: 0.0, right: -rightPadding))
+        
+        metadataContainerView.addSubview(projectCreatedDateLabel)
+        projectCreatedDateLabel.anchor(withTopAnchor: projectNameLabel.bottomAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 1.0, left: 8.0, bottom: 0.0, right: 0.0))
         
         /*-- setup the button selector methods now that we have views in the cell --*/
         handleTargetSelectorMethods()
@@ -258,11 +268,11 @@ extension FeedCell {
     
     @objc func expandProjectButtonPressed() {
         guard let projectInfo = self._project else { return }
-        delegate?.playProjectVideoButtonPressed(withProjectInfo: projectInfo)
+        delegate?.expandButtonPressed(withProjectInfo: projectInfo)
     }
     
     @objc func sendProjectButtonPressed() {
         guard let projectInfo = self._project else { return }
-        delegate?.playProjectVideoButtonPressed(withProjectInfo: projectInfo)
+        delegate?.sendButtonPressed(withProjectInfo: projectInfo)
     }
 }
