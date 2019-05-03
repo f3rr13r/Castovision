@@ -8,7 +8,7 @@
 
 import UIKit
 
-class VideoFilmingNavigationVC: UINavigationController {
+class LandscapeModeContainerVC: UINavigationController {
     
     override func viewDidLoad() {
         super.viewDidLoad()

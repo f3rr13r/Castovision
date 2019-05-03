@@ -201,7 +201,11 @@ class AddSelfTapeService {
         
         /*-- loop through the available takes --*/
         for takeIndex in 0..<takes.count {
-            storeAndModelTakeData(withUserId: userId, sceneNumber: sceneNumber, takeNumber: takeIndex + 1, take: takes[takeIndex], currentProgressNumber: currentProgressNumber, updatedUpdateStatus: { (updatedUpdateInfo) in
+            guard let takeNumber = takes[takeIndex].takeNumber else {
+                uploadFailed("Unable to get scene information")
+                return
+            }
+            storeAndModelTakeData(withUserId: userId, sceneNumber: sceneNumber, takeNumber: takeNumber, take: takes[takeIndex], currentProgressNumber: currentProgressNumber, updatedUpdateStatus: { (updatedUpdateInfo) in
                 updateInfo = updatedUpdateInfo
             }, uploadFailed: { (failedMessage) in
                 uploadFailed(failedMessage)
@@ -211,6 +215,7 @@ class AddSelfTapeService {
                     // check the successful completions
                     numberOfSuccessCompletions += 1
                     if numberOfSuccessCompletions == takes.count {
+                        let sortedTakesObjectArray = takesObjectArray
                         sceneObject["takes"] = takesObjectArray
                         uploadSuccess(successMessage, sceneObject)
                     }
@@ -321,6 +326,10 @@ class AddSelfTapeService {
         } catch {
             uploadFailed("Failed to get video data for Scene \(sceneNumber) - Take \(takeNumber)")
         }
+    }
+    
+    func reset() {
+        self._selfTapeProject = Project()
     }
 }
 

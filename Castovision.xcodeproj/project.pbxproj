@@ -17,6 +17,7 @@
 		4A1175C6227B6E800088AD6F /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175C5227B6E800088AD6F /* UIImageView.swift */; };
 		4A1175C8227B85DF0088AD6F /* Pacman-loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */; };
 		4A1175CA227BAEAD0088AD6F /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */; };
+		4A1175CC227C45F10088AD6F /* ProjectPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */; };
 		4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1639912278AC950039890A /* FeedSearchVC.swift */; };
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
 		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
@@ -69,7 +70,7 @@
 		4A799E2C224D921E004EFA90 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E2B224D921E004EFA90 /* UIView.swift */; };
 		4A8F5BFB225BAD4400C4FF8B /* UICollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */; };
 		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
-		4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */; };
+		4A8F5C00225BD81C00C4FF8B /* LandscapeModeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */; };
 		4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF11842277572C0047FC31 /* FeedCell.swift */; };
 		4AC356DF22672F5F005DBBBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC356DE22672F5F005DBBBD /* User.swift */; };
 		4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27142265F19D00649F2B /* TakeViewerVC.swift */; };
@@ -101,6 +102,7 @@
 		4A1175C5227B6E800088AD6F /* UIImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageView.swift; sourceTree = "<group>"; };
 		4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Pacman-loading.gif"; sourceTree = "<group>"; };
 		4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
+		4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPlayerItem.swift; sourceTree = "<group>"; };
 		4A1639912278AC950039890A /* FeedSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchVC.swift; sourceTree = "<group>"; };
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
 		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
@@ -155,7 +157,7 @@
 		4A799E2B224D921E004EFA90 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		4A8F5BFA225BAD4400C4FF8B /* UICollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UICollectionView.swift; sourceTree = "<group>"; };
 		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
-		4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoFilmingNavigationVC.swift; sourceTree = "<group>"; };
+		4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeModeContainerVC.swift; sourceTree = "<group>"; };
 		4AAF11842277572C0047FC31 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		4AC356DE22672F5F005DBBBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4ADA27142265F19D00649F2B /* TakeViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewerVC.swift; sourceTree = "<group>"; };
@@ -327,6 +329,7 @@
 				4ADA271C2266349500649F2B /* AuthenticationModels.swift */,
 				4AC356DE22672F5F005DBBBD /* User.swift */,
 				4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */,
+				4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -401,7 +404,6 @@
 			isa = PBXGroup;
 			children = (
 				4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */,
-				4A8F5BFF225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift */,
 				4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */,
 				4A67BC6A225E052200939469 /* TakeSavedModal.swift */,
 			);
@@ -411,6 +413,7 @@
 		4ADA27132265F17E00649F2B /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */,
 				4ADA27142265F19D00649F2B /* TakeViewerVC.swift */,
 				4A3EE311227074AE0081E332 /* SavedEmailAddressesVC.swift */,
 				4A1175B1227B06820088AD6F /* SendProjectEmailVC.swift */,
@@ -621,6 +624,7 @@
 			files = (
 				4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */,
 				4ADA272122663A0A00649F2B /* Routes.swift in Sources */,
+				4A1175CC227C45F10088AD6F /* ProjectPlayerItem.swift in Sources */,
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */,
 				4A0FD5AE227702D9002D1CBD /* UploadStatus.swift in Sources */,
@@ -640,7 +644,7 @@
 				4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */,
 				4A56CED1224E5FAF008493CB /* AddAccountNameVC.swift in Sources */,
 				4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */,
-				4A8F5C00225BD81C00C4FF8B /* VideoFilmingNavigationVC.swift in Sources */,
+				4A8F5C00225BD81C00C4FF8B /* LandscapeModeContainerVC.swift in Sources */,
 				4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4ADA271B226633A800649F2B /* AuthService.swift in Sources */,

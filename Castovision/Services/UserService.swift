@@ -31,6 +31,7 @@ class UserService {
     
     // store current user
     var currentUser = User()
+    var projects: [Project] = []
     
     /*========================
             GET METHODS
@@ -42,7 +43,7 @@ class UserService {
                 return
             }
             
-            let currentUserRef = db.collection(_USERS).document(userId)
+            let currentUserRef: DocumentReference = db.collection(_USERS).document(userId)
             currentUserRef.addSnapshotListener { (document, error) in
                 if error != nil {
                     completion(false)
@@ -100,7 +101,7 @@ class UserService {
         
         let auditionTapesRef = db.collection(_AUDITION_TAPES)
         let currentUserAuditionTapeDocuments = auditionTapesRef.whereField(_OWNER_ID, isEqualTo: userId)
-        currentUserAuditionTapeDocuments.getDocuments { (querySnapshot, error) in
+        currentUserAuditionTapeDocuments.addSnapshotListener { (querySnapshot, error) in
             if error != nil {
                 // completion(someting bad)
             } else {
@@ -177,7 +178,8 @@ class UserService {
                 
                 updatedScenesCount += 1
                 if updatedScenesCount == scenesCount {
-                    successCompletion(scenes)
+                    let sortedScenes = scenes.sorted(by: { $0.sceneNumber! < $1.sceneNumber! })
+                    successCompletion(sortedScenes)
                 }
             }
         }
@@ -193,6 +195,7 @@ class UserService {
             
             // get the basic data
             guard let fileSize = takeObjectData["fileSize"] as? Double,
+                let takeNumber = takeObjectData["takeNumber"] as? Int,
                 let videoDuration = takeObjectData["videoDuration"] as? Double,
                 let videoUrlString = takeObjectData["videoUrl"] as? String,
                 let videoThumbnailUrlString = takeObjectData["videoThumbnailUrl"] as? String,
@@ -207,6 +210,7 @@ class UserService {
                 let videoThumbnailUrlData = try Data(contentsOf: videoThumbnailUrl)
                 
                 let take: Take = Take(
+                    takeNumber: takeNumber,
                     videoThumbnailUrl: videoThumbnailUrlData,
                     videoUrl: videoUrl,
                     videoDuration: videoDuration,
@@ -217,7 +221,12 @@ class UserService {
                 
                 updatedTakesCount += 1
                 if takesCount == updatedTakesCount {
-                    successCompletion(takes)
+                    if takesCount > 1 {
+                        let sortedTakes = takes.sorted(by: { $0.takeNumber! < $1.takeNumber! })
+                        successCompletion(sortedTakes)
+                    } else {
+                        successCompletion(takes)
+                    }
                 }
                 
             } catch let error {

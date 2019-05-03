@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddNewSceneTakeFooterViewDelegate {
-    func addNewSceneTake(forSceneNumber sceneNumber: Int)
+    func addNewSceneTake(forTakeNumber takeNumber: Int, forSceneNumber sceneNumber: Int)
 }
 
 class AddNewSceneTakeFooterView: BaseReusableView {
@@ -20,7 +20,8 @@ class AddNewSceneTakeFooterView: BaseReusableView {
     // delegate
     var delegate: AddNewSceneTakeFooterViewDelegate?
     
-    func configureSceneFooterView(withSceneNumber sceneNumber: Int) {
+    func configureSceneFooterView(withTakeNumber takeNumber: Int, withSceneNumber sceneNumber: Int) {
+        addNewSceneTakeView.parentTakeNumber = takeNumber
         addNewSceneTakeView.parentSceneNumber = sceneNumber
     }
     
@@ -38,8 +39,8 @@ class AddNewSceneTakeFooterView: BaseReusableView {
 
 // add new scene view delegate methods
 extension AddNewSceneTakeFooterView: AddNewSceneTakeViewDelegate {
-    func addNewSceneTake(forScene sceneNumber: Int) {
-        delegate?.addNewSceneTake(forSceneNumber: sceneNumber)
+    func addNewSceneTake(forTake takeNumber: Int, forScene sceneNumber: Int) {
+        delegate?.addNewSceneTake(forTakeNumber: takeNumber, forSceneNumber: sceneNumber)
     }
     
     func handleChildDelegates() {

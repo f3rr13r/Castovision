@@ -237,7 +237,7 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
             let sceneNumber = selfTapeProject.scenes?[indexPath.section].sceneNumber {
                 // instantiate the takeViewerVC, feed it into the videoFilmingNavigationVC and present it
                 let takeViewerVC = TakeViewerVC(sceneNumber: sceneNumber, takeNumber: indexPath.item + 1, take: sceneTake)
-                let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: takeViewerVC)
+                let videoFilmingNavigationVC = LandscapeModeContainerVC(rootViewController: takeViewerVC)
                 self.present(videoFilmingNavigationVC, animated: true, completion: nil)
             
         } else {
@@ -276,11 +276,12 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
                 guard let expandableFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: extendedSceneFooterCellId, for: indexPath) as? ExpandedAddNewSceneFooterView else {
                         return UICollectionReusableView()
                     }
-                guard let sceneNumber = self.selfTapeProject.scenes?[indexPath.section].sceneNumber else {
+                guard let sceneNumber = self.selfTapeProject.scenes?[indexPath.section].sceneNumber,
+                      let takesCount = self.selfTapeProject.scenes?[indexPath.section].takes?.count else {
                     return UICollectionReusableView()
                 }
                 
-                expandableFooter.configureSceneFooterView(withSceneNumber: sceneNumber)
+                expandableFooter.configureSceneFooterView(withTakeNumber: takesCount + 1, withSceneNumber: sceneNumber)
                 expandableFooter.delegate = self
                 return expandableFooter
             } else {
@@ -288,10 +289,12 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
                 guard let defaultFooter = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: sceneFooterCellId, for: indexPath) as? AddNewSceneTakeFooterView else {
                         return UICollectionReusableView()
                 }
-                guard let sceneNumber = selfTapeProject.scenes?[indexPath.item].sceneNumber else {
+                guard let sceneNumber = selfTapeProject.scenes?[indexPath.item].sceneNumber,
+                      let takes = selfTapeProject.scenes?[indexPath.item].takes else {
                     return UICollectionReusableView()
                 }
-                defaultFooter.configureSceneFooterView(withSceneNumber: sceneNumber)
+                let takeNumber = takes.count + 1
+                defaultFooter.configureSceneFooterView(withTakeNumber: takeNumber, withSceneNumber: sceneNumber)
                 defaultFooter.delegate = self
                 return defaultFooter
             }
@@ -388,9 +391,9 @@ extension AddProjectScenesVC: SceneTakeCellDelegate {
 
 // cell footers delegate methods
 extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewSceneTakeFooterViewDelegate {
-    func addNewSceneTake(forSceneNumber sceneNumber: Int) {
-        let videoCameraVC = VideoCameraVC(sceneNumber: sceneNumber)
-        let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: videoCameraVC)
+    func addNewSceneTake(forTakeNumber takeNumber: Int, forSceneNumber sceneNumber: Int) {
+        let videoCameraVC = VideoCameraVC(takeNumber: takeNumber, sceneNumber: sceneNumber)
+        let videoFilmingNavigationVC = LandscapeModeContainerVC(rootViewController: videoCameraVC)
         self.present(videoFilmingNavigationVC, animated: true, completion: nil)
     }
     

@@ -12,6 +12,7 @@ import MarqueeLabel
 extension UIViewController {
     
     func configureNavigationBar(withTitle title: String, withSearchBar needsSearchBar: Bool, withSearchResultsController searchResultsController: UIViewController? = nil) {
+        print("configure navigation bar")
         
         /*-- set the title --*/
         self.navigationItem.title = title
@@ -42,9 +43,10 @@ extension UIViewController {
         appDelegate.updateDeviceOrientation(toOrientation: .landscapeRight)
     }
     
-    func lockDeviceVertically() {        
+    func lockDeviceVertically() {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.updateDeviceOrientation(toOrientation: .portrait)
+
     }
 }
 

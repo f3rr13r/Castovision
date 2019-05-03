@@ -138,7 +138,7 @@ extension FeedSearchVC: UICollectionViewDelegate, UICollectionViewDataSource {
 // feed cell delegate methods
 extension FeedSearchVC: FeedCellDelegate {
     func playProjectVideoButtonPressed(withProjectInfo projectInfo: Project) {
-        let projectViewerVC = ProjectViewerVC()
+        let projectViewerVC = ProjectViewerVC(project: projectInfo)
         self.navigationController?.pushViewController(projectViewerVC, animated: true)
     }
     

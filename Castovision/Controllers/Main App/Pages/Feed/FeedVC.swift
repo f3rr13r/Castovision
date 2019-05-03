@@ -42,28 +42,32 @@ class FeedVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
-        lockDeviceVertically()
-        anchorChildViews()
+        self.getUpdatedUserAuditionProjects()
+        self.lockDeviceVertically()
         self.configureNavigationBar(withTitle: "Feed", withSearchBar: true, withSearchResultsController: feedSearchVC)
+        self.anchorChildViews()
         self.configureCollectionView()
         
         /*-- we need this for the search controller --*/
-        definesPresentationContext = true    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        getUpdatedUserAuditionProjects()
+        definesPresentationContext = true
     }
     
     @objc func getUpdatedUserAuditionProjects() {
-        UserService.instance.getCurrentUserAuditions(failedCompletion: { (failedMessage) in
-            self.loadingView.isHidden = true
-            let errorMessageConfig = CustomErrorMessageConfig(title: "Oops!", body: "Something went wrong when trying to retrieve your self-tape projects. Check your internet connection, and click 'refresh' to try again")
-            SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
-        }) { (updatedAuditionProjects) in
-            self.loadingView.fadeOut()
-            self.auditionProjects = updatedAuditionProjects
-            self.feedSearchVC.injectData(forAuditionProjects: self.auditionProjects)
+        DispatchQueue.global(qos: .background).async {
+            UserService.instance.getCurrentUserAuditions(failedCompletion: { (failedMessage) in
+                self.loadingView.isHidden = true
+                let errorMessageConfig = CustomErrorMessageConfig(title: "Oops!", body: "Something went wrong when trying to retrieve your self-tape projects. Check your internet connection, and click 'refresh' to try again")
+                SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+            }) { (updatedAuditionProjects) in
+                print(updatedAuditionProjects)
+                self.loadingView.fadeOut()
+                if updatedAuditionProjects.count > 0 {
+                    self.auditionProjects = updatedAuditionProjects
+                    self.feedSearchVC.injectData(forAuditionProjects: self.auditionProjects)
+                } else {
+                        // show a no data state
+                }
+            }
         }
     }
     
@@ -104,8 +108,9 @@ class FeedVC: UICollectionViewController {
 // feed cell delegate methods
 extension FeedVC: FeedCellDelegate {
     func playProjectVideoButtonPressed(withProjectInfo projectInfo: Project) {
-        let projectViewerVC = ProjectViewerVC()
-        self.navigationController?.pushViewController(projectViewerVC, animated: true)
+        let projectViewerVC = ProjectViewerVC(project: projectInfo)
+        let landscapeModeContainerVC = LandscapeModeContainerVC(rootViewController: projectViewerVC)
+        self.present(landscapeModeContainerVC, animated: true, completion: nil)
     }
     
     func expandButtonPressed(withProjectInfo projectInfo: Project) {
@@ -118,3 +123,4 @@ extension FeedVC: FeedCellDelegate {
         self.navigationController?.pushViewController(sendProjectEmailVC, animated: true)
     }
 }
+

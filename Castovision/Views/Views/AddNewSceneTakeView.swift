@@ -9,7 +9,7 @@
 import UIKit
 
 protocol AddNewSceneTakeViewDelegate {
-    func addNewSceneTake(forScene sceneNumber: Int)
+    func addNewSceneTake(forTake takeNumber: Int, forScene sceneNumber: Int)
 }
 
 class AddNewSceneTakeView: BaseView {
@@ -45,6 +45,7 @@ class AddNewSceneTakeView: BaseView {
     
     // variables
     var parentSceneNumber: Int?
+    var parentTakeNumber: Int?
     
     override func setupView() {
         super.setupView()
@@ -61,9 +62,11 @@ class AddNewSceneTakeView: BaseView {
     }
     
     @objc func userDidTap() {
-        print("user did tap to add new scene take")
-        if let parentSceneNumber = self.parentSceneNumber {
-            delegate?.addNewSceneTake(forScene: parentSceneNumber)
+        if let parentSceneNumber = self.parentSceneNumber,
+           let parentTakeNumber = self.parentTakeNumber {
+            delegate?.addNewSceneTake(forTake: parentTakeNumber, forScene: parentSceneNumber)
+        } else {
+            print("Couldn't find either scene or take")
         }
     }
     

@@ -70,6 +70,7 @@ class VideoCameraVC: UIViewController {
     }()
     
     // variables
+    private var _takeNumber: Int
     private var _sceneNumber: Int
     private var _cameraManager: CameraManager = CameraManager()
     private var _timer: Timer?
@@ -86,7 +87,8 @@ class VideoCameraVC: UIViewController {
     // delegate
     var delegate: VideoCameraVCDelegate?
     
-    init(sceneNumber: Int) {
+    init(takeNumber: Int, sceneNumber: Int) {
+        self._takeNumber = takeNumber
         self._sceneNumber = sceneNumber
         super.init(nibName: nil, bundle: nil)
     }
@@ -210,7 +212,7 @@ class VideoCameraVC: UIViewController {
     }
     
     func navigateToEditSceneVC(withVideoURL videoURL: URL) {
-        let take = Take(videoUrl: videoURL)
+        let take = Take(takeNumber: _takeNumber, videoThumbnailUrl: nil, videoUrl: videoURL, videoDuration: nil, fileSize: nil)
         let editSceneTakeVC = EditSceneTakeVC(take: take, sceneNumber: self._sceneNumber)
         self.navigationController?.pushViewController(editSceneTakeVC, animated: true)
     }

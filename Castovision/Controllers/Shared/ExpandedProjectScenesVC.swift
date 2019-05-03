@@ -115,7 +115,7 @@ extension ExpandedProjectScenesVC: UICollectionViewDelegate, UICollectionViewDat
         }
         // instantiate the takeViewerVC, feed it into the videoFilmingNavigationVC and present it
         let takeViewerVC = TakeViewerVC(sceneNumber: sceneNumber, takeNumber: indexPath.item + 1, take: sceneTake)
-        let videoFilmingNavigationVC = VideoFilmingNavigationVC(rootViewController: takeViewerVC)
+        let videoFilmingNavigationVC = LandscapeModeContainerVC(rootViewController: takeViewerVC)
         self.present(videoFilmingNavigationVC, animated: true, completion: nil)
     }
 }

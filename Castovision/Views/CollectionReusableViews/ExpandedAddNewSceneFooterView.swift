@@ -21,7 +21,8 @@ class ExpandedAddNewSceneFooterView: BaseReusableView {
     // delegate
     var delegate: ExpandedAddNewSceneFooterViewDelegate?
     
-    func configureSceneFooterView(withSceneNumber sceneNumber: Int) {
+    func configureSceneFooterView(withTakeNumber takeNumber: Int, withSceneNumber sceneNumber: Int) {
+        addNewSceneTakeView.parentTakeNumber = takeNumber
         addNewSceneTakeView.parentSceneNumber = sceneNumber
     }
     
@@ -41,13 +42,14 @@ class ExpandedAddNewSceneFooterView: BaseReusableView {
 }
 
 extension ExpandedAddNewSceneFooterView: AddNewSceneTakeViewDelegate, AddNewSceneViewDelegate {
+    
     func handleChildDelegates() {
         addNewSceneTakeView.delegate = self
         addNewSceneView.delegate = self
     }
     
-    func addNewSceneTake(forScene sceneNumber: Int) {
-        delegate?.addNewSceneTake(forSceneNumber: sceneNumber)
+    func addNewSceneTake(forTake takeNumber: Int, forScene sceneNumber: Int) {
+        delegate?.addNewSceneTake(forTakeNumber: takeNumber, forSceneNumber: sceneNumber)
     }
     
     func addNewScene() {

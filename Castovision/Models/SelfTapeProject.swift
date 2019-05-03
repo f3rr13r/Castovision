@@ -39,13 +39,15 @@ struct Scene: Encodable {
 }
 
 struct Take: Encodable {
+    var takeNumber: Int?
     var videoThumbnailUrl: Data?
     var videoUrl: URL?
     var videoDuration: Double?
     var numberOfViews: Int?
     var fileSize: Double?
     
-    init(videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, fileSize: Double? = nil) {
+    init(takeNumber: Int? = nil, videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, fileSize: Double? = nil) {
+        self.takeNumber = takeNumber
         self.videoThumbnailUrl = videoThumbnailUrl
         self.videoUrl = videoUrl
         self.videoDuration = videoDuration

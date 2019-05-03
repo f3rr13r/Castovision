@@ -226,15 +226,13 @@ class FeedCell: BaseCell {
         metadataContainerView.anchor(withTopAnchor: thumbnailImageView.bottomAnchor, leadingAnchor: self.contentView.leadingAnchor, bottomAnchor: self.contentView.bottomAnchor, trailingAnchor: self.contentView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         
         metadataContainerView.addSubview(sendButton)
-        sendButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: metadataContainerView.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -8.0))
-        
-        let rightPadding: CGFloat = 16.0 + sendButton.frame.width
+        sendButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: metadataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: metadataContainerView.centerYAnchor, widthAnchor: 68.0, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: -8.0))
         
         metadataContainerView.addSubview(projectNameTitleLabel)
-        projectNameTitleLabel.anchor(withTopAnchor: metadataContainerView.topAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: 8.0, bottom: 0.0, right: -rightPadding))
+        projectNameTitleLabel.anchor(withTopAnchor: metadataContainerView.topAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: sendButton.leadingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: 8.0, bottom: 0.0, right: -8.0))
         
         metadataContainerView.addSubview(projectNameLabel)
-        projectNameLabel.anchor(withTopAnchor: projectNameTitleLabel.bottomAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 8.0, bottom: 0.0, right: -rightPadding))
+        projectNameLabel.anchor(withTopAnchor: projectNameTitleLabel.bottomAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: sendButton.leadingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 8.0, bottom: 0.0, right: -8.0))
         
         metadataContainerView.addSubview(projectCreatedDateLabel)
         projectCreatedDateLabel.anchor(withTopAnchor: projectNameLabel.bottomAnchor, leadingAnchor: metadataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 1.0, left: 8.0, bottom: 0.0, right: 0.0))
