@@ -21,6 +21,7 @@ class SavedAddressCell: BaseCell {
     let emailAddressLabel: UILabel = {
         let label = UILabel()
         label.font = smallTitleFont
+        label.textColor = darkGrey
         return label
     }()
     
@@ -33,10 +34,11 @@ class SavedAddressCell: BaseCell {
         anchorChildViews()
     }
     
-    func configureCell(withEmailAddress emailAddress: String, andSelectableState isSelectable: Bool) {
+    func configureCell(withEmailAddress emailAddress: String, andSelectableState isSelectable: Bool, andDisabledState isDisabled: Bool = false) {
         self._emailAddress = emailAddress
         emailAddressLabel.text = emailAddress
-        tickIcon.isHidden = isSelectable
+        emailAddressLabel.textColor = isDisabled ? grey : darkGrey
+        tickIcon.isHidden = isSelectable || isDisabled
     }
     
     func anchorChildViews() {

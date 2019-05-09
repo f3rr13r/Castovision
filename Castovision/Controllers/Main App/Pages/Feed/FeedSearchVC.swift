@@ -148,7 +148,7 @@ extension FeedSearchVC: FeedCellDelegate {
     }
     
     func sendButtonPressed(withProjectInfo projectInfo: Project) {
-        let sendProjectEmailVC = SendProjectEmailVC()
+        let sendProjectEmailVC = SendProjectEmailVC(project: projectInfo)
         self.navigationController?.pushViewController(sendProjectEmailVC, animated: true)
     }
 }

@@ -59,13 +59,25 @@ class SavedEmailAddressesVC: UIViewController {
             savedEmailAddressesCollectionView.reloadData()
         }
     }
+    
+    private var _disabledEmailAddresses: [String] = [] {
+        didSet {
+            savedEmailAddressesCollectionView.reloadData()
+        }
+    }
 
     // delegate
     var delegate: SavedEmailAddressesVCDelegate?
     
-    init(savedAddresses: [String], emailAddresses: [String]) {
+    init(savedAddresses: [String], emailAddresses: [String], disabledEmailAddresses: [String] = []) {
         self._savedAddresses = savedAddresses
         self._emailAddresses = emailAddresses
+        
+        /*-- for when you have already sent project, and are sending to more
+             then we will be disabling previously send to email addresses --*/
+        if disabledEmailAddresses.count > 0 {
+            self._disabledEmailAddresses = disabledEmailAddresses
+        }
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -110,8 +122,14 @@ extension SavedEmailAddressesVC: UICollectionViewDataSource, UICollectionViewDel
         guard let addressCell = collectionView.dequeueReusableCell(withReuseIdentifier: _savedEmailAddressCellId, for: indexPath) as? SavedAddressCell else {
             return UICollectionViewCell()
         }
-        addressCell.configureCell(withEmailAddress: _savedAddresses[indexPath.item], andSelectableState: !_emailAddresses.contains(_savedAddresses[indexPath.item]))
+        addressCell.configureCell(withEmailAddress: _savedAddresses[indexPath.item], andSelectableState: !_emailAddresses.contains(_savedAddresses[indexPath.item]), andDisabledState: _disabledEmailAddresses.contains(_savedAddresses[indexPath.item]))
+
         return addressCell
+    }
+    
+    /*-- disable the cell selection if it has already been sent to --*/
+    func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
+        return !_disabledEmailAddresses.contains(_savedAddresses[indexPath.item])
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

@@ -107,13 +107,14 @@ class UserService {
             return
         }
         
-        var auditionProjects: [Project] = []
-        
         let auditionTapesRef = db.collection(_AUDITION_TAPES)
         let currentUserAuditionTapeDocuments = auditionTapesRef.whereField(_OWNER_ID, isEqualTo: userId)
         currentUserAuditionTapeDocuments.addSnapshotListener { (querySnapshot, error) in
+            
+            var auditionProjects: [Project] = []
+            
             if error != nil {
-                // completion(someting bad)
+                failedCompletion("Something went wrong when attempting to retrieve your audition projects. Refresh the page by swiping down")
             } else {
                 if let documents = querySnapshot?.documents {
                     let auditionProjectsCount: Int = documents.count
@@ -134,11 +135,11 @@ class UserService {
                             projectPassword: documentData["projectPassword"] as? String ?? "No project password found",
                             scenes: [],
                             numberOfViews: documentData["numberOfViews"] as? Int ?? 0,
-                            currentMailingList: []
+                            currentMailingList: documentData["currentMailingList"] as? [String] ?? []
                         )
                         
                         guard let scenesObjectData = documentData["scenes"] as? [[String: Any]] else {
-                            print("Something went wrong")
+                            failedCompletion("Something went wrong when attempting to retrieve your audition projects. Refresh the page by swiping down")
                             return
                         }
                         
@@ -151,6 +152,7 @@ class UserService {
                             auditionProjects.append(auditionProject)
                             
                             updatedProjectsCount += 1
+
                             if updatedProjectsCount == auditionProjectsCount {
                                 /*-- order the projects array by date descending --*/
                                 let orderedProjectsArray: [Project] = auditionProjects.sorted(by: { $0.timeStamp!.timeIntervalSince1970 > $1.timeStamp!.timeIntervalSince1970 })

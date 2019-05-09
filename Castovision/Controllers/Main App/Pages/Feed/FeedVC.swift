@@ -31,7 +31,6 @@ class FeedVC: UICollectionViewController {
     var auditionProjects: [Project] = [] {
         didSet {
             if self.auditionProjects.count > 0 {
-                
                 collectionView.reloadData()
             } else {
                 // show no data state
@@ -118,7 +117,7 @@ extension FeedVC: FeedCellDelegate {
     }
     
     func sendButtonPressed(withProjectInfo projectInfo: Project) {
-        let sendProjectEmailVC = SendProjectEmailVC()
+        let sendProjectEmailVC = SendProjectEmailVC(project: projectInfo)
         self.navigationController?.pushViewController(sendProjectEmailVC, animated: true)
     }
 }
