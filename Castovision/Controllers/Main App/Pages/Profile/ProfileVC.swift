@@ -157,13 +157,13 @@ class ProfileVC: UIViewController {
         didSet {
             if let updatedProfileInfo = self.profileInfo {
                 // check for values
-                guard let updatedProfileImage = updatedProfileInfo.profileImage else { return }
+                guard let updatedProfileImageData = updatedProfileInfo.profileImageData else { return }
                 guard let updatedProfileName = updatedProfileInfo.name else { return }
                 guard let updatedAccountCreatedDate = updatedProfileInfo.accountCreatedDate else { return }
                 guard let updatedRemainingStorage = updatedProfileInfo.storageGigabytesRemaining else { return }
                 
                 // populate the simple UI elements
-                profileImageView.image = updatedProfileImage
+                profileImageView.image = UIImage(data: updatedProfileImageData)
                 profileNameLabel.text = updatedProfileName
                
                 // get the date into a workable string format

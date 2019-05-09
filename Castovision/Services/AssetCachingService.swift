@@ -20,38 +20,45 @@ enum VideoCacheResponse {
 
 class AssetCachingService {
     
-    let imageCache = NSCache<AnyObject, AnyObject>()
-    let videoCache = NSCache<AnyObject, AnyObject>()
+    private let _imageCache = NSCache<NSString, NSData>()
+    private let _videoCache = NSCache<NSString, NSData>()
     
-    typealias ImageCacheResponseCompletion = (ImageCacheResponse, UIImage?) -> ()
+    typealias ImageCacheResponseCompletion = (ImageCacheResponse, Data?) -> ()
     typealias VideoCacheResponseCompletion = (VideoCacheResponse, Data?) -> ()
     
     static let instance = AssetCachingService()
     
     
     /*-- get methods --*/
+    func clearCaches() {
+        _imageCache.removeAllObjects()
+        _videoCache.removeAllObjects()
+    }
+    
     func getCachedImage(withKey key: String, completion: ImageCacheResponseCompletion) {
-        guard let cachedImage = imageCache.value(forKey: key) as? UIImage else {
+        guard let cachedImageNSData = _imageCache.object(forKey: key as NSString) else {
             completion(.noValueFound, nil)
             return
         }
-        completion(.imageFound, cachedImage)
+        let cachedImageData = Data(referencing: cachedImageNSData)
+        completion(.imageFound, cachedImageData)
     }
     
     func getCachedVideo(withKey key: String, completion: VideoCacheResponseCompletion) {
-        guard let cachedVideoData = videoCache.value(forKey: key) as? Data else {
+        guard let cachedVideoNSData = _videoCache.object(forKey: key as NSString) else {
             completion(.noValueFound, nil)
             return
         }
+        let cachedVideoData = Data(referencing: cachedVideoNSData)
         completion(.videoDataFound, cachedVideoData)
     }
     
     /*-- set methods --*/
-    func setCachedImage(withKey key: String, andImage image: UIImage) {
-        imageCache.setValue(image, forKey: key)
+    func setCachedImage(withKey key: String, andImageData imageData: Data) {
+        _imageCache.setObject(imageData as NSData, forKey: key as NSString)
     }
     
     func setCachedVideo(withKey key: String, andVideoData videoData: Data) {
-        videoCache.setValue(videoData, forKey: key)
+        _videoCache.setObject(videoData as NSData, forKey: key as NSString)
     }
 }

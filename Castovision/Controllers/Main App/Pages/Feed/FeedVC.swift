@@ -59,7 +59,6 @@ class FeedVC: UICollectionViewController {
                 let errorMessageConfig = CustomErrorMessageConfig(title: "Oops!", body: "Something went wrong when trying to retrieve your self-tape projects. Check your internet connection, and click 'refresh' to try again")
                 SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
             }) { (updatedAuditionProjects) in
-                print(updatedAuditionProjects)
                 self.loadingView.fadeOut()
                 if updatedAuditionProjects.count > 0 {
                     self.auditionProjects = updatedAuditionProjects

@@ -238,26 +238,48 @@ extension TakeViewerVC {
     func setupAVPlayer() {
         // guard check if we have a video url
         guard let videoUrl = self._take.videoUrl else { return }
+        let key = videoUrl.absoluteString.components(separatedBy: "/o/")[1]
         
-        // instantiate the player item
-        let playerItem: AVPlayerItem = AVPlayerItem(url: videoUrl)
+        var playerItem: CachingPlayerItem!
         
-        // notifications for video when video ends
-        NotificationCenter.default.addObserver(self, selector: #selector(itemDidFinishPlaying(_:)), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-        
-        // instantiate the player
-        player = AVPlayer(playerItem: playerItem)
-        
-        // notification for when video is ready
-        player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
-        
-        // instantiate the av player layer
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer?.frame = self.view.bounds
-        playerLayer?.videoGravity = .resizeAspectFill
-        
-        // add player layer to the VC
-        self.view.layer.addSublayer(playerLayer!)
+        AssetCachingService.instance.getCachedVideo(withKey: key) { (responseStatus, videoData) in
+            switch responseStatus {
+            case .videoDataFound:
+                print("video data found")
+                guard let data = videoData else {
+                    playerItem = CachingPlayerItem(url: videoUrl, customFileExtension: "mp4")
+                    playerItem.delegate = self
+                    addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                    playerItem.download()
+                    return
+                }
+                playerItem = CachingPlayerItem(data: data, mimeType: "video/mp4", fileExtension: "mp4")
+                addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                playerItem.download()
+                break
+            case .noValueFound:
+                print("no value found")
+                playerItem = CachingPlayerItem(url: videoUrl, customFileExtension: "mp4")
+                playerItem.delegate = self
+                addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                playerItem.download()
+                break
+            }
+            
+            // instantiate the player
+            player = AVPlayer(playerItem: playerItem)
+            
+            // notification for when video is ready
+            player?.addObserver(self, forKeyPath: "currentItem.loadedTimeRanges", options: .new, context: nil)
+            
+            // instantiate the av player layer
+            playerLayer = AVPlayerLayer(player: player)
+            playerLayer?.frame = self.view.bounds
+            playerLayer?.videoGravity = .resizeAspectFill
+            
+            // add player layer to the VC
+            self.view.layer.addSublayer(playerLayer!)
+        }
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -274,7 +296,6 @@ extension TakeViewerVC {
     }
     
     @objc func togglePlayButtonPressed() {
-        
         guard let player = self.player else { return }
         
         if !isVideoPlaying {
@@ -287,6 +308,10 @@ extension TakeViewerVC {
         isVideoPlaying = !isVideoPlaying
     }
     
+    func addPlayerItemDidFinishPlayingObserver(forPlayerItem playerItem: CachingPlayerItem) {
+        NotificationCenter.default.addObserver(self, selector: #selector(itemDidFinishPlaying), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+    }
+    
     @objc func itemDidFinishPlaying(_ notification: Notification) {
         player?.seek(to: .zero)
         isVideoPlaying = false
@@ -297,8 +322,20 @@ extension TakeViewerVC {
 }
 
 // delegate methods
-extension TakeViewerVC: BackButtonDelegate {
+extension TakeViewerVC: BackButtonDelegate, CachingPlayerItemDelegate {
     func backButtonPressed() {
         self.navigationController?.dismissVideoFilmingNavigationVC()
+    }
+    
+    func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
+        guard let keyStringAssetURL = (playerItem.asset as? AVURLAsset)?.url.absoluteString else { return }
+        let keyStringMinified = keyStringAssetURL.components(separatedBy: "/o/")[1]
+        let keyString = keyStringMinified.replacingOccurrences(of: ".mp4", with: "")
+        print(keyString)
+        AssetCachingService.instance.getCachedVideo(withKey: keyString) { (responseStatus, _) in
+            if responseStatus == .noValueFound {
+                AssetCachingService.instance.setCachedVideo(withKey: keyString, andVideoData: data)
+            }
+        }
     }
 }

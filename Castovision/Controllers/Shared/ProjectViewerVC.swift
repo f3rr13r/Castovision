@@ -370,12 +370,39 @@ extension ProjectViewerVC {
                 guard let takeVideoUrl = sceneTakes[i].videoUrl else { return }
                 guard let takeDuration = sceneTakes[i].videoDuration else { return }
                 let takeNumber = i + 1
-                let playerItem = CachingPlayerItem(url: takeVideoUrl, customFileExtension: "mp4")
-                self.addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
-                playerItem.download()
                 
-                let projectPlayerItem = ProjectPlayerItem(sceneNumber: sceneNumber, takeNumber: takeNumber, playerItem: playerItem, playerItemDuration: takeDuration)
-                self._projectPlayerItems.append(projectPlayerItem)
+                var playerItem: CachingPlayerItem!
+
+                // get the cache key
+                let key = takeVideoUrl.absoluteString.components(separatedBy: "/o/")[1]
+                
+                AssetCachingService.instance.getCachedVideo(withKey: key, completion: { (responseStatus, videoData) in
+                    switch responseStatus {
+                        case .videoDataFound:
+                            print("video data found")
+                            guard let data = videoData else {
+                                playerItem = CachingPlayerItem(url: takeVideoUrl, customFileExtension: "mp4")
+                                playerItem.delegate = self
+                                self.addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                                playerItem.download()
+                                return
+                            }
+                            playerItem = CachingPlayerItem(data: data, mimeType: "video/mp4", fileExtension: "mp4")
+                            self.addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                            playerItem.download()
+                        break
+                
+                        case .noValueFound:
+                            playerItem = CachingPlayerItem(url: takeVideoUrl, customFileExtension: "mp4")
+                            playerItem.delegate = self
+                            self.addPlayerItemDidFinishPlayingObserver(forPlayerItem: playerItem)
+                            playerItem.download()
+                        break
+                    }
+                
+                    let projectPlayerItem = ProjectPlayerItem(sceneNumber: sceneNumber, takeNumber: takeNumber, playerItem: playerItem, playerItemDuration: takeDuration)
+                    self._projectPlayerItems.append(projectPlayerItem)
+                })
             }
         }
         
@@ -458,10 +485,10 @@ extension ProjectViewerVC {
     }
     
     func addPlayerItemDidFinishPlayingObserver(forPlayerItem playerItem: CachingPlayerItem) {
-        NotificationCenter.default.addObserver(self, selector: #selector(playerItemDidFinishPlaying), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
+        NotificationCenter.default.addObserver(self, selector: #selector(itemDidFinishPlaying), name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
     }
     
-    @objc func playerItemDidFinishPlaying() {
+    @objc func itemDidFinishPlaying() {
         if self._currentVideoIndex == (self._projectPlayerItems.count - 1) {
             self.isVideoPlaying = false
             self._currentVideoIndex = 0
@@ -497,8 +524,19 @@ extension ProjectViewerVC {
 }
 
 // delegate methods
-extension ProjectViewerVC: BackButtonDelegate {
+extension ProjectViewerVC: BackButtonDelegate, CachingPlayerItemDelegate {
     func backButtonPressed() {
         self.navigationController?.dismissVideoFilmingNavigationVC()
+    }
+    
+    func playerItem(_ playerItem: CachingPlayerItem, didFinishDownloadingData data: Data) {
+        guard let keyStringAssetURL = (playerItem.asset as? AVURLAsset)?.url.absoluteString else { return }
+        let keyStringMinified = keyStringAssetURL.components(separatedBy: "/o/")[1]
+        let keyString = keyStringMinified.replacingOccurrences(of: ".mp4", with: "")
+        AssetCachingService.instance.getCachedVideo(withKey: keyString, completion: { (responseStatus, _) in
+            if responseStatus == .noValueFound {
+                AssetCachingService.instance.setCachedVideo(withKey: keyString, andVideoData: data)
+            }
+        })
     }
 }

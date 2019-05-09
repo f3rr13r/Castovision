@@ -71,19 +71,18 @@ class UserService {
                                     return
                                 }
                                 
-                                // check if we have it on disk already. If we do just set it. If we don't then don't bother
-                                AssetCachingService.instance.getCachedImage(withKey: profileImageURL, completion: { (responseStatus, image) in
+                                // check if we have it on disk already. If we do just set it. If we don't then save it to cache for future
+                                AssetCachingService.instance.getCachedImage(withKey: profileImageURL, completion: { (responseStatus, imageData) in
                                     switch responseStatus {
                                         case .imageFound:
-                                            guard let profileImage = image else { completion(false); return }
-                                            self.currentUser.profileImage = profileImage
+                                            guard let profileImageData = imageData else { completion(false); return }
+                                            self.currentUser.profileImageData = profileImageData
                                             break
                                     case .noValueFound:
                                             do {
                                                 let imageData = try Data(contentsOf: URL(string: profileImageURL)!)
-                                                let profileImage = UIImage(data: imageData)
-                                                self.currentUser.profileImage = profileImage
-                                                AssetCachingService.instance.setCachedImage(withKey: profileImageURL, andImage: profileImage!)
+                                                self.currentUser.profileImageData = imageData
+                                                AssetCachingService.instance.setCachedImage(withKey: profileImageURL, andImageData: imageData)
                                             } catch {
                                                 // give locally stored default image
                                                 return
@@ -216,13 +215,37 @@ class UserService {
                     return
             }
             
-            // make data from the video thumbnail url
-            do {
-                let videoThumbnailUrlData = try Data(contentsOf: videoThumbnailUrl)
+            // check if we have the image on disk already. If we do just set it. If we don't then save it to cache for future
+            let key = videoThumbnailUrl.absoluteString
+            var videoThumbnailURLData: Data!
+            
+            AssetCachingService.instance.getCachedImage(withKey: key) { (responseStatus, imageData) in
+                switch responseStatus {
+                    case .imageFound:
+                        guard let data = imageData else {
+                            do {
+                                videoThumbnailURLData = try Data(contentsOf: videoThumbnailUrl)
+                            } catch {
+                               failedCompletion("Failed to get scene take data")
+                            }
+                            return
+                        }
+                        
+                        videoThumbnailURLData = data
+                    break
+                    
+                    case .noValueFound:
+                        do {
+                            videoThumbnailURLData = try Data(contentsOf: videoThumbnailUrl)
+                        } catch {
+                            failedCompletion("Failed to get scene take data")
+                        }
+                    break
+                }
                 
                 let take: Take = Take(
                     takeNumber: takeNumber,
-                    videoThumbnailUrl: videoThumbnailUrlData,
+                    videoThumbnailUrl: videoThumbnailURLData,
                     videoUrl: videoUrl,
                     videoDuration: videoDuration,
                     fileSize: fileSize
@@ -239,9 +262,6 @@ class UserService {
                         successCompletion(takes)
                     }
                 }
-                
-            } catch let error {
-                failedCompletion(error.localizedDescription)
             }
         }
     }
