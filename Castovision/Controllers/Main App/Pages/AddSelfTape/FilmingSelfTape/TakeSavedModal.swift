@@ -13,7 +13,7 @@ protocol TakeSavedModalDelegate {
     func dismissButtonPressed()
 }
 
-class TakeSavedModal: BaseView {
+class LoadingAndTakeSavedModal: BaseView {
 
     // views
     let modalContainerView: UIView = {

@@ -75,8 +75,8 @@ class EditSceneTakeVC: UIViewController {
     }()
     
     // we won't instantiate this until needed
-    var saveTakeModal: TakeSavedModal = {
-        let modal = TakeSavedModal()
+    var saveTakeModal: LoadingAndTakeSavedModal = {
+        let modal = LoadingAndTakeSavedModal()
         modal.layer.zPosition = 1.0
         return modal
     }()
@@ -188,8 +188,10 @@ class EditSceneTakeVC: UIViewController {
     }
     
     @objc func saveTakeButtonPressed() {
+        self.view.addSubview(self.saveTakeModal)
+        self.saveTakeModal.fillSuperview()
+        self.saveTakeModal.show(withStage: .loading)
         self.needSaveButtonLoadingState = true
-        
         if let trimmerViewStartTime = self.trimmerView.startTime,
             let trimmerViewEndTime = self.trimmerView.endTime {
             let videoDurationCMTime = CMTimeSubtract(trimmerViewEndTime, trimmerViewStartTime)
@@ -200,23 +202,15 @@ class EditSceneTakeVC: UIViewController {
             VideoHelperMethodsService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
                 self._take.videoThumbnailUrl = thumbnailImageData
                 
-                guard let currentItemDuration = player?.currentItem?.duration else { return }
-                let originalVideoDuration = CMTimeGetSeconds(currentItemDuration)
-                
-                if updatedVideoDuration != originalVideoDuration {
-                    VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
-                        if didCropSuccessfully {
-                            DispatchQueue.main.async {
-                                self._take.videoUrl = croppedVideo
-                                self._take.fileSize = VideoHelperMethodsService.instance.getVideoFileSizeInMegabytes(withVideoURL: self._take.videoUrl!)
-                                self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
-                            }
+                VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
+                    if didCropSuccessfully {
+                        DispatchQueue.main.async {
+                            self._take.videoUrl = croppedVideo
+                            self._take.fileSize = VideoHelperMethodsService.instance.getVideoFileSizeInMegabytes(withVideoURL: self._take.videoUrl!)
+                            self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
                         }
-                    })
-                } else {
-                    self._take.fileSize = VideoHelperMethodsService.instance.getVideoFileSizeInMegabytes(withVideoURL: self._take.videoUrl!)
-                    self.addNewScene(withValue: self._take, forSceneNumber: self._sceneNumber)
-                }
+                    }
+                })
             })
         } else {
             self.needSaveButtonLoadingState = false
@@ -226,10 +220,7 @@ class EditSceneTakeVC: UIViewController {
     func addNewScene(withValue value: Take, forSceneNumber sceneNumber: Int) {
         AddSelfTapeService.instance.addNewSceneTake(withValue: value, forSceneNumber: sceneNumber) {
             self.needSaveButtonLoadingState = false
-            
-            self.view.addSubview(self.saveTakeModal)
-            self.saveTakeModal.fillSuperview()
-            self.saveTakeModal.showModal()
+            self.saveTakeModal.show(withStage: .confirmed)
         }
     }
 }

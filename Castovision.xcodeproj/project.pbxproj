@@ -18,6 +18,7 @@
 		4A1175C8227B85DF0088AD6F /* Pacman-loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */; };
 		4A1175CA227BAEAD0088AD6F /* CachingPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */; };
 		4A1175CC227C45F10088AD6F /* ProjectPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */; };
+		4A1175D0227CAD020088AD6F /* AddProjectImageModalStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */; };
 		4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1639912278AC950039890A /* FeedSearchVC.swift */; };
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
 		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
@@ -57,7 +58,7 @@
 		4A67BC64225CAC2B00939469 /* EditSceneTakeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */; };
 		4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */; };
 		4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC68225D0CC600939469 /* SelfTapeProject.swift */; };
-		4A67BC6B225E052200939469 /* TakeSavedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6A225E052200939469 /* TakeSavedModal.swift */; };
+		4A67BC6B225E052200939469 /* LoadingAndTakeSavedModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6A225E052200939469 /* LoadingAndTakeSavedModal.swift */; };
 		4A67BC6E225E0E8400939469 /* VideoHelperMethodsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6D225E0E8400939469 /* VideoHelperMethodsService.swift */; };
 		4A67BC70225E3FA400939469 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC6F225E3FA400939469 /* UIButton.swift */; };
 		4A799E09224D899D004EFA90 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A799E08224D899D004EFA90 /* AppDelegate.swift */; };
@@ -80,6 +81,7 @@
 		4ADA271D2266349500649F2B /* AuthenticationModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA271C2266349500649F2B /* AuthenticationModels.swift */; };
 		4ADA271F2266354200649F2B /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA271E2266354200649F2B /* UserService.swift */; };
 		4ADA272122663A0A00649F2B /* Routes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA272022663A0A00649F2B /* Routes.swift */; };
+		4AE96E7D228433740072D20B /* AssetCachingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE96E7C228433740072D20B /* AssetCachingService.swift */; };
 		4AF6CD96225A5D7600F3AF87 /* AddNewSceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */; };
 		4AF6CD98225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */; };
 		4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */; };
@@ -103,6 +105,7 @@
 		4A1175C7227B85DF0088AD6F /* Pacman-loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = "Pacman-loading.gif"; sourceTree = "<group>"; };
 		4A1175C9227BAEAD0088AD6F /* CachingPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachingPlayerItem.swift; sourceTree = "<group>"; };
 		4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPlayerItem.swift; sourceTree = "<group>"; };
+		4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectImageModalStage.swift; sourceTree = "<group>"; };
 		4A1639912278AC950039890A /* FeedSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchVC.swift; sourceTree = "<group>"; };
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
 		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
@@ -142,7 +145,7 @@
 		4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSceneTakeVC.swift; sourceTree = "<group>"; };
 		4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelfTapeService.swift; sourceTree = "<group>"; };
 		4A67BC68225D0CC600939469 /* SelfTapeProject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfTapeProject.swift; sourceTree = "<group>"; };
-		4A67BC6A225E052200939469 /* TakeSavedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeSavedModal.swift; sourceTree = "<group>"; };
+		4A67BC6A225E052200939469 /* LoadingAndTakeSavedModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingAndTakeSavedModal.swift; sourceTree = "<group>"; };
 		4A67BC6D225E0E8400939469 /* VideoHelperMethodsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoHelperMethodsService.swift; sourceTree = "<group>"; };
 		4A67BC6F225E3FA400939469 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		4A799E05224D899D004EFA90 /* Castovision.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Castovision.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +170,7 @@
 		4ADA271C2266349500649F2B /* AuthenticationModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationModels.swift; sourceTree = "<group>"; };
 		4ADA271E2266354200649F2B /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		4ADA272022663A0A00649F2B /* Routes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Routes.swift; sourceTree = "<group>"; };
+		4AE96E7C228433740072D20B /* AssetCachingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssetCachingService.swift; sourceTree = "<group>"; };
 		4AF6CD95225A5D7600F3AF87 /* AddNewSceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneView.swift; sourceTree = "<group>"; };
 		4AF6CD97225A5F2600F3AF87 /* ExpandedAddNewSceneFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandedAddNewSceneFooterView.swift; sourceTree = "<group>"; };
 		4AF6CD99225A5F3E00F3AF87 /* AddNewSceneTakeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddNewSceneTakeView.swift; sourceTree = "<group>"; };
@@ -330,6 +334,7 @@
 				4AC356DE22672F5F005DBBBD /* User.swift */,
 				4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */,
 				4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */,
+				4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -396,6 +401,7 @@
 				4ADA271A226633A800649F2B /* AuthService.swift */,
 				4ADA271E2266354200649F2B /* UserService.swift */,
 				4A3EE3062268E61A0081E332 /* SharedModalService.swift */,
+				4AE96E7C228433740072D20B /* AssetCachingService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -405,7 +411,7 @@
 			children = (
 				4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */,
 				4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */,
-				4A67BC6A225E052200939469 /* TakeSavedModal.swift */,
+				4A67BC6A225E052200939469 /* LoadingAndTakeSavedModal.swift */,
 			);
 			path = FilmingSelfTape;
 			sourceTree = "<group>";
@@ -635,10 +641,11 @@
 				4A1175B4227B06BD0088AD6F /* ProjectViewerVC.swift in Sources */,
 				4ADA271F2266354200649F2B /* UserService.swift in Sources */,
 				4A799E21224D8E93004EFA90 /* BaseView.swift in Sources */,
-				4A67BC6B225E052200939469 /* TakeSavedModal.swift in Sources */,
+				4A67BC6B225E052200939469 /* LoadingAndTakeSavedModal.swift in Sources */,
 				4A56CED9224E855D008493CB /* NotificationName.swift in Sources */,
 				4A799E24224D8F33004EFA90 /* LogoImageView.swift in Sources */,
 				4AF6CD9C225A65B200F3AF87 /* SceneHeaderView.swift in Sources */,
+				4AE96E7D228433740072D20B /* AssetCachingService.swift in Sources */,
 				4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */,
 				4AFB2B6C225616F900F99B16 /* AddNewSceneTakeFooterView.swift in Sources */,
 				4A67BC69225D0CC600939469 /* SelfTapeProject.swift in Sources */,
@@ -684,6 +691,7 @@
 				4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */,
 				4A1175CA227BAEAD0088AD6F /* CachingPlayerItem.swift in Sources */,
 				4A3EE30C2268E7AA0081E332 /* CustomErrorMessageModal.swift in Sources */,
+				4A1175D0227CAD020088AD6F /* AddProjectImageModalStage.swift in Sources */,
 				4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */,
 				4A3EE30E226F67390081E332 /* CGFloat.swift in Sources */,
 				4A3EE31622709F1D0081E332 /* EmailAddressCell.swift in Sources */,

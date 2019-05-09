@@ -156,7 +156,6 @@ class AddProjectScenesVC: UIViewController {
         
         let fileSizeTotalCGFloat = CGFloat(fileSizeTotal)
         let remainingStorage: CGFloat = CGFloat(self.remainingStorage) - (fileSizeTotalCGFloat.rounded(toPlaces: 1))
-        self.remainingStorage = Double(remainingStorage)
         let remainingStorageTrimmed: CGFloat = (remainingStorage / 1000).rounded(toPlaces: 2)
         
 
@@ -281,7 +280,7 @@ extension AddProjectScenesVC: UICollectionViewDataSource, UICollectionViewDelega
                     return UICollectionReusableView()
                 }
                 
-                expandableFooter.configureSceneFooterView(withTakeNumber: takesCount + 1, withSceneNumber: sceneNumber)
+                expandableFooter.configureSceneFooterView(withTakeNumber: takesCount, withSceneNumber: sceneNumber)
                 expandableFooter.delegate = self
                 return expandableFooter
             } else {

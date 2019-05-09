@@ -64,7 +64,6 @@ class UserService {
                             
                             /*-- profile image --*/
                             do {
-                                // check the cache here first
                                 
                                 // if not in cash, do the following
                                 guard let profileImageURL = data["profileImageUrl"] as? String else {
@@ -72,14 +71,26 @@ class UserService {
                                     return
                                 }
                                 
-                                do {
-                                    let imageData = try Data(contentsOf: URL(string: profileImageURL)!)
-                                    let profileImage = UIImage(data: imageData)
-                                    self.currentUser.profileImage = profileImage
-                                } catch {
-                                    // give locally stored default image
-                                    return
-                                }
+                                // check if we have it on disk already. If we do just set it. If we don't then don't bother
+                                AssetCachingService.instance.getCachedImage(withKey: profileImageURL, completion: { (responseStatus, image) in
+                                    switch responseStatus {
+                                        case .imageFound:
+                                            guard let profileImage = image else { completion(false); return }
+                                            self.currentUser.profileImage = profileImage
+                                            break
+                                    case .noValueFound:
+                                            do {
+                                                let imageData = try Data(contentsOf: URL(string: profileImageURL)!)
+                                                let profileImage = UIImage(data: imageData)
+                                                self.currentUser.profileImage = profileImage
+                                                AssetCachingService.instance.setCachedImage(withKey: profileImageURL, andImage: profileImage!)
+                                            } catch {
+                                                // give locally stored default image
+                                                return
+                                            }
+                                        break;
+                                    }
+                                })
                             }
                             completion(true)
                         }
