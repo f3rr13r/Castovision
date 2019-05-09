@@ -110,6 +110,29 @@ class SavedEmailAddressesVC: UIViewController {
     func handleChildDelegates() {
         confirmButton.delegate = self
     }
+    
+    func showAlertController(withEmailAddress emailAddress: String) {
+        let existingEmailAlertController = UIAlertController(title: nil, message: "You've already sent the project to \(emailAddress). Would you like to re-send it?", preferredStyle: .actionSheet)
+        
+        let resendEmailOption = UIAlertAction(title: "Resend Email", style: .default) { (resendOptionClicked) in
+            self.addEmailToMailingList(withEmailAddress: emailAddress)
+        }
+        resendEmailOption.setValue(UIColor.red, forKey: "titleTextColor")
+        
+        let cancelOption = UIAlertAction(title: "No Thanks", style: .cancel) { (cancelOptionClicked) in
+            existingEmailAlertController.dismiss(animated: true, completion: nil)
+        }
+        cancelOption.setValue(UIColor.black, forKey: "titleTextColor")
+        
+        existingEmailAlertController.addAction(resendEmailOption)
+        existingEmailAlertController.addAction(cancelOption)
+        
+        self.present(existingEmailAlertController, animated: true, completion: nil)
+    }
+    
+    func addEmailToMailingList(withEmailAddress emailAddress: String) {
+        self._emailAddresses.append(emailAddress)
+    }
 }
 
 // collection view delegate and datasource methods
@@ -127,16 +150,19 @@ extension SavedEmailAddressesVC: UICollectionViewDataSource, UICollectionViewDel
         return addressCell
     }
     
-    /*-- disable the cell selection if it has already been sent to --*/
-    func collectionView(_ collectionView: UICollectionView, canFocusItemAt indexPath: IndexPath) -> Bool {
-        return !_disabledEmailAddresses.contains(_savedAddresses[indexPath.item])
-    }
-    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if _emailAddresses.contains(_savedAddresses[indexPath.item]) {
-            _emailAddresses.removeAll { $0 == _savedAddresses[indexPath.item] }
+        if _disabledEmailAddresses.contains(_savedAddresses[indexPath.item]) {
+            if _emailAddresses.contains(_savedAddresses[indexPath.item]) {
+                _emailAddresses.removeAll { $0 == _savedAddresses[indexPath.item] }
+            } else {
+                showAlertController(withEmailAddress: _savedAddresses[indexPath.item])
+            }
         } else {
-            _emailAddresses.append(_savedAddresses[indexPath.item])
+            if _emailAddresses.contains(_savedAddresses[indexPath.item]) {
+                _emailAddresses.removeAll { $0 == _savedAddresses[indexPath.item] }
+            } else {
+                addEmailToMailingList(withEmailAddress: _savedAddresses[indexPath.item])
+            }
         }
     }
     

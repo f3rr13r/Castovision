@@ -38,7 +38,7 @@ class SavedAddressCell: BaseCell {
         self._emailAddress = emailAddress
         emailAddressLabel.text = emailAddress
         emailAddressLabel.textColor = isDisabled ? grey : darkGrey
-        tickIcon.isHidden = isSelectable || isDisabled
+        tickIcon.isHidden = isSelectable
     }
     
     func anchorChildViews() {
