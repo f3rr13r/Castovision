@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Stripe
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupInitialEntryVC()
         configureFirebase()
+        configureStripe()
         return true
     }
     
@@ -43,8 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         SharedModalService.instance.initializeSharedModalsMethodsClass(withAppDelegate: self, andNavigationController: self.navigationController!)
     }
     
-    func configureFirebase() {
+    private func configureFirebase() {
         FirebaseApp.configure()
+    }
+    
+    private func configureStripe() {
+        let publishableKey = "pk_test_ndhxgsTnjbmaIsVlCZH75jTa00CmeuysrU"
+        STPPaymentConfiguration.shared().publishableKey = publishableKey
     }
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {

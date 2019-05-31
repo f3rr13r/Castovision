@@ -55,6 +55,7 @@ class UserService {
                             self.currentUser.name = data["profileName"] as? String ?? "Name not found"
                             self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
                             self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
+                            self.currentUser.stripeCustomerId = data["stripe_customer_id"] as? String ?? nil
                             guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
                                 completion(false)
                                 return
@@ -121,6 +122,7 @@ class UserService {
                     var updatedProjectsCount: Int = 0
                     
                     documents.forEach({ (documentSnapshot) in
+                        let projectId = documentSnapshot.documentID
                         let documentData = documentSnapshot.data()
                         var useableTimeStamp: Date = Date()
                         if let serverTimeStamp = documentData["createdDate"] as? Timestamp {
@@ -129,6 +131,7 @@ class UserService {
                         
                         /*-- initialzie project --*/
                         var auditionProject = Project(
+                            id: projectId,
                             timeStamp: useableTimeStamp,
                             ownerId: userId,
                             projectName: documentData["projectName"] as? String ?? "No project name found",

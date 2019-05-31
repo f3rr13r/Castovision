@@ -72,6 +72,8 @@
 		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
 		4A8F5C00225BD81C00C4FF8B /* LandscapeModeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */; };
 		4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF11842277572C0047FC31 /* FeedCell.swift */; };
+		4AB0B44C22A039C300EEBAE9 /* PaymentStepsContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */; };
+		4AB0B44E22A096EE00EEBAE9 /* StripeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0B44D22A096EE00EEBAE9 /* StripeService.swift */; };
 		4AC356DF22672F5F005DBBBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC356DE22672F5F005DBBBD /* User.swift */; };
 		4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27142265F19D00649F2B /* TakeViewerVC.swift */; };
 		4ADA27172266279A00649F2B /* AddProjectPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27162266279A00649F2B /* AddProjectPassword.swift */; };
@@ -160,6 +162,8 @@
 		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
 		4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeModeContainerVC.swift; sourceTree = "<group>"; };
 		4AAF11842277572C0047FC31 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
+		4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStepsContainerVC.swift; sourceTree = "<group>"; };
+		4AB0B44D22A096EE00EEBAE9 /* StripeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeService.swift; sourceTree = "<group>"; };
 		4AC356DE22672F5F005DBBBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4ADA27142265F19D00649F2B /* TakeViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewerVC.swift; sourceTree = "<group>"; };
 		4ADA27162266279A00649F2B /* AddProjectPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectPassword.swift; sourceTree = "<group>"; };
@@ -399,6 +403,7 @@
 				4ADA271E2266354200649F2B /* UserService.swift */,
 				4A3EE3062268E61A0081E332 /* SharedModalService.swift */,
 				4AE96E7C228433740072D20B /* AssetCachingService.swift */,
+				4AB0B44D22A096EE00EEBAE9 /* StripeService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 				4A1175B1227B06820088AD6F /* SendProjectEmailVC.swift */,
 				4A1175B3227B06BD0088AD6F /* ProjectViewerVC.swift */,
 				4A1175B5227B07910088AD6F /* ExpandedProjectScenesVC.swift */,
+				4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -590,6 +596,7 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/PryntTrimmerView/PryntTrimmerView.framework",
 				"${BUILT_PRODUCTS_DIR}/SPStorkController/SPStorkController.framework",
+				"${BUILT_PRODUCTS_DIR}/Stripe/Stripe.framework",
 				"${BUILT_PRODUCTS_DIR}/UICircularProgressRing/UICircularProgressRing.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -606,6 +613,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PryntTrimmerView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SPStorkController.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Stripe.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UICircularProgressRing.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -651,6 +659,7 @@
 				4A36DBC022537CDC00F76E1B /* UINavigationController.swift in Sources */,
 				4A56CEC5224E37A7008493CB /* BaseLabel.swift in Sources */,
 				4ADA271B226633A800649F2B /* AuthService.swift in Sources */,
+				4AB0B44E22A096EE00EEBAE9 /* StripeService.swift in Sources */,
 				4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */,
 				4A1175B9227B2D6B0088AD6F /* SceneTakeCell.swift in Sources */,
 				4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */,
@@ -661,6 +670,7 @@
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */,
 				4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */,
+				4AB0B44C22A039C300EEBAE9 /* PaymentStepsContainerVC.swift in Sources */,
 				4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
 				4A1175B6227B07910088AD6F /* ExpandedProjectScenesVC.swift in Sources */,

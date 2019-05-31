@@ -16,8 +16,9 @@ struct User {
     var accountCreatedDate: Date?
     var storageGigabytesRemaining: Double?
     var savedEmailAddresses: [String]?
+    var stripeCustomerId: String?
     
-    init(id: String? = nil, name: String? = nil, emailAddress: String? = nil, profileImageData: Data? = nil, accountCreatedDate: Date? = nil, storageGigabytesRemaining: Double? = nil, savedEmailAddresses: [String]? = nil) {
+    init(id: String? = nil, name: String? = nil, emailAddress: String? = nil, profileImageData: Data? = nil, accountCreatedDate: Date? = nil, storageGigabytesRemaining: Double? = nil, savedEmailAddresses: [String]? = nil, stripeCustomerId: String? = nil) {
         self.id = id
         self.name = name
         self.emailAddress = emailAddress
@@ -25,5 +26,6 @@ struct User {
         self.accountCreatedDate = accountCreatedDate
         self.storageGigabytesRemaining = storageGigabytesRemaining
         self.savedEmailAddresses = savedEmailAddresses
+        self.stripeCustomerId = stripeCustomerId
     }
 }

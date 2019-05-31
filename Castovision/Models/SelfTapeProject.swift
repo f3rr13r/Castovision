@@ -9,6 +9,7 @@
 import Foundation
 
 struct Project: Encodable {
+    var id: String?
     var timeStamp: Date?
     var ownerId: String?
     var projectName: String?
@@ -17,7 +18,8 @@ struct Project: Encodable {
     var numberOfViews: Int?
     var currentMailingList: [String]?
     
-    init(timeStamp: Date? = nil, ownerId: String? = nil, projectName: String? = nil, projectPassword: String? = nil, scenes: [Scene]? = nil, numberOfViews: Int? = nil, currentMailingList: [String]? = []) {
+    init(id: String? = nil, timeStamp: Date? = nil, ownerId: String? = nil, projectName: String? = nil, projectPassword: String? = nil, scenes: [Scene]? = nil, numberOfViews: Int? = nil, currentMailingList: [String]? = []) {
+        self.id = id
         self.timeStamp = timeStamp
         self.ownerId = ownerId
         self.projectName = projectName
