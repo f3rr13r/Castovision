@@ -19,6 +19,7 @@
 		4A1175CC227C45F10088AD6F /* ProjectPlayerItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */; };
 		4A1175D0227CAD020088AD6F /* AddProjectImageModalStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */; };
 		4A1639922278AC950039890A /* FeedSearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A1639912278AC950039890A /* FeedSearchVC.swift */; };
+		4A2F3D8722A54C59007B768B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4A2F3D8622A54C59007B768B /* StoreKit.framework */; };
 		4A36DBB72253757A00F76E1B /* MainAppNavigationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */; };
 		4A36DBBC2253760500F76E1B /* AddProjectNameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */; };
 		4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A36DBBD2253761800F76E1B /* ProfileVC.swift */; };
@@ -37,6 +38,9 @@
 		4A3EE314227081980081E332 /* SavedAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE313227081980081E332 /* SavedAddressCell.swift */; };
 		4A3EE31622709F1D0081E332 /* EmailAddressCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE31522709F1D0081E332 /* EmailAddressCell.swift */; };
 		4A3EE3182271BA4B0081E332 /* UploadProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A3EE3172271BA4B0081E332 /* UploadProjectVC.swift */; };
+		4A5598F522A9567200B138F2 /* PaymentOptionsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5598F422A9567200B138F2 /* PaymentOptionsVC.swift */; };
+		4A5598F722A95DD700B138F2 /* PaymentOptionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5598F622A95DD700B138F2 /* PaymentOptionButton.swift */; };
+		4A5598F922A95DEC00B138F2 /* PaymentOptionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5598F822A95DEC00B138F2 /* PaymentOptionType.swift */; };
 		4A56CEB5224DA281008493CB /* MainActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB4224DA281008493CB /* MainActionButton.swift */; };
 		4A56CEB7224DA9C9008493CB /* Sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB6224DA9C9008493CB /* Sizes.swift */; };
 		4A56CEB9224DACBC008493CB /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CEB8224DACBC008493CB /* SignupVC.swift */; };
@@ -72,7 +76,6 @@
 		4A8F5BFD225BC7FA00C4FF8B /* VideoCameraVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */; };
 		4A8F5C00225BD81C00C4FF8B /* LandscapeModeContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */; };
 		4AAF11852277572C0047FC31 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AAF11842277572C0047FC31 /* FeedCell.swift */; };
-		4AB0B44C22A039C300EEBAE9 /* PaymentStepsContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */; };
 		4AB0B44E22A096EE00EEBAE9 /* StripeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AB0B44D22A096EE00EEBAE9 /* StripeService.swift */; };
 		4AC356DF22672F5F005DBBBD /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC356DE22672F5F005DBBBD /* User.swift */; };
 		4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ADA27142265F19D00649F2B /* TakeViewerVC.swift */; };
@@ -107,6 +110,7 @@
 		4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectPlayerItem.swift; sourceTree = "<group>"; };
 		4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectImageModalStage.swift; sourceTree = "<group>"; };
 		4A1639912278AC950039890A /* FeedSearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSearchVC.swift; sourceTree = "<group>"; };
+		4A2F3D8622A54C59007B768B /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		4A36DBB62253757A00F76E1B /* MainAppNavigationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAppNavigationVC.swift; sourceTree = "<group>"; };
 		4A36DBBB2253760500F76E1B /* AddProjectNameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProjectNameVC.swift; sourceTree = "<group>"; };
 		4A36DBBD2253761800F76E1B /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
@@ -125,6 +129,9 @@
 		4A3EE313227081980081E332 /* SavedAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedAddressCell.swift; sourceTree = "<group>"; };
 		4A3EE31522709F1D0081E332 /* EmailAddressCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailAddressCell.swift; sourceTree = "<group>"; };
 		4A3EE3172271BA4B0081E332 /* UploadProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProjectVC.swift; sourceTree = "<group>"; };
+		4A5598F422A9567200B138F2 /* PaymentOptionsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOptionsVC.swift; sourceTree = "<group>"; };
+		4A5598F622A95DD700B138F2 /* PaymentOptionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOptionButton.swift; sourceTree = "<group>"; };
+		4A5598F822A95DEC00B138F2 /* PaymentOptionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentOptionType.swift; sourceTree = "<group>"; };
 		4A56CEB4224DA281008493CB /* MainActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainActionButton.swift; sourceTree = "<group>"; };
 		4A56CEB6224DA9C9008493CB /* Sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sizes.swift; sourceTree = "<group>"; };
 		4A56CEB8224DACBC008493CB /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
@@ -162,7 +169,6 @@
 		4A8F5BFC225BC7FA00C4FF8B /* VideoCameraVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCameraVC.swift; sourceTree = "<group>"; };
 		4A8F5BFF225BD81C00C4FF8B /* LandscapeModeContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandscapeModeContainerVC.swift; sourceTree = "<group>"; };
 		4AAF11842277572C0047FC31 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
-		4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentStepsContainerVC.swift; sourceTree = "<group>"; };
 		4AB0B44D22A096EE00EEBAE9 /* StripeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StripeService.swift; sourceTree = "<group>"; };
 		4AC356DE22672F5F005DBBBD /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		4ADA27142265F19D00649F2B /* TakeViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeViewerVC.swift; sourceTree = "<group>"; };
@@ -192,6 +198,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D29D7BDBD20C09F45A2F57E /* Pods_Castovision.framework in Frameworks */,
+				4A2F3D8722A54C59007B768B /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +343,7 @@
 				4A0FD5AD227702D9002D1CBD /* UploadStatus.swift */,
 				4A1175CB227C45F10088AD6F /* ProjectPlayerItem.swift */,
 				4A1175CF227CAD020088AD6F /* AddProjectImageModalStage.swift */,
+				4A5598F822A95DEC00B138F2 /* PaymentOptionType.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -427,7 +435,7 @@
 				4A1175B1227B06820088AD6F /* SendProjectEmailVC.swift */,
 				4A1175B3227B06BD0088AD6F /* ProjectViewerVC.swift */,
 				4A1175B5227B07910088AD6F /* ExpandedProjectScenesVC.swift */,
-				4AB0B44B22A039C300EEBAE9 /* PaymentStepsContainerVC.swift */,
+				4A5598F422A9567200B138F2 /* PaymentOptionsVC.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -462,6 +470,7 @@
 			children = (
 				4A56CEB4224DA281008493CB /* MainActionButton.swift */,
 				4A56CEBE224DB7B5008493CB /* BackButton.swift */,
+				4A5598F622A95DD700B138F2 /* PaymentOptionButton.swift */,
 			);
 			path = Buttons;
 			sourceTree = "<group>";
@@ -479,6 +488,7 @@
 		C6D4BA0B8AEF77D0808AAF07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4A2F3D8622A54C59007B768B /* StoreKit.framework */,
 				F5E4DB163392FF55AB82CE60 /* Pods_Castovision.framework */,
 			);
 			name = Frameworks;
@@ -528,6 +538,11 @@
 					4A799E04224D899D004EFA90 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
+						SystemCapabilities = {
+							com.apple.InAppPurchase = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -635,6 +650,7 @@
 				4A36DBC222538E6A00F76E1B /* FeedVC.swift in Sources */,
 				4ADA272122663A0A00649F2B /* Routes.swift in Sources */,
 				4A1175CC227C45F10088AD6F /* ProjectPlayerItem.swift in Sources */,
+				4A5598F722A95DD700B138F2 /* PaymentOptionButton.swift in Sources */,
 				4AFB2B7022561F7C00F99B16 /* Colours.swift in Sources */,
 				4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */,
 				4A0FD5AE227702D9002D1CBD /* UploadStatus.swift in Sources */,
@@ -665,12 +681,12 @@
 				4AF6CD9A225A5F3E00F3AF87 /* AddNewSceneTakeView.swift in Sources */,
 				4A3EE312227074AE0081E332 /* SavedEmailAddressesVC.swift in Sources */,
 				4A3EE310227063FE0081E332 /* AddProjectMailingListVC.swift in Sources */,
+				4A5598F922A95DEC00B138F2 /* PaymentOptionType.swift in Sources */,
 				4AF6CD96225A5D7600F3AF87 /* AddNewSceneView.swift in Sources */,
 				4A1175C6227B6E800088AD6F /* UIImageView.swift in Sources */,
 				4A56CEC1224E373F008493CB /* CustomInputView.swift in Sources */,
 				4A36DBC92253B3EA00F76E1B /* AddProjectPasswordVC.swift in Sources */,
 				4A36DBBE2253761800F76E1B /* ProfileVC.swift in Sources */,
-				4AB0B44C22A039C300EEBAE9 /* PaymentStepsContainerVC.swift in Sources */,
 				4ADA27152265F19D00649F2B /* TakeViewerVC.swift in Sources */,
 				4A799E27224D9054004EFA90 /* BaseImageView.swift in Sources */,
 				4A1175B6227B07910088AD6F /* ExpandedProjectScenesVC.swift in Sources */,
@@ -704,6 +720,7 @@
 				4A56CECF224E5DEE008493CB /* ForgotPasswordVC.swift in Sources */,
 				4A56CEC7224E3841008493CB /* String.swift in Sources */,
 				4A67BC6E225E0E8400939469 /* VideoHelperMethodsService.swift in Sources */,
+				4A5598F522A9567200B138F2 /* PaymentOptionsVC.swift in Sources */,
 				4A36DBCF2253C44300F76E1B /* BaseReusableView.swift in Sources */,
 				4A56CECB224E513A008493CB /* BaseButton.swift in Sources */,
 				4A56CED3224E6255008493CB /* Fonts.swift in Sources */,
@@ -861,7 +878,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.harryferrier.Castovision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -880,7 +897,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.harryferrier.Castovision;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

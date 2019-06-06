@@ -8,7 +8,7 @@
 
 import UIKit
 import UICircularProgressRing
-import Stripe
+import SPStorkController
 
 class ProfileVC: UIViewController {
     
@@ -108,7 +108,7 @@ class ProfileVC: UIViewController {
     
     let buyMoreStorageButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Buy More", for: .normal)
+        button.setTitle("Buy More Storage", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.red
         button.titleLabel?.font = defaultButtonFont
@@ -290,39 +290,14 @@ class ProfileVC: UIViewController {
     }
     
     @objc func buyMoreStorage() {
-        //self.profileInfo!.storageGigabytesRemaining! += 5000.0
-        let customerContext = STPCustomerContext(keyProvider: StripeService.instance)
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        transitionDelegate.customHeight = 360.0
         
-        let config = STPPaymentConfiguration.shared()
-        config.additionalPaymentOptions = .all
-        config.requiredBillingAddressFields = .full
+        let paymentOptionsVC = PaymentOptionsVC()
+        paymentOptionsVC.transitioningDelegate = transitionDelegate
+        paymentOptionsVC.modalPresentationStyle = .custom
+        paymentOptionsVC.modalPresentationCapturesStatusBarAppearance = true
         
-        let theme = STPTheme()
-        theme.accentColor = UIColor.red
-        
-        let paymentContext = STPPaymentContext(customerContext: customerContext, configuration: config, theme: theme)
-        paymentContext.delegate = self
-        paymentContext.hostViewController = self
-        paymentContext.paymentAmount = 5000
-        paymentContext.presentPaymentOptionsViewController()
-    }
-}
-
-// stripe delegate methods
-extension ProfileVC: STPPaymentContextDelegate {
-    func paymentContext(_ paymentContext: STPPaymentContext, didFailToLoadWithError error: Error) {
-        print("payment context did fail to load with error: \(error.localizedDescription)")
-    }
-    
-    func paymentContextDidChange(_ paymentContext: STPPaymentContext) {
-        print("context did change: \(paymentContext)")
-    }
-    
-    func paymentContext(_ paymentContext: STPPaymentContext, didCreatePaymentResult paymentResult: STPPaymentResult, completion: @escaping STPErrorBlock) {
-        print("did create payment result: \(paymentResult)")
-    }
-    
-    func paymentContext(_ paymentContext: STPPaymentContext, didFinishWith status: STPPaymentStatus, error: Error?) {
-        print("payment context did finish with status: \(status)")
+        self.present(paymentOptionsVC, animated: true, completion: nil)
     }
 }

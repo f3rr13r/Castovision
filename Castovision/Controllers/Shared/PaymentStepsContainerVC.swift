@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PaymentStepsContainerVC: UINavigationController {
+class PaymentOptionsVC: UINavigationController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

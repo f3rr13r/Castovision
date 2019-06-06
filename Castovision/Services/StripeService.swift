@@ -10,6 +10,8 @@ import Foundation
 import FirebaseFunctions
 import Stripe
 
+/*-- will we need this in future for a castovision store which sells tripods other film recording equipment? --*/
+
 class StripeService: NSObject, STPCustomerEphemeralKeyProvider {
     
     static let instance = StripeService()
