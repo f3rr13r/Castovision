@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import SwiftyStoreKit
 //import Stripe
 
 @UIApplicationMain
@@ -21,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupInitialEntryVC()
         configureFirebase()
+        configureSwiftyStoreKit()
         //configureStripe()
         return true
     }
@@ -47,6 +49,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func configureFirebase() {
         FirebaseApp.configure()
+    }
+    
+    private func configureSwiftyStoreKit() {
+        SwiftyStoreKit.completeTransactions(atomically: true) { purchases in
+            for purchase in purchases {
+                switch purchase.transaction.transactionState {
+                case .purchased, .restored:
+                    if purchase.needsFinishTransaction {
+                        // Deliver content from server, then:
+                        SwiftyStoreKit.finishTransaction(purchase.transaction)
+                    }
+                // Unlock content
+                case .failed, .purchasing, .deferred:
+                    break // do nothing
+                }
+            }
+        }
     }
     
 //    private func configureStripe() {

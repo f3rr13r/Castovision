@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum PaymentOptionType {
-    case twoGigabytes
-    case fiveGigabytes
+enum PaymentOptionType: String {
+    case twoGigabytes = "CASTOSTORE2GB"
+    case fiveGigabytes = "CASTOSTORE5GB"
 }

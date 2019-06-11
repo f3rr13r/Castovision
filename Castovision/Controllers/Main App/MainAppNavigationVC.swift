@@ -22,8 +22,12 @@ class MainAppNavigationVC: UITabBarController {
     }
     
     func getUserData() {
-        UserService.instance.getCurrentUserDataFromCloudFirestore { (gotData) in
-            // do we need to do anything here?
+        UserService.instance.getCurrentUserDataFromCloudFirestore(isInitializing: true, successCompletion: {
+            // do we need this?
+        }, failedCompletion: {
+            // do we need this?
+        }) { (_) in
+            // don't need this
         }
     }
     

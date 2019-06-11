@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import UICircularProgressRing
+import SPStorkController
 
 private let sceneHeaderCellId: String = "sceneHeaderCellId"
 private let projectSceneTakeCellId: String = "projectSceneCellId"
@@ -37,7 +37,7 @@ class AddProjectScenesVC: UIViewController {
     
     let buyMoreStorageButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Buy More", for: .normal)
+        button.setTitle("Buy More Storage", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
         button.backgroundColor = UIColor.red
         button.titleLabel?.font = defaultButtonFont
@@ -113,6 +113,7 @@ class AddProjectScenesVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         getCurrentSelfTapeProject()
+        UserService.instance.delegate = self
     }
     
     func getCurrentSelfTapeProject() {
@@ -189,7 +190,14 @@ class AddProjectScenesVC: UIViewController {
     }
     
     @objc func buyMoreStorage() {
-        /*-- buy here --*/
+        let transitionDelegate = SPStorkTransitioningDelegate()
+        transitionDelegate.customHeight = 360.0
+        let paymentOptionsVC = PaymentOptionsVC()
+        paymentOptionsVC.transitioningDelegate = transitionDelegate
+        paymentOptionsVC.modalPresentationStyle = .custom
+        paymentOptionsVC.modalPresentationCapturesStatusBarAppearance = true
+        
+        self.present(paymentOptionsVC, animated: true, completion: nil)
     }
     
     @objc func nextButtonPressed() {
@@ -401,5 +409,14 @@ extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewScene
             self.needsScrollingAnimation = true
             self.selfTapeProject = updatedSelfTapeProject
         }
+    }
+}
+
+// User Service delegate methods
+extension AddProjectScenesVC: UserServiceDelegate {
+    func currentUserWasUpdated(updatedData: User) {
+        print("updated price")
+        self.remainingStorage = updatedData.storageGigabytesRemaining!
+        self.updateAvailableStorageBar()
     }
 }

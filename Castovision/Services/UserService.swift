@@ -10,6 +10,10 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 
+protocol UserServiceDelegate {
+    func currentUserWasUpdated(updatedData: User)
+}
+
 class UserService {
     
     static let instance = UserService()
@@ -30,23 +34,29 @@ class UserService {
     typealias takesSuccessCompletion = ([Take]) -> ()
     
     // store current user
-    var currentUser = User()
+    var currentUser = User() {
+        didSet {
+            delegate?.currentUserWasUpdated(updatedData: self.currentUser)
+        }
+    }
     var projects: [Project] = []
+    
+    var delegate: UserServiceDelegate?
     
     /*========================
             GET METHODS
     ========================*/
-    func getCurrentUserDataFromCloudFirestore(completion: @escaping (Bool) -> ()) {
+    func getCurrentUserDataFromCloudFirestore(isInitializing: Bool = false, successCompletion: @escaping () -> (), failedCompletion: @escaping () -> (), updaterCompletion: @escaping (User) -> ()) {
         if currentUser.id == nil {
             guard let userId = UserDefaults.standard.object(forKey: "userId") as? String else {
-                completion(false)
+                failedCompletion()
                 return
             }
             
             let currentUserRef: DocumentReference = db.collection(_USERS).document(userId)
             currentUserRef.addSnapshotListener { (document, error) in
                 if error != nil {
-                    completion(false)
+                    failedCompletion()
                 } else {
                     if let document = document, document.exists {
                         if let data = document.data() {
@@ -57,7 +67,7 @@ class UserService {
                             self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
                             self.currentUser.stripeCustomerId = data["stripe_customer_id"] as? String ?? nil
                             guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
-                                completion(false)
+                                failedCompletion()
                                 return
                             }
                             self.currentUser.accountCreatedDate = timeStamp.dateValue()
@@ -76,10 +86,12 @@ class UserService {
                                 AssetCachingService.instance.getCachedImage(withKey: profileImageURL, completion: { (responseStatus, imageData) in
                                     switch responseStatus {
                                         case .imageFound:
-                                            guard let profileImageData = imageData else { completion(false); return }
+                                            guard let profileImageData = imageData else { failedCompletion()
+                                                return
+                                            }
                                             self.currentUser.profileImageData = profileImageData
                                             break
-                                    case .noValueFound:
+                                        case .noValueFound:
                                             do {
                                                 let imageData = try Data(contentsOf: URL(string: profileImageURL)!)
                                                 self.currentUser.profileImageData = imageData
@@ -92,10 +104,15 @@ class UserService {
                                     }
                                 })
                             }
-                            completion(true)
+
+                            if isInitializing {
+                                successCompletion()
+                            } else {
+                                updaterCompletion(self.currentUser)
+                            }
                         }
                     } else {
-                        completion(false)
+                        failedCompletion()
                     }
                 }
             }

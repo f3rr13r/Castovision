@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import UICircularProgressRing
 import SPStorkController
 
 class ProfileVC: UIViewController {
@@ -95,15 +94,11 @@ class ProfileVC: UIViewController {
         return label
     }()
     
-    let availableStorageRing: UICircularProgressRing = {
-        let circularProgressRing = UICircularProgressRing()
-        circularProgressRing.innerRingWidth = 2.0
-        circularProgressRing.innerRingColor = UIColor.red
-        circularProgressRing.innerRingSpacing = 2.0
-        circularProgressRing.outerRingWidth = 4.0
-        circularProgressRing.outerRingColor = grey
-        circularProgressRing.style = UICircularRingStyle.inside
-        return circularProgressRing
+    let storageIconImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFit
+        iv.image = #imageLiteral(resourceName: "storage-icon-with-border")
+        return iv
     }()
     
     let buyMoreStorageButton: UIButton = {
@@ -135,26 +130,11 @@ class ProfileVC: UIViewController {
         return label
     }()
     
-    let remainingGigabytesTitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Remaining Storage"
-        label.font = smallContentFont
-        label.textColor = darkGrey
-        return label
-    }()
-    
-    let remainingGigabytesLabel: UILabel = {
-        let label = UILabel()
-        label.font = smallTitleFont
-        label.textColor = darkGrey
-        return label
-    }()
-    
     override var shouldAutorotate: Bool {
         return false
     }
     
-    var profileInfo: User? = nil {
+    var profileInfo: User? {
         didSet {
             if let updatedProfileInfo = self.profileInfo {
                 // check for values
@@ -173,19 +153,9 @@ class ProfileVC: UIViewController {
                 let accountCreatedStringDate = dateFormatter.string(from: updatedAccountCreatedDate)
                 profileAccountCreatedLabel.text = "\(accountCreatedStringDate)"
                 
-                // do available storage stuff
-                let totalGigabytes: CGFloat = 5000
-                let remainingGigabytes: CGFloat = CGFloat(updatedRemainingStorage)
-                
-                // progress ring
-                let progressRingMaxValue = remainingGigabytes > 5000 ? (remainingGigabytes / 5000) * 100.0 : 100.0
-                availableStorageRing.maxValue = progressRingMaxValue
-                availableStorageRing.minValue = 0.0
-                availableStorageRing.value = (remainingGigabytes / totalGigabytes) * 100
-                
-                // labels
-                totalGigabytesLabel.text = "\(totalGigabytes / 1000)gb"
-                remainingGigabytesLabel.text = "\(remainingGigabytes / 1000)gb"
+                // do storage stuff
+                let totalGigabytes = updatedRemainingStorage / 1000
+                totalGigabytesLabel.text = "\(totalGigabytes)gb"
             } else {
                 // show loading / empty states
             }
@@ -202,6 +172,11 @@ class ProfileVC: UIViewController {
         getUserData()
         anchorSubviews()
         setupViewShadowing()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        UserService.instance.delegate = self
     }
     
     func addHiddenNavigationLeftButton() {
@@ -250,27 +225,21 @@ class ProfileVC: UIViewController {
         
         gigabytesRemainingContainerView.addSubview(gigabytesUsageTitleLabel)
         gigabytesUsageTitleLabel.anchor(withTopAnchor: gigabytesRemainingContainerView.topAnchor, leadingAnchor: gigabytesRemainingContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
-
-        gigabytesRemainingContainerView.addSubview(availableStorageRing)
-        availableStorageRing.anchor(withTopAnchor: gigabytesUsageTitleLabel.bottomAnchor, leadingAnchor: gigabytesRemainingContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: 80.0, heightAnchor: 80.0, padding: .init(top: 20.0, left: 21.0, bottom: 0.0, right: 0.0))
         
-        gigabytesRemainingContainerView.addSubview(buyMoreStorageButton)
-        buyMoreStorageButton.anchor(withTopAnchor: nil, leadingAnchor: nil, bottomAnchor: gigabytesRemainingContainerView.bottomAnchor, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: -20.0, right: -horizontalPadding))
+        gigabytesRemainingContainerView.addSubview(storageIconImageView)
+        storageIconImageView.anchor(withTopAnchor: gigabytesUsageTitleLabel.bottomAnchor, leadingAnchor: gigabytesRemainingContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: 80.0, heightAnchor: 80.0, padding: .init(top: 20.0, left: 21.0, bottom: 0.0, right: 0.0))
         
         gigabytesRemainingContainerView.addSubview(storageTextContainerView)
-        storageTextContainerView.anchor(withTopAnchor: gigabytesUsageTitleLabel.bottomAnchor, leadingAnchor: availableStorageRing.trailingAnchor, bottomAnchor: buyMoreStorageButton.topAnchor, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 20.0, left: 12.0, bottom: -24.0, right: -horizontalPadding))
+        storageTextContainerView.anchor(withTopAnchor: nil, leadingAnchor: storageIconImageView.trailingAnchor, bottomAnchor: nil, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: storageIconImageView.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 12.0, bottom: 0.0, right: -horizontalPadding))
         
         storageTextContainerView.addSubview(totalGigabytesTitleLabel)
         totalGigabytesTitleLabel.anchor(withTopAnchor: storageTextContainerView.topAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         
         storageTextContainerView.addSubview(totalGigabytesLabel)
-        totalGigabytesLabel.anchor(withTopAnchor: totalGigabytesTitleLabel.bottomAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
+        totalGigabytesLabel.anchor(withTopAnchor: totalGigabytesTitleLabel.bottomAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: storageTextContainerView.bottomAnchor, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
         
-        storageTextContainerView.addSubview(remainingGigabytesTitleLabel)
-        remainingGigabytesTitleLabel.anchor(withTopAnchor: totalGigabytesLabel.bottomAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 8.0, left: 0.0, bottom: 0.0, right: 0.0))
-        
-        storageTextContainerView.addSubview(remainingGigabytesLabel)
-        remainingGigabytesLabel.anchor(withTopAnchor: remainingGigabytesTitleLabel.bottomAnchor, leadingAnchor: storageTextContainerView.leadingAnchor, bottomAnchor: storageTextContainerView.bottomAnchor, trailingAnchor: storageTextContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
+        gigabytesRemainingContainerView.addSubview(buyMoreStorageButton)
+        buyMoreStorageButton.anchor(withTopAnchor: storageIconImageView.bottomAnchor, leadingAnchor: nil, bottomAnchor: gigabytesRemainingContainerView.bottomAnchor, trailingAnchor: gigabytesRemainingContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: 0.0, bottom: -20.0, right: -horizontalPadding))
     }
     
     func setupViewShadowing() {
@@ -299,5 +268,12 @@ class ProfileVC: UIViewController {
         paymentOptionsVC.modalPresentationCapturesStatusBarAppearance = true
         
         self.present(paymentOptionsVC, animated: true, completion: nil)
+    }
+}
+
+// User service delegate
+extension ProfileVC: UserServiceDelegate {
+    func currentUserWasUpdated(updatedData: User) {
+        self.profileInfo = updatedData
     }
 }

@@ -30,6 +30,10 @@ class SharedModalService {
         let customErrorMessageModal = CustomErrorMessageModal()
         navigationController.view.addSubview(customErrorMessageModal)
         customErrorMessageModal.fillSuperview()
+        
+        let loadingStateModal = LoadingStateModal()
+        navigationController.view.addSubview(loadingStateModal)
+        loadingStateModal.fillSuperview()
     }
     
     /*--
@@ -69,4 +73,26 @@ class SharedModalService {
         }
     }
     
+    /*--
+     loading state modal
+    --*/
+    func showLoadingStateModal() {
+        if let navigationController = _navigationController {
+            for subview in navigationController.view.subviews {
+                if let loadingStateModal = subview as? LoadingStateModal {
+                    loadingStateModal.showLoadingStateModal()
+                }
+            }
+        }
+    }
+    
+    func hideLoadingStateModal() {
+        if let navigationController = _navigationController {
+            for subview in navigationController.view.subviews {
+                if let loadingStateModal = subview as? LoadingStateModal {
+                    loadingStateModal.hideLoadingStateModal()
+                }
+            }
+        }
+    }
 }
