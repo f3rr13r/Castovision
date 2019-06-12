@@ -95,6 +95,7 @@ extension PaymentOptionsVC: PaymentOptionButtonActionDelegate {
     }
     
     func showErrorMessage(withErrorMessage errorMessage: String) {
+        self.dismiss(animated: true, completion: nil)
         let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: errorMessage)
         SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
     }

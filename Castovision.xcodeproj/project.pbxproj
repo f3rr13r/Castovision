@@ -60,6 +60,8 @@
 		4A56CED5224E6C9E008493CB /* AddAccountImageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */; };
 		4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */; };
 		4A56CED9224E855D008493CB /* NotificationName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A56CED8224E855D008493CB /* NotificationName.swift */; };
+		4A5D081F22AFD883006077DB /* AddAccountMailingListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A5D081E22AFD883006077DB /* AddAccountMailingListVC.swift */; };
+		4A5D082122B0F6FE006077DB /* no-profile-selected-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4A5D082022B0F6FE006077DB /* no-profile-selected-icon.png */; };
 		4A67BC62225C009000939469 /* AppDelegateHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC61225C009000939469 /* AppDelegateHelper.swift */; };
 		4A67BC64225CAC2B00939469 /* EditSceneTakeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */; };
 		4A67BC66225D05EA00939469 /* AddSelfTapeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */; };
@@ -154,6 +156,8 @@
 		4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountImageVC.swift; sourceTree = "<group>"; };
 		4A56CED6224E7FE7008493CB /* PermissionDeniedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeniedView.swift; sourceTree = "<group>"; };
 		4A56CED8224E855D008493CB /* NotificationName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationName.swift; sourceTree = "<group>"; };
+		4A5D081E22AFD883006077DB /* AddAccountMailingListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAccountMailingListVC.swift; sourceTree = "<group>"; };
+		4A5D082022B0F6FE006077DB /* no-profile-selected-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "no-profile-selected-icon.png"; sourceTree = "<group>"; };
 		4A67BC61225C009000939469 /* AppDelegateHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegateHelper.swift; sourceTree = "<group>"; };
 		4A67BC63225CAC2B00939469 /* EditSceneTakeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSceneTakeVC.swift; sourceTree = "<group>"; };
 		4A67BC65225D05EA00939469 /* AddSelfTapeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSelfTapeService.swift; sourceTree = "<group>"; };
@@ -308,6 +312,7 @@
 				4A799E1A224D8CD0004EFA90 /* Controllers */,
 				4A799E08224D899D004EFA90 /* AppDelegate.swift */,
 				4A799E0F224D89A1004EFA90 /* Assets.xcassets */,
+				4A5D082022B0F6FE006077DB /* no-profile-selected-icon.png */,
 				4A799E11224D89A1004EFA90 /* LaunchScreen.storyboard */,
 				4A799E14224D89A1004EFA90 /* Info.plist */,
 				4ADA27182266320100649F2B /* GoogleService-Info.plist */,
@@ -364,6 +369,7 @@
 				4A56CECE224E5DEE008493CB /* ForgotPasswordVC.swift */,
 				4A56CED0224E5FAF008493CB /* AddAccountNameVC.swift */,
 				4A56CED4224E6C9E008493CB /* AddAccountImageVC.swift */,
+				4A5D081E22AFD883006077DB /* AddAccountMailingListVC.swift */,
 			);
 			path = Authentication;
 			sourceTree = "<group>";
@@ -580,6 +586,7 @@
 			files = (
 				4A799E13224D89A1004EFA90 /* LaunchScreen.storyboard in Resources */,
 				4A799E10224D89A1004EFA90 /* Assets.xcassets in Resources */,
+				4A5D082122B0F6FE006077DB /* no-profile-selected-icon.png in Resources */,
 				4ADA27192266320100649F2B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -709,6 +716,7 @@
 				4A4A79B622AEB23000E824B7 /* LoadingStateModal.swift in Sources */,
 				4A3EE30A2268E70F0081E332 /* CustomOverlayModal.swift in Sources */,
 				4A56CED7224E7FE7008493CB /* PermissionDeniedView.swift in Sources */,
+				4A5D081F22AFD883006077DB /* AddAccountMailingListVC.swift in Sources */,
 				4A36DBC4225394D700F76E1B /* UIViewController.swift in Sources */,
 				4AFB2B7222564ADA00F99B16 /* AuditionProject.swift in Sources */,
 				4A56CEBD224DAFEE008493CB /* LargeTitleView.swift in Sources */,

@@ -47,73 +47,77 @@ class UserService {
             GET METHODS
     ========================*/
     func getCurrentUserDataFromCloudFirestore(isInitializing: Bool = false, successCompletion: @escaping () -> (), failedCompletion: @escaping () -> (), updaterCompletion: @escaping (User) -> ()) {
-        if currentUser.id == nil {
-            guard let userId = UserDefaults.standard.object(forKey: "userId") as? String else {
+        
+        guard let userId = UserDefaults.standard.object(forKey: "userId") as? String else {
+            failedCompletion()
+            return
+        }
+        
+        let currentUserRef: DocumentReference = db.collection(_USERS).document(userId)
+        currentUserRef.addSnapshotListener { (document, error) in
+            if error != nil {
                 failedCompletion()
-                return
-            }
-            
-            let currentUserRef: DocumentReference = db.collection(_USERS).document(userId)
-            currentUserRef.addSnapshotListener { (document, error) in
-                if error != nil {
-                    failedCompletion()
-                } else {
-                    if let document = document, document.exists {
-                        if let data = document.data() {
-                            
-                            self.currentUser.id = userId
-                            self.currentUser.name = data["profileName"] as? String ?? "Name not found"
-                            self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
-                            self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
-                            self.currentUser.stripeCustomerId = data["stripe_customer_id"] as? String ?? nil
-                            guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
-                                failedCompletion()
-                                return
-                            }
-                            self.currentUser.accountCreatedDate = timeStamp.dateValue()
-                            self.currentUser.storageGigabytesRemaining = data["storageMegabytesRemaining"] as? Double ?? 0.0
-                            
-                            /*-- profile image --*/
-                            do {
-                                
-                                // if not in cash, do the following
-                                guard let profileImageURL = data["profileImageUrl"] as? String else {
-                                    // give a locally stored default image
-                                    return
-                                }
-                                
-                                // check if we have it on disk already. If we do just set it. If we don't then save it to cache for future
-                                AssetCachingService.instance.getCachedImage(withKey: profileImageURL, completion: { (responseStatus, imageData) in
-                                    switch responseStatus {
-                                        case .imageFound:
-                                            guard let profileImageData = imageData else { failedCompletion()
-                                                return
-                                            }
-                                            self.currentUser.profileImageData = profileImageData
-                                            break
+            } else {
+                if let document = document, document.exists {
+                    if let data = document.data() {
+                        self.currentUser.id = userId
+                        self.currentUser.name = data["profileName"] as? String ?? "Name not found"
+                        self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
+                        self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
+                        self.currentUser.stripeCustomerId = data["stripe_customer_id"] as? String ?? nil
+                        guard let timeStamp = data["accountCreatedDate"] as? Timestamp else {
+                            failedCompletion()
+                            return
+                        }
+                        self.currentUser.accountCreatedDate = timeStamp.dateValue()
+                        self.currentUser.storageGigabytesRemaining = data["storageMegabytesRemaining"] as? Double ?? 0.0
+                        
+                        /*-- profile image --*/
+                        if let profileImageUrl = data["profileImageUrl"] as? String {
+                            AssetCachingService.instance.getCachedImage(withKey: profileImageUrl, completion: { (responseStatus, imageData) in
+                                switch responseStatus {
+                                    case .imageFound:
+                                        guard let profileImageData = imageData else {
+                                            failedCompletion()
+                                            return
+                                        }
+                                        
+                                        self.currentUser.profileImageData = profileImageData
+                                        break
+                                    
                                         case .noValueFound:
                                             do {
-                                                let imageData = try Data(contentsOf: URL(string: profileImageURL)!)
+                                                let imageData = try Data(contentsOf: URL(string: profileImageUrl)!)
                                                 self.currentUser.profileImageData = imageData
-                                                AssetCachingService.instance.setCachedImage(withKey: profileImageURL, andImageData: imageData)
+                                                AssetCachingService.instance.setCachedImage(withKey: profileImageUrl, andImageData: imageData)
+                                                break
                                             } catch {
-                                                // give locally stored default image
-                                                return
+                                                break
                                             }
-                                        break;
-                                    }
-                                })
+                                        }
+                                    })
+                        } else {
+                            do {
+                                guard let noProfileImageURL = Bundle.main.url(forResource: "no-profile-selected-icon", withExtension: "png") else {
+                                    failedCompletion()
+                                    return
+                                }
+                                self.currentUser.profileImageData = try Data(contentsOf: noProfileImageURL)
+                                return
+                            } catch {
+                                failedCompletion()
                             }
-
-                            if isInitializing {
-                                successCompletion()
-                            } else {
-                                updaterCompletion(self.currentUser)
-                            }
+                            return
                         }
-                    } else {
-                        failedCompletion()
+                        
+                        if isInitializing {
+                            successCompletion()
+                        } else {
+                            updaterCompletion(self.currentUser)
+                        }
                     }
+                } else {
+                    failedCompletion()
                 }
             }
         }
@@ -138,50 +142,54 @@ class UserService {
                     let auditionProjectsCount: Int = documents.count
                     var updatedProjectsCount: Int = 0
                     
-                    documents.forEach({ (documentSnapshot) in
-                        let projectId = documentSnapshot.documentID
-                        let documentData = documentSnapshot.data()
-                        var useableTimeStamp: Date = Date()
-                        if let serverTimeStamp = documentData["createdDate"] as? Timestamp {
-                            useableTimeStamp = serverTimeStamp.dateValue()
-                        }
-                        
-                        /*-- initialzie project --*/
-                        var auditionProject = Project(
-                            id: projectId,
-                            timeStamp: useableTimeStamp,
-                            ownerId: userId,
-                            projectName: documentData["projectName"] as? String ?? "No project name found",
-                            projectPassword: documentData["projectPassword"] as? String ?? "No project password found",
-                            scenes: [],
-                            numberOfViews: documentData["numberOfViews"] as? Int ?? 0,
-                            currentMailingList: documentData["currentMailingList"] as? [String] ?? []
-                        )
-                        
-                        guard let scenesObjectData = documentData["scenes"] as? [[String: Any]] else {
-                            failedCompletion("Something went wrong when attempting to retrieve your audition projects. Refresh the page by swiping down")
-                            return
-                        }
-                        
-                        /*-- model the scenes data into something workable --*/
-                        self.modelSceneObjectDataToAuditionScenes(withObjectData: scenesObjectData, failedCompletion: { (failedMessage) in
-                            failedCompletion(failedMessage)
-                        }, successCompletion: { (scenes) in
-                            auditionProject.scenes = scenes
-                            
-                            auditionProjects.append(auditionProject)
-                            
-                            updatedProjectsCount += 1
-
-                            if updatedProjectsCount == auditionProjectsCount {
-                                /*-- order the projects array by date descending --*/
-                                let orderedProjectsArray: [Project] = auditionProjects.sorted(by: { $0.timeStamp!.timeIntervalSince1970 > $1.timeStamp!.timeIntervalSince1970 })
-                                
-                                /*-- pass back the array --*/
-                                successCompletion(orderedProjectsArray)
+                    if auditionProjectsCount > 0 {
+                        documents.forEach({ (documentSnapshot) in
+                            let projectId = documentSnapshot.documentID
+                            let documentData = documentSnapshot.data()
+                            var useableTimeStamp: Date = Date()
+                            if let serverTimeStamp = documentData["createdDate"] as? Timestamp {
+                                useableTimeStamp = serverTimeStamp.dateValue()
                             }
+                            
+                            /*-- initialzie project --*/
+                            var auditionProject = Project(
+                                id: projectId,
+                                timeStamp: useableTimeStamp,
+                                ownerId: userId,
+                                projectName: documentData["projectName"] as? String ?? "No project name found",
+                                projectPassword: documentData["projectPassword"] as? String ?? "No project password found",
+                                scenes: [],
+                                numberOfViews: documentData["numberOfViews"] as? Int ?? 0,
+                                currentMailingList: documentData["currentMailingList"] as? [String] ?? []
+                            )
+                            
+                            guard let scenesObjectData = documentData["scenes"] as? [[String: Any]] else {
+                                failedCompletion("Something went wrong when attempting to retrieve your audition projects. Refresh the page by swiping down")
+                                return
+                            }
+                            
+                            /*-- model the scenes data into something workable --*/
+                            self.modelSceneObjectDataToAuditionScenes(withObjectData: scenesObjectData, failedCompletion: { (failedMessage) in
+                                failedCompletion(failedMessage)
+                            }, successCompletion: { (scenes) in
+                                auditionProject.scenes = scenes
+                                
+                                auditionProjects.append(auditionProject)
+                                
+                                updatedProjectsCount += 1
+                                
+                                if updatedProjectsCount == auditionProjectsCount {
+                                    /*-- order the projects array by date descending --*/
+                                    let orderedProjectsArray: [Project] = auditionProjects.sorted(by: { $0.timeStamp!.timeIntervalSince1970 > $1.timeStamp!.timeIntervalSince1970 })
+                                    
+                                    /*-- pass back the array --*/
+                                    successCompletion(orderedProjectsArray)
+                                }
+                            })
                         })
-                    })
+                    } else {
+                        successCompletion(auditionProjects)
+                    }
                 }
             }
         }

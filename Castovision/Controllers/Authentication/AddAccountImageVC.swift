@@ -220,7 +220,7 @@ class AddAccountImageVC: UIViewController {
     }
     
     @objc func skipButtonPressed() {
-        navigateIntoMainApp()
+        self.navigateToMailingListVC()
     }
     
     func saveProfileImageToAccount() {
@@ -233,7 +233,7 @@ class AddAccountImageVC: UIViewController {
         UserService.instance.updateUserData(withName: "profileImageUrl", andValue: profileImage) { (updatedSuccessfully) in
             SharedModalService.instance.hideCustomOverlayModal()
             if updatedSuccessfully {
-                self.navigateIntoMainApp()
+                self.navigateToMailingListVC()
             } else {
                 self.showErrorMessage(withMessage: "We were unable to update your account with your profile image. Please try again, or click skip to have a go later on")
             }
@@ -245,8 +245,9 @@ class AddAccountImageVC: UIViewController {
         SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
     }
     
-    func navigateIntoMainApp() {
-        self.navigationController?.navigateIntoMainApp()
+    func navigateToMailingListVC() {
+        let addAccountMailingListVC = AddAccountMailingListVC()
+        self.navigationController?.pushViewController(addAccountMailingListVC, animated: true)
     }
 }
 

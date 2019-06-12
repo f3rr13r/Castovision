@@ -23,11 +23,12 @@ class MainAppNavigationVC: UITabBarController {
     
     func getUserData() {
         UserService.instance.getCurrentUserDataFromCloudFirestore(isInitializing: true, successCompletion: {
-            // do we need this?
+            print("Successfully initialized user data")
         }, failedCompletion: {
-            // do we need this?
+            let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: "We were unable to successfully retrieve your account information. Please try again by starting the app")
+            SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
         }) { (_) in
-            // don't need this
+            print("bla bla bla")
         }
     }
     

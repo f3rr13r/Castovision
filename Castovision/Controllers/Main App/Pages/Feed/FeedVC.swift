@@ -24,6 +24,31 @@ class FeedVC: UICollectionViewController {
     
     let loadingView = LoadingView()
     
+    let noDataContainerView: UIView = {
+        let view = UIView()
+        view.isHidden = true
+        return view
+    }()
+    
+    let noDataTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "No self-tapes uploaded"
+        label.textColor = darkGrey
+        label.textAlignment = .center
+        label.font = smallTitleFont
+        return label
+    }()
+    
+    let noDataDescriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Auditions that you upload will appear here. To film your first self-taped audition, press on the 'Add Self-tape' tab below"
+        label.textColor = darkGrey
+        label.textAlignment = .center
+        label.font = defaultContentFont
+        label.numberOfLines = 0
+        return label
+    }()
+    
     override var shouldAutorotate: Bool {
         return false
     }
@@ -32,8 +57,9 @@ class FeedVC: UICollectionViewController {
         didSet {
             if self.auditionProjects.count > 0 {
                 collectionView.reloadData()
+                noDataContainerView.isHidden = true
             } else {
-                // show no data state
+                noDataContainerView.isHidden = false
             }
         }
     }
@@ -59,12 +85,8 @@ class FeedVC: UICollectionViewController {
                 SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
             }) { (updatedAuditionProjects) in
                 self.loadingView.fadeOut()
-                if updatedAuditionProjects.count > 0 {
-                    self.auditionProjects = updatedAuditionProjects
-                    self.feedSearchVC.injectData(forAuditionProjects: self.auditionProjects)
-                } else {
-                        // show a no data state
-                }
+                self.auditionProjects = updatedAuditionProjects
+                self.feedSearchVC.injectData(forAuditionProjects: self.auditionProjects)
             }
         }
     }
@@ -75,6 +97,13 @@ class FeedVC: UICollectionViewController {
         
         self.view.insertSubview(loadingView, aboveSubview: collectionView)
         loadingView.fillSuperview()
+        
+        self.view.insertSubview(noDataContainerView, aboveSubview: collectionView)
+        noDataContainerView.anchor(withTopAnchor: nil, leadingAnchor: self.view.safeAreaLayoutGuide.leadingAnchor, bottomAnchor: nil, trailingAnchor: self.view.safeAreaLayoutGuide.trailingAnchor, centreXAnchor: nil, centreYAnchor: self.view.centerYAnchor, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 0.0, left: horizontalPadding, bottom: 0.0, right: -horizontalPadding))
+        noDataContainerView.addSubview(noDataTitleLabel)
+        noDataTitleLabel.anchor(withTopAnchor: noDataContainerView.topAnchor, leadingAnchor: noDataContainerView.leadingAnchor, bottomAnchor: nil, trailingAnchor: noDataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil)
+        noDataContainerView.addSubview(noDataDescriptionLabel)
+        noDataDescriptionLabel.anchor(withTopAnchor: noDataTitleLabel.bottomAnchor, leadingAnchor: noDataContainerView.leadingAnchor, bottomAnchor: noDataContainerView.bottomAnchor, trailingAnchor: noDataContainerView.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: nil, padding: .init(top: 12.0, left: 0.0, bottom: 0.0, right: 0.0))
     }
     
     func configureCollectionView() {
