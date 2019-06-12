@@ -33,14 +33,23 @@ class ForgotPasswordVC : UIViewController {
     
     let sendEmailButton = MainActionButton(buttonUseType: .forgotPassword, buttonTitle: "Send Forgot Password Email", buttonColour: UIColor.red, isDisabled: true)
     
-    init() {
+    init(emailAddressValue: String, isPresentedModally: Bool = false) {
+        self._emailAddress = emailAddressValue
+        self.emailInputView.updatedInitialInputValue = emailAddressValue
+        self._isPresentedModally = isPresentedModally
         super.init(nibName: nil, bundle: nil)
     }
     
-    init(emailAddressValue: String, passwordValue: String) {
-        emailInputView.updatedInitialInputValue = emailAddressValue
-        super.init(nibName: nil, bundle: nil)
+    private var _emailAddress: String {
+        didSet {
+            if self._emailAddress.count > 0 && self._emailAddress.isValidEmail() {
+                self.sendEmailButton.isDisabled = false
+            } else {
+                self.sendEmailButton.isDisabled = true
+            }
+        }
     }
+    private var _isPresentedModally: Bool
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -88,21 +97,34 @@ class ForgotPasswordVC : UIViewController {
 // input delegate methods
 extension ForgotPasswordVC : CustomInputViewDelegate {
     func inputValueDidChange(inputType: CustomInputType, inputValue: String) {
-        // do something here
+        self._emailAddress = inputValue
     }
     
     func inputClearButtonPressed(inputType: CustomInputType) {
-        // do something here
+        self._emailAddress = ""
     }
 }
 
 // button delegate methods
 extension ForgotPasswordVC: BackButtonDelegate, MainActionButtonDelegate {
     func backButtonPressed() {
-        self.navigationController?.popViewController(animated: true)
+        if _isPresentedModally {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     func mainActionButtonPressed(fromButtonUseType buttonUseType: MainActionButtonType) {
-        // do something here
+        if buttonUseType == .forgotPassword {
+            AuthService.instance.sendPasswordResetEmail(withEmailAddress: self._emailAddress) { (response) in
+                if response.success {
+                    self.backButtonPressed()
+                } else {
+                    let errorConfig = CustomErrorMessageConfig(title: "Something went wrong", body: "Failed to successfully send a password reset email to the address you provided. Please check the email address and try again")
+                    SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorConfig)
+                }
+            }
+        }
     }
 }

@@ -368,7 +368,6 @@ class UserService {
         }
     }
     
-    
     func clearCurrentUser() {
         self.currentUser = User()
     }

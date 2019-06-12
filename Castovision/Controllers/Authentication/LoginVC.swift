@@ -132,7 +132,7 @@ extension LoginVC: CustomInputViewDelegate {
     }
     
     func forgotPasswordButtonPressed() {
-        let forgotPasswordVC = ForgotPasswordVC()
+        let forgotPasswordVC = ForgotPasswordVC(emailAddressValue: self.loginInfo.emailAddress)
         self.navigationController?.pushViewController(forgotPasswordVC, animated: true)
     }
 }

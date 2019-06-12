@@ -96,6 +96,18 @@ class AuthService {
         }
     }
     
+    func sendPasswordResetEmail(withEmailAddress emailAddress: String, completion: @escaping AuthResponseCompletion) {
+        Auth.auth().sendPasswordReset(withEmail: emailAddress) { (error) in
+            if error != nil {
+                let emailSendFailedResponse = AuthResponse(success: false, errorMessage: error?.localizedDescription)
+                completion(emailSendFailedResponse)
+            } else {
+                let emailSendCompleteResponse = AuthResponse(success: true, errorMessage: nil)
+                completion(emailSendCompleteResponse)
+            }
+        }
+    }
+    
     func logoutUser(completion: (Bool) -> ()) {
         do {
             try Auth.auth().signOut()

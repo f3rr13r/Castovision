@@ -11,6 +11,7 @@ import UIKit
 enum CustomInputType: String {
     case unspecified = "Loading..."
     case emailAddress = "Email Address"
+    case newEmailAddress = "Enter your new email address"
     case name = "First and Last Name(s)"
     case password = "Password"
     case reEnterPassword = "Re-enter Password"

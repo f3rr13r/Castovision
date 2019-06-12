@@ -13,6 +13,6 @@ enum SettingsOption: String {
     case updateEmailAddress = "Update Email Address"
     case updatePassword = "Update Password"
     case updateProfileImage = "Update Profile Image"
-    case updateMailingList = "Update Mailing List"
+    case updateMailingList = "Update Saved Email Addresses"
     case deleteAccount = "Delete Account"
 }
