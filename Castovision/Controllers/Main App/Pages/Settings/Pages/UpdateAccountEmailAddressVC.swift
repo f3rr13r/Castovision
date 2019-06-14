@@ -87,7 +87,7 @@ class UpdateAccountEmailAddressVC: UIViewController {
         SharedModalService.instance.showCustomOverlayModal(withMessage: "Updating Account")
         if let currentUser = Auth.auth().currentUser {
             let authCredential: AuthCredential = EmailAuthProvider.credential(withEmail: self.emailUpdaterInfo.currentEmailAddress, password: self.emailUpdaterInfo.currentPassword)
-            currentUser.reauthenticateAndRetrieveData(with: authCredential) { (result, error) in
+            currentUser.reauthenticateAndRetrieveData(with: authCredential) { (_, error) in
                 if error != nil {
                     SharedModalService.instance.hideCustomOverlayModal()
                     self.showErrorModal(withMessage: error!.localizedDescription)

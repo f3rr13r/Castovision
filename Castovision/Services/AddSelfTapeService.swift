@@ -215,7 +215,6 @@ class AddSelfTapeService {
                     // check the successful completions
                     numberOfSuccessCompletions += 1
                     if numberOfSuccessCompletions == takes.count {
-                        let sortedTakesObjectArray = takesObjectArray
                         sceneObject["takes"] = takesObjectArray
                         uploadSuccess(successMessage, sceneObject)
                     }
@@ -251,7 +250,7 @@ class AddSelfTapeService {
             takeVideoMetadata.contentType = "video/mp4"
             
             let takeVideoUID = "\(userId)_takeVideo_\(UUID().uuidString)"
-            let videoStorageRef = storage.reference().child(_AUDITION_TAPES).child(takeVideoUID)
+            let videoStorageRef = storage.reference().child(_AUDITION_TAPES).child(userId).child(takeVideoUID)
             
             /*-- put the video data into storage --*/
             let takeVideoUploadTask = videoStorageRef.putData(takeVideoData, metadata: takeVideoMetadata)
@@ -279,7 +278,7 @@ class AddSelfTapeService {
                         
                         /*-- next we do the thumbnail --*/
                         let takeVideoThumbnailUID = "\(userId)_video-thumbnails_\(UUID().uuidString)"
-                        let takeVideoThumbnailStorageRef = self.storage.reference().child(_AUDITION_TAKE_THUMBNAILS).child(takeVideoThumbnailUID)
+                        let takeVideoThumbnailStorageRef = self.storage.reference().child(_AUDITION_TAKE_THUMBNAILS).child(userId).child(takeVideoThumbnailUID)
                         
                         /*-- put the thumbnail into storage --*/
                         let takeVideoThumbnailUploadTask = takeVideoThumbnailStorageRef.putData(takeVideoThumbnailData)

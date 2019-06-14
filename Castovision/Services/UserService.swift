@@ -350,7 +350,7 @@ class UserService {
     
     func storeProfileImageInStorageBucket(withUserId userId: String, andProfileImage image: UIImage, completion: @escaping (_ storageSuccessful: Bool, _ storageLocationUrl: String?) -> ()) {
         guard let imageData = image.pngData() else { print("Failed to get representation"); completion(false, nil); return }
-        let profileImageStorageRef = storage.reference().child("profile-images/").child("\(userId)_profileImage")
+        let profileImageStorageRef = storage.reference().child(_PROFILE_IMAGES).child(userId).child("\(userId)_profileImage")
         profileImageStorageRef.putData(imageData, metadata: nil) { (metadata, error) in
             if error != nil {
                 print("1. \(String(describing: error?.localizedDescription))")

@@ -15,6 +15,8 @@ enum CustomInputType: String {
     case name = "First and Last Name(s)"
     case password = "Password"
     case reEnterPassword = "Re-enter Password"
+    case newPassword = "New Password"
+    case reEnterNewPassword = "Re-enter your new password"
     case projectName = "Enter the project name"
     case projectPassword = "Enter an access password"
     case reEnterProjectPassword = "Re-enter the access password"
@@ -49,7 +51,7 @@ class CustomInputView: BaseView {
         
         /*-- input type --*/
         self._inputType = inputType
-        if inputType == .password || inputType == .reEnterPassword {
+        if inputType == .password || inputType == .reEnterPassword || inputType == .newPassword || inputType == .reEnterNewPassword {
             input.isSecureTextEntry = true
         }
         

@@ -89,6 +89,7 @@ class AddProjectScenesVC: UIViewController {
     }
     var remainingStorage: Double = UserService.instance.currentUser.storageGigabytesRemaining!
     var fileSizeTotal: Double = 0
+    var isDeletingAccount: Bool = false
     
     var canEnableSaveButton: Bool = false {
         didSet {
@@ -412,11 +413,16 @@ extension AddProjectScenesVC: ExpandedAddNewSceneFooterViewDelegate, AddNewScene
     }
 }
 
-// User Service delegate methods
-extension AddProjectScenesVC: UserServiceDelegate {
+// AuthService and User Service delegate methods
+extension AddProjectScenesVC: AuthServiceDelegate, UserServiceDelegate {
+    func isDeletingAccountValueChanged(toValue isDeletingValue: Bool) {
+        self.isDeletingAccount = isDeletingValue
+    }
+    
     func currentUserWasUpdated(updatedData: User) {
-        print("updated price")
-        self.remainingStorage = updatedData.storageGigabytesRemaining!
-        self.updateAvailableStorageBar()
+        if !isDeletingAccount {
+            self.remainingStorage = updatedData.storageGigabytesRemaining!
+            self.updateAvailableStorageBar()
+        }
     }
 }

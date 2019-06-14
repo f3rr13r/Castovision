@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MainAppNavigationVC: UITabBarController {
+class MainAppNavigationVC: UITabBarController, AuthServiceDelegate {
 
     let feedVC = FeedVC(collectionViewLayout: UICollectionViewFlowLayout())
     let createTapeVC = AddProjectNameVC()
     let profileVC = ProfileVC()
+    
+    private var _isDeletingUserAccount: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,14 +23,30 @@ class MainAppNavigationVC: UITabBarController {
         configureTabBar()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        AuthService.instance.delegate = self
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        AuthService.instance.delegate = nil
+    }
+    
+    func isDeletingAccountValueChanged(toValue isDeletingValue: Bool) {
+        _isDeletingUserAccount = isDeletingValue
+    }
+    
     func getUserData() {
         UserService.instance.getCurrentUserDataFromCloudFirestore(isInitializing: true, successCompletion: {
-            print("Successfully initialized user data")
+            /*-- don't think we need this here --*/
         }, failedCompletion: {
-            let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: "We were unable to successfully retrieve your account information. Please try again by starting the app")
-            SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+            if !self._isDeletingUserAccount {
+                let errorMessageConfig = CustomErrorMessageConfig(title: "Something went wrong", body: "We were unable to successfully retrieve your account information. Please try again by starting the app")
+                SharedModalService.instance.showErrorMessageModal(withErrorMessageConfig: errorMessageConfig)
+            }
         }) { (_) in
-            print("bla bla bla")
+            /*-- we don't need to do anything here --*/
         }
     }
     
