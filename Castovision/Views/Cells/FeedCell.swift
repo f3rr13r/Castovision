@@ -134,7 +134,7 @@ class FeedCell: BaseCell {
     func configureCell(withProjectInfo projectInfo: Project) {
         self._project = projectInfo
         
-        guard let thumbnailImageData = projectInfo.scenes?[0].takes?[0].videoThumbnailUrl,
+        guard let thumbnailImageData = projectInfo.scenes?[0].takes?[0].videoThumbnailData,
               let projectName = projectInfo.projectName,
               let projectCreatedDate = projectInfo.timeStamp,
               let numberOfViews = projectInfo.numberOfViews else {

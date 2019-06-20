@@ -85,7 +85,7 @@ class SceneTakeCell: BaseCell {
     
     private var _take: Take = Take() {
         didSet {
-            if let videoThumbnailData = self._take.videoThumbnailUrl {
+            if let videoThumbnailData = self._take.videoThumbnailData {
                 if let videoThumbnailImage = UIImage(data: videoThumbnailData) {
                     thumbnailImageView.image = videoThumbnailImage
                 }

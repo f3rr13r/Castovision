@@ -42,17 +42,23 @@ struct Scene: Encodable {
 
 struct Take: Encodable {
     var takeNumber: Int?
-    var videoThumbnailUrl: Data?
+    var videoThumbnailUrl: URL?
+    var videoThumbnailData: Data?
     var videoUrl: URL?
     var videoDuration: Double?
     var numberOfViews: Int?
     var fileSize: Double?
     
-    init(takeNumber: Int? = nil, videoThumbnailUrl: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, fileSize: Double? = nil) {
+    init(takeNumber: Int? = nil, videoThumbnailUrl: URL? = nil, videoThumbnailData: Data? = nil, videoUrl: URL? = nil, videoDuration: Double? = nil, fileSize: Double? = nil) {
         self.takeNumber = takeNumber
         self.videoThumbnailUrl = videoThumbnailUrl
+        self.videoThumbnailData = videoThumbnailData
         self.videoUrl = videoUrl
         self.videoDuration = videoDuration
         self.fileSize = fileSize
+    }
+    
+    mutating func updateVideoThumbnailUrl(withNewVideoThumbnailUrl newVideoThumbnailUrl: URL) {
+        self.videoThumbnailUrl = newVideoThumbnailUrl
     }
 }

@@ -62,6 +62,7 @@ class UserService {
                     if let data = document.data() {
                         self.currentUser.id = userId
                         self.currentUser.name = data["profileName"] as? String ?? "Name not found"
+                        self.currentUser.profileImageUrl = URL(string: data["profileImageUrl"] as! String) ?? nil
                         self.currentUser.emailAddress = data["emailAddress"] as? String ?? "Email address not found"
                         self.currentUser.savedEmailAddresses = data["savedEmailAddresses"] as? [String] ?? []
                         self.currentUser.stripeCustomerId = data["stripe_customer_id"] as? String ?? nil
@@ -73,8 +74,8 @@ class UserService {
                         self.currentUser.storageGigabytesRemaining = data["storageMegabytesRemaining"] as? Double ?? 0.0
                         
                         /*-- profile image --*/
-                        if let profileImageUrl = data["profileImageUrl"] as? String {
-                            AssetCachingService.instance.getCachedImage(withKey: profileImageUrl, completion: { (responseStatus, imageData) in
+                        if let profileImageUrl = self.currentUser.profileImageUrl {
+                            AssetCachingService.instance.getCachedImage(withKey: profileImageUrl.absoluteString, completion: { (responseStatus, imageData) in
                                 switch responseStatus {
                                     case .imageFound:
                                         guard let profileImageData = imageData else {
@@ -87,9 +88,9 @@ class UserService {
                                     
                                         case .noValueFound:
                                             do {
-                                                let imageData = try Data(contentsOf: URL(string: profileImageUrl)!)
+                                                let imageData = try Data(contentsOf: profileImageUrl)
                                                 self.currentUser.profileImageData = imageData
-                                                AssetCachingService.instance.setCachedImage(withKey: profileImageUrl, andImageData: imageData)
+                                                AssetCachingService.instance.setCachedImage(withKey: profileImageUrl.absoluteString, andImageData: imageData)
                                                 break
                                             } catch {
                                                 break
@@ -275,7 +276,8 @@ class UserService {
                 
                 let take: Take = Take(
                     takeNumber: takeNumber,
-                    videoThumbnailUrl: videoThumbnailURLData,
+                    videoThumbnailUrl: videoThumbnailUrl,
+                    videoThumbnailData: videoThumbnailURLData,
                     videoUrl: videoUrl,
                     videoDuration: videoDuration,
                     fileSize: fileSize
@@ -313,7 +315,6 @@ class UserService {
             }
         }
     }
-    
     
     func updateUserData<T>(withName name: String, andValue value: T, completion: @escaping (Bool) -> ()) {
         guard let userId = UserDefaults.standard.object(forKey: "userId") as? String else { completion(false); return }

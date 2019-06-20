@@ -88,6 +88,7 @@ class AddProjectScenesVC: UIViewController {
         }
     }
     var remainingStorage: Double = UserService.instance.currentUser.storageGigabytesRemaining!
+    var updatedRemainingStorage: CGFloat = 0.0
     var fileSizeTotal: Double = 0
     var isDeletingAccount: Bool = false
     
@@ -158,10 +159,12 @@ class AddProjectScenesVC: UIViewController {
         
         let fileSizeTotalCGFloat = CGFloat(fileSizeTotal)
         let remainingStorage: CGFloat = CGFloat(self.remainingStorage) - (fileSizeTotalCGFloat.rounded(toPlaces: 1))
-        let remainingStorageTrimmed: CGFloat = (remainingStorage / 1000).rounded(toPlaces: 2)
+        self.updatedRemainingStorage = remainingStorage.rounded()
         
+        /*-- store this to eventually update the user storage amount on database --*/
+        let storageLeft = (remainingStorage / 1000).rounded(toPlaces: 2)
 
-        remainingStorageLabel.text = "\(remainingStorageTrimmed)gb"
+        remainingStorageLabel.text = "\(storageLeft)gb"
     }
     
     func addNavigationRightButton() {
@@ -202,7 +205,7 @@ class AddProjectScenesVC: UIViewController {
     }
     
     @objc func nextButtonPressed() {
-        let addProjectMailingListVC = AddProjectMailingListVC()
+        let addProjectMailingListVC = AddProjectMailingListVC(remainingStorage: updatedRemainingStorage)
         self.navigationController?.pushViewController(addProjectMailingListVC, animated: true)
     }
 }

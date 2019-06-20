@@ -154,7 +154,7 @@ class ProfileVC: UIViewController {
                 profileAccountCreatedLabel.text = "\(accountCreatedStringDate)"
                 
                 // do storage stuff
-                let totalGigabytes = updatedRemainingStorage / 1000
+                let totalGigabytes: CGFloat = CGFloat(updatedRemainingStorage / 1000).rounded(toPlaces: 2)
                 totalGigabytesLabel.text = "\(totalGigabytes)gb"
             } else {
                 // show loading / empty states

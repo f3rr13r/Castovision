@@ -82,6 +82,7 @@ class AddProjectMailingListVC: UIViewController {
     // variables
     private var _selfTapeProject: Project = Project()
     private var _user: User = User()
+    private var _remainingStorage: CGFloat = CGFloat()
     
     var currentEmailInputViewValue: String = "" {
         didSet {
@@ -113,6 +114,15 @@ class AddProjectMailingListVC: UIViewController {
                 self.noEmailSelectedContainerView.isHidden = self.mailingList.count > 0 ? true : false
             }
         }
+    }
+    
+    init(remainingStorage: CGFloat) {
+        self._remainingStorage = remainingStorage
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -170,7 +180,7 @@ class AddProjectMailingListVC: UIViewController {
     }
     
     @objc func sendSelfTapeProject() {
-        let uploadingProjectVC = UploadProjectVC()
+        let uploadingProjectVC = UploadProjectVC(remainingStorage: self._remainingStorage)
         self.navigationController?.pushViewController(uploadingProjectVC, animated: true)
     }
     

@@ -200,7 +200,7 @@ class EditSceneTakeVC: UIViewController {
             self._take.videoDuration = updatedVideoDuration
     
             VideoHelperMethodsService.instance.generateThumbnail(forVideoAtTempUrl: self._take.videoUrl!, atTime: trimmerViewStartTime, completion: { (thumbnailImageData) in
-                self._take.videoThumbnailUrl = thumbnailImageData
+                self._take.videoThumbnailData = thumbnailImageData
                 
                 VideoHelperMethodsService.instance.trimVideo(sourceURL: self._take.videoUrl!, startTime: trimmerViewStartTime, endTime: trimmerViewEndTime, completion: { (croppedVideo, didCropSuccessfully) in
                     if didCropSuccessfully {
