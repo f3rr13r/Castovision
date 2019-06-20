@@ -14,7 +14,7 @@ class AddAccountNameVC: UIViewController {
     let backgroundImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
-        iv.image = #imageLiteral(resourceName: "castovision-logo-background")
+        iv.image = #imageLiteral(resourceName: "loading-background")
         return iv
     }()
     
@@ -75,7 +75,7 @@ class AddAccountNameVC: UIViewController {
     
     func anchorSubviews() {
         self.view.addSubview(backgroundImageView)
-        backgroundImageView.anchor(withTopAnchor: nil, leadingAnchor: self.view.leadingAnchor, bottomAnchor: self.view.bottomAnchor, trailingAnchor: self.view.trailingAnchor, centreXAnchor: nil, centreYAnchor: nil, widthAnchor: nil, heightAnchor: screenWidth * 1.25, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0))
+        backgroundImageView.fillSuperview()
         
         self.view.addSubview(logoImageView)
         logoImageView.anchor(withTopAnchor: self.view.safeAreaLayoutGuide.topAnchor, leadingAnchor: nil, bottomAnchor: nil, trailingAnchor: nil, centreXAnchor: self.view.safeAreaLayoutGuide.centerXAnchor, centreYAnchor: nil, widthAnchor: 30.0, heightAnchor: 30.0, padding: .init(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0))

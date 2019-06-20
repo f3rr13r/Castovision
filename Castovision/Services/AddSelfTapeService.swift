@@ -27,7 +27,7 @@ class AddSelfTapeService {
     typealias uploadingSuccessCompletion = (_ successMessage: String) -> ()
     
     typealias uploadingTakeSuccessCompletion = (_ successMessage: String, _ takeObject: [String: Any]) -> ()
-    typealias uploadSceneSuccessCompletion = (_ successMessage: String, _ scenesObject: [String: Any]) -> ()
+    typealias uploadingSceneSuccessCompletion = (_ successMessage: String, _ scenesObject: [String: Any]) -> ()
     
     // locally stored project
     private var _selfTapeProject: Project = Project()
@@ -103,13 +103,12 @@ class AddSelfTapeService {
     }
     
     
-    /*-- upload the self tape project --*/
     func upload(updateStatus: @escaping uploadingStatusCompletion, uploadFailed: @escaping uploadingFailedCompletion, uploadSucceeded: @escaping uploadingSuccessCompletion) {
         
-        /*-- observable uploading update status variable so we can pass back values for the progress to be displayed to the user in real time --*/
-        var updateInfo: UploadStatus = UploadStatus(progressNumber: 0.0, progressMessage: "Preparing upload") {
-                didSet {
-                    updateStatus(updateInfo)
+        /*-- fire off the status update --*/
+        var updateInfo: UploadStatus = UploadStatus(progressNumber: 0.0, progressMessage: "Preparing Upload") {
+            didSet {
+                updateStatus(updateInfo)
             }
         }
         
@@ -118,212 +117,254 @@ class AddSelfTapeService {
               let scenes: [Scene] = self._selfTapeProject.scenes,
               let projectName: String = self._selfTapeProject.projectName,
               let projectPassword: String = self._selfTapeProject.projectPassword else {
-            
                 uploadFailed("Failed to get your project information")
                 return
         }
         
-        /*-- add the intial database entry --*/
-        let auditionsDatabasePath: CollectionReference = self.db.collection(_AUDITION_TAPES)
-        let projectId: String = UUID().uuidString
-        let projectDatabasePath: DocumentReference = auditionsDatabasePath.document(projectId)
-        
-        /*-- set the initial data for the project in firebase database --*/
-        projectDatabasePath.setData([
+        /*-- model for passing to the database --*/
+        var projectInfo: [String: Any] = [
             "ownerId": userId,
             "createdDate": FieldValue.serverTimestamp(),
             "numberOfViews": 0,
             "projectName": projectName,
-            "projectPassword": projectPassword,
-        ]) { (setDataError) in
-            if setDataError != nil {
-                uploadFailed("Failed to store initial project information")
-            } else {
-                var scenesObjectArray: [[String: Any]] = []
+            "projectPassword": projectPassword
+        ]
+        
+        /*-- dispatch queue stuff --*/
+        let scenesDispatchGroup = DispatchGroup()
+        let scenesDispatchQueue = DispatchQueue(label: "scenesDispatchQueue")
+        let scenesDispatchSemaphore = DispatchSemaphore(value: 0)
+    
+        /*-- utility variables --*/
+        var sceneNumber: Int = 0
+        var scenesObject: [[String: Any]] = []
+        
+        /*-- do the counter --*/
+        scenesDispatchQueue.async {
+            for i in 0..<scenes.count {
+                sceneNumber = i + 1
+                scenesDispatchGroup.enter()
                 
-                /*-- keep reference to the number of success completions that we get --*/
-                var numberOfSuccessCompletions: Int = 0
+                print("Modelling scene \(sceneNumber) data")
                 
-                /*-- loop through the available scenes --*/
-                for sceneIndex in 0..<scenes.count {
-                    // what do we need to do here
-                    // we need to map a scenes object
-                    self.modelSceneDataToObject(withUserId: userId, scene: scenes[sceneIndex], currentProgressNumber: 0, uploadUpdateStatus: { (updatedUploadStatus) in
-                        updateInfo = updatedUploadStatus
-                    }, uploadFailed: { (uploadFailedMessage) in
-                        uploadFailed(uploadFailedMessage)
-                    }, uploadSuccess: { (uploadSuccessMessage, updatedSceneObject) in
-                        scenesObjectArray.append(updatedSceneObject)
-                        numberOfSuccessCompletions += 1
-                        if numberOfSuccessCompletions == scenes.count {
-                            projectDatabasePath.updateData([
-                                "scenes": scenesObjectArray
-                                ], completion: { (updateDataError) in
-                                    if updateDataError != nil {
-                                        uploadFailed("Failed to store project information")
-                                    } else {
-                                        uploadSucceeded(uploadSuccessMessage)
-                                    }
-                            })
-                        }
-                    })
-                }
+                self.modelSceneData(withScene: scenes[i], sceneNumber: sceneNumber, currentProgress: updateInfo.progressNumber, userId: userId, updateCompletion: { (newUploadStatus) in
+                    updateInfo = newUploadStatus
+                }, failedCompletion: { (errorMessage) in
+                    uploadFailed(errorMessage)
+                }, successCompletion: { (successMessage, sceneObject) in
+                    print("Scene \(sceneNumber) modelled successfully")
+                    scenesObject.append(sceneObject)
+                    
+                    // leave the dispatch group
+                    scenesDispatchSemaphore.signal()
+                    scenesDispatchGroup.leave()
+                })
+                scenesDispatchSemaphore.wait()
             }
+        }
+        
+        scenesDispatchGroup.notify(queue: scenesDispatchQueue) {
+            projectInfo["scenes"] = scenesObject
+            
+            self.storeProjectToDatabase(withProjectInfo: projectInfo, updateCompletion: { (newUploadStatus) in
+                updateInfo = newUploadStatus
+            }, failedCompletion: { (errorMessage) in
+                uploadFailed(errorMessage)
+            }, successCompletion: { (successMessage) in
+                /*-- in future we will put the email sending stuff here --*/
+                uploadSucceeded(successMessage)
+            })
         }
     }
     
-    /*-- scene saver method --*/
-    func modelSceneDataToObject(withUserId userId: String, scene: Scene, currentProgressNumber: CGFloat, uploadUpdateStatus: @escaping uploadingStatusCompletion, uploadFailed: @escaping uploadingFailedCompletion, uploadSuccess: @escaping uploadSceneSuccessCompletion) {
+    func modelSceneData(withScene scene: Scene, sceneNumber: Int, currentProgress: CGFloat, userId: String, updateCompletion: @escaping uploadingStatusCompletion, failedCompletion: @escaping uploadingFailedCompletion, successCompletion: @escaping uploadingSceneSuccessCompletion) {
         
-        /*-- observable status updater which will feed back to parent --*/
-        var updateInfo: UploadStatus = UploadStatus(progressNumber: currentProgressNumber, progressMessage: "") {
+        var scenesUpdateInfo: UploadStatus = UploadStatus(progressNumber: currentProgress, progressMessage: "") {
             didSet {
-                uploadUpdateStatus(updateInfo)
+                updateCompletion(scenesUpdateInfo)
             }
         }
         
-        /*-- value check. without these we cannot proceed --*/
+        /*-- do all applicable property existence checks first --*/
         guard let sceneNumber = scene.sceneNumber,
             let takes = scene.takes else {
-            uploadFailed("Unable to get scene information")
+            failedCompletion("Unable to get scene information")
             return
         }
         
+        /*-- scene object --*/
         var sceneObject: [String: Any] = [
             "sceneNumber": sceneNumber,
             "sceneId": UUID().uuidString,
-            "ownerId": userId,
-            "takes": []
+            "ownerId": userId
         ]
         
-        var takesObjectArray: [[String: Any]] = []
-        var numberOfSuccessCompletions: Int = 0
+        /*-- dispatch queue stuff --*/
+        let takesDispatchGroup = DispatchGroup()
+        let takesDispatchQueue = DispatchQueue(label: "scenesDispatchQueue")
+        let takesDispatchSemaphore = DispatchSemaphore(value: 0)
         
-        /*-- loop through the available takes --*/
-        for takeIndex in 0..<takes.count {
-            guard let takeNumber = takes[takeIndex].takeNumber else {
-                uploadFailed("Unable to get scene information")
-                return
-            }
-            storeAndModelTakeData(withUserId: userId, sceneNumber: sceneNumber, takeNumber: takeNumber, take: takes[takeIndex], currentProgressNumber: currentProgressNumber, updatedUpdateStatus: { (updatedUpdateInfo) in
-                updateInfo = updatedUpdateInfo
-            }, uploadFailed: { (failedMessage) in
-                uploadFailed(failedMessage)
-            }) { (successMessage, updatedTakeObject) in
-                    takesObjectArray.append(updatedTakeObject)
+        /*-- ulitity variables --*/
+        var takesObject: [[String: Any]] = []
+        var takeNumber: Int = 0
+        var takesCompletionsNumber: Int = 0
+        
+        takesDispatchQueue.async {
+            for i in 0..<takes.count {
+                takeNumber = i + 1
+                takesDispatchGroup.enter()
+                
+                print("Modelling scene \(sceneNumber) - take \(takeNumber)")
+                self.uploadAndModelTakeData(withTake: takes[i], sceneNumber: sceneNumber, takeNumber: takeNumber, currentProgress: currentProgress, userId: userId, updateCompletion: { (newUploadStatus) in
+                    scenesUpdateInfo = newUploadStatus
+                }, failedCompletion: { (errorMessage) in
+                    failedCompletion(errorMessage)
+                }, successCompletion: { (successMessage, takeObject) in
+                    takesCompletionsNumber += 1
+                    print("Scene \(sceneNumber) - take \(takeNumber) uploaded and modelled successfully")
+                    takesObject.append(takeObject)
                     
-                    // check the successful completions
-                    numberOfSuccessCompletions += 1
-                    if numberOfSuccessCompletions == takes.count {
-                        sceneObject["takes"] = takesObjectArray
-                        uploadSuccess(successMessage, sceneObject)
-                    }
-                }
+                    // leave the dispatch group
+                    takesDispatchSemaphore.signal()
+                    takesDispatchGroup.leave()
+                })
+                takesDispatchGroup.wait()
             }
         }
+        
+        takesDispatchGroup.notify(queue: takesDispatchQueue) {
+            sceneObject["takes"] = takesObject
+            successCompletion("Scene \(sceneNumber) uploaded successfully", sceneObject)
+        }
+    }
     
-    /*-- scene takes method --*/
-    func storeAndModelTakeData(withUserId userId: String, sceneNumber: Int, takeNumber: Int, take: Take, currentProgressNumber: CGFloat, updatedUpdateStatus: @escaping uploadingStatusCompletion, uploadFailed: @escaping uploadingFailedCompletion, uploadSuccess: @escaping uploadingTakeSuccessCompletion) {
+    func uploadAndModelTakeData(withTake take: Take, sceneNumber: Int, takeNumber: Int, currentProgress: CGFloat, userId: String, updateCompletion: @escaping uploadingStatusCompletion, failedCompletion: @escaping uploadingFailedCompletion, successCompletion: @escaping uploadingTakeSuccessCompletion) {
         
-        /*-- observable status updater which will feed back to parent --*/
-        var updateInfo: UploadStatus = UploadStatus(progressNumber: currentProgressNumber, progressMessage: "") {
+        var updateInfo: UploadStatus = UploadStatus(progressNumber: currentProgress, progressMessage: "") {
             didSet {
-                updatedUpdateStatus(updateInfo)
+                updateCompletion(updateInfo)
             }
         }
         
-        /*-- check for values which are imperitive. if we don't have them then kill it --*/
+        /*-- do all applicable property existence checks first --*/
         guard let takeVideoUrl = take.videoUrl,
               let takeVideoDuration = take.videoDuration,
               let takeVideoThumbnailData = take.videoThumbnailUrl,
               let takeVideoFileSize = take.fileSize else {
-                uploadFailed("Failed to get information for a Scene \(sceneNumber) take")
+                failedCompletion("Failed to get information for a Scene \(sceneNumber) take")
                 return
         }
         
+        var takeObject: [String: Any] = [
+            "takeNumber": takeNumber,
+            "videoDuration": takeVideoDuration,
+            "fileSize": takeVideoFileSize,
+            "takeId": UUID().uuidString
+        ]
+        
+        /*-- do the storage stuff here --*/
+        updateInfo = UploadStatus(progressNumber: 0.0, progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber) video to the cloud")
+        
         /*-- attempt to extract the video data --*/
         do {
-            
             let takeVideoData = try Data(contentsOf: takeVideoUrl)
-            
             let takeVideoMetadata = StorageMetadata()
             takeVideoMetadata.contentType = "video/mp4"
             
             let takeVideoUID = "\(userId)_takeVideo_\(UUID().uuidString)"
             let videoStorageRef = storage.reference().child(_AUDITION_TAPES).child(userId).child(takeVideoUID)
             
-            /*-- put the video data into storage --*/
+            /*-- attempt to put the video data to storage --*/
             let takeVideoUploadTask = videoStorageRef.putData(takeVideoData, metadata: takeVideoMetadata)
             
-            /*-- add observers to the upload task --*/
+            /*-- storage upload status observers --*/
             takeVideoUploadTask.observe(.progress) { (snapshot) in
-                updateInfo = UploadStatus(progressNumber: CGFloat(snapshot.progress!.fractionCompleted), progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber)")
+                updateInfo = UploadStatus(progressNumber: CGFloat(snapshot.progress!.fractionCompleted), progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber) video to the cloud")
             }
             
             takeVideoUploadTask.observe(.failure) { (snapshot) in
-                uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) on our database")
+                failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) video to the cloud")
             }
             
-            takeVideoUploadTask.observe(.success) { (snapshot) in
+            takeVideoUploadTask.observe(.success) { (_) in
                 
-                /*-- video in the firebase storage bucket. get download url --*/
-                videoStorageRef.downloadURL(completion: { (takeVideoStorageUrl, error) in
+                videoStorageRef.downloadURL(completion: { (url, error) in
                     if error != nil {
-                        uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) on our database")
+                        failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) video to the cloud")
                     } else {
-                        guard let takeVideoStorageUrlString = takeVideoStorageUrl?.absoluteString else {
-                            uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) on our database")
+                        
+                        guard let takeVideoStorageUrlString = url?.absoluteString else {
+                            failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) video to the cloud")
                             return
                         }
                         
-                        /*-- next we do the thumbnail --*/
-                        let takeVideoThumbnailUID = "\(userId)_video-thumbnails_\(UUID().uuidString)"
+                        updateInfo = UploadStatus(progressNumber: 0.0, progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber) thumbnail to the cloud")
+                        
+                        /*-- success done - next we do thumbnail --*/
+                        let takeVideoThumbnailUID = "\(userId)_videoThumbnails_\(UUID().uuidString)"
                         let takeVideoThumbnailStorageRef = self.storage.reference().child(_AUDITION_TAKE_THUMBNAILS).child(userId).child(takeVideoThumbnailUID)
                         
-                        /*-- put the thumbnail into storage --*/
+                        /*-- put the thumbnail data to storage --*/
                         let takeVideoThumbnailUploadTask = takeVideoThumbnailStorageRef.putData(takeVideoThumbnailData)
                         
-                        /*-- add the observers --*/
-                        takeVideoThumbnailUploadTask.observe(.progress, handler: { (snapshot) in
-                            updateInfo = UploadStatus(progressNumber: CGFloat(snapshot.progress!.fractionCompleted), progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber)")
-                        })
+                        /*-- storage upload observers --*/
+                        takeVideoThumbnailUploadTask.observe(.progress) { (snapshot) in
+                            updateInfo = UploadStatus(progressNumber: CGFloat(snapshot.progress!.fractionCompleted), progressMessage: "Uploading Scene \(sceneNumber) - Take \(takeNumber) thumbnail to the cloud")
+                        }
                         
-                        takeVideoThumbnailUploadTask.observe(.failure, handler: { (snapshot) in
-                            uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) thumbnail on our database")
-                        })
+                        takeVideoThumbnailUploadTask.observe(.failure) { (snapshot) in
+                            failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) thumbnail to the cloud")
+                        }
                         
-                        takeVideoThumbnailUploadTask.observe(.success, handler: { (snapshot) in
+                        takeVideoThumbnailUploadTask.observe(.success) { (_) in
                             
-                            /*-- thumbnail in the firebase storage bucket. get download url --*/
-                            takeVideoThumbnailStorageRef.downloadURL(completion: { (takeThumbnailStorageUrl, error) in
+                            takeVideoThumbnailStorageRef.downloadURL(completion: { (url, error) in
                                 if error != nil {
-                                    uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) thumbnail on our database")
+                                    failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) thumbnail to the cloud")
                                 } else {
-                                    guard let takeVideoThumbnailStorageUrlString = takeThumbnailStorageUrl?.absoluteString else {
-                                            uploadFailed("Failed to store Scene \(sceneNumber) - Take \(takeNumber) thumbnail on our database")
+                                    
+                                    guard let takeVideoThumbnailStorageUrlString = url?.absoluteString else {
+                                        failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) thumbnail to the cloud")
                                         return
                                     }
                                     
-                                    /*-- unique reference to take --*/
-                                    let updatedTakeObject: [String: Any] = [
-                                        "takeNumber": takeNumber,
-                                        "videoThumbnailUrl": takeVideoThumbnailStorageUrlString,
-                                        "videoUrl": takeVideoStorageUrlString,
-                                        "videoDuration": takeVideoDuration,
-                                        "fileSize": takeVideoFileSize,
-                                        "takeId": UUID().uuidString
-                                    ]
+                                    takeObject["videoUrl"] = takeVideoStorageUrlString
+                                    takeObject["videoThumbnailUrl"] = takeVideoThumbnailStorageUrlString
                                     
-                                    uploadSuccess("Take uploaded and saved successfully", updatedTakeObject)
+                                    successCompletion("Uploaded Scene \(sceneNumber) - Take \(takeNumber) to the cloud", takeObject)
                                 }
                             })
-                        })
+                            
+                        }
                     }
                 })
             }
-            
         } catch {
-            uploadFailed("Failed to get video data for Scene \(sceneNumber) - Take \(takeNumber)")
+            failedCompletion("Failed to upload Scene \(sceneNumber) - Take \(takeNumber) to the cloud")
+        }
+    }
+    
+    func storeProjectToDatabase(withProjectInfo projectInfo: [String: Any], updateCompletion: @escaping uploadingStatusCompletion, failedCompletion: @escaping uploadingFailedCompletion, successCompletion: @escaping uploadingSuccessCompletion) {
+        
+        var updateInfo: UploadStatus = UploadStatus(progressNumber: 0.0, progressMessage: "Saving scenes cloud information to database") {
+            didSet {
+                updateCompletion(updateInfo)
+            }
+        }
+        
+        /*-- database pathing --*/
+        let auditionsDatabasePath: CollectionReference = self.db.collection(_AUDITION_TAPES)
+        let projectId: String = UUID().uuidString
+        let projectDataBasePath: DocumentReference = auditionsDatabasePath.document(projectId)
+        
+        /*-- set the data in firebase database --*/
+        projectDataBasePath.setData(projectInfo) { (error) in
+            if error != nil {
+                failedCompletion("Failed to save project info in the database")
+            } else {
+                updateInfo = UploadStatus(progressNumber: 100.0, progressMessage: "Audution successfully saved to the database")
+                successCompletion("Audition upload successfully!")
+            }
         }
     }
     
