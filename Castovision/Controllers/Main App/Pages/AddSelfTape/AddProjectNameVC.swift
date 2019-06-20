@@ -90,6 +90,8 @@ class AddProjectNameVC: UIViewController {
     func resetInputValues() {
         self.auditionNameInputView.input.text = nil
     }
+    
+    // bla bla bla bla bla
 }
 
 // delegate methods
